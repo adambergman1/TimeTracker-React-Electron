@@ -1,0 +1,11 @@
+body {
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .remove-icon {
+    float: right;
+    cursor: pointer;
+  }
