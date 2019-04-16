@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Projects from '../projects/Projects'
 import AddProject from '../projects/AddProject'
+import { Modal, Button } from 'react-materialize'
+
 
 class Home extends Component {
   state = {
@@ -49,11 +51,12 @@ class Home extends Component {
 
   render () {
     return (
-      <div className="container">
-        <h1 className='center blue-text'>Projects</h1>
-        <Projects projects={this.state.projects} 
-        deleteProject={this.deleteProject} />
-        <AddProject addProject={this.addProject} />
+      <div className="container home">
+        <h1 className='center'>Projects</h1>
+        <Modal trigger={<Button>Add project</Button>}>
+          <AddProject addProject={this.addProject} />
+        </Modal>
+        <Projects projects={this.state.projects} deleteProject={this.deleteProject} />
       </div>
     )
   }

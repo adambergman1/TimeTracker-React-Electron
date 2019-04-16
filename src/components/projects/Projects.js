@@ -15,7 +15,7 @@ const Projects = ({ projects, deleteProject }) => {
           <div className='actions'>
             <Modal trigger={<span className='remove-icon'><img src={deleteIcon} className='delete-icon' alt='Delete project' /></span>}>
               <p>Are you sure that you want to remove this project? All tasks related to it will be removed.</p>
-              <span className='remove-icon' onClick={() => { deleteProject(project) }}>DELETE</span>
+              <span className='btn red' onClick={() => { deleteProject(project) }}>DELETE</span>
             </Modal>
 
           </div>

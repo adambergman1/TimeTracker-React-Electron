@@ -53,7 +53,7 @@ class Tasks extends Component {
               <div className='actions'>
                 <Modal trigger={<span className='remove-icon'><img src={deleteIcon} className='delete-icon' alt='Delete task' /></span>}>
                   <p>Are you sure that you want to remove this task?</p>
-                  <span className='remove-icon' onClick={() => { this.deleteTask(task.id) }}>DELETE</span>
+                  <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>DELETE</span>
                 </Modal>
               </div>
           </div>

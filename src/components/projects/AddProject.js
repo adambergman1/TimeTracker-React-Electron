@@ -21,7 +21,7 @@ class AddProject extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>Add new project:</label>
-        <input type="text" onChange={this.handleChange} value={this.state.name} />
+        <input type="text" onChange={this.handleChange} value={this.state.name} placeholder="The name of your project" />
       </form>
     )
   }
