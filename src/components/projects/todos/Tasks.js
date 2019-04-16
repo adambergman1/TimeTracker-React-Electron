@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AddTask from './AddTask'
 import deleteIcon from '../../images/delete.svg'
+import startIcon from '../../images/start.svg'
 import { Modal } from 'react-materialize'
 
 class Tasks extends Component {
@@ -43,26 +44,27 @@ class Tasks extends Component {
     render() {
     const { tasks, project_name } = this.state
 
-    let taskList = tasks.length ? (
-      tasks.map(task => {
-        if (task.parent === project_name) {
-        return (
-            <div className="collection-item" key={task.id}>
-              <span>{task.title}</span>
+    const filteredTasks = [...tasks.filter(task => task.parent === project_name)]
 
-              <div className='actions'>
-                <Modal trigger={<span className='remove-icon'><img src={deleteIcon} className='delete-icon' alt='Delete task' /></span>}>
-                  <p>Are you sure that you want to remove this task?</p>
-                  <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>DELETE</span>
-                </Modal>
-              </div>
-          </div>
-          )
-        }
+    let currentTasks = filteredTasks.length ? (
+      filteredTasks.map(task => {
+        return (
+          <div className="collection-item" key={task.id}>
+               <span>{task.title}</span>
+
+               <div className='actions'>
+                 <Modal trigger={<span className='remove-icon'><img src={deleteIcon} className='delete-icon' alt='Delete task' /></span>}>
+                   <p>Are you sure that you want to remove this task?</p>
+                   <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>DELETE</span>
+                 </Modal>
+                 <div className="timer">
+                 <span className="start-timer" onClick={this.startTimer}><img src={startIcon} alt="Start timer" className="start-icon"/></span>
+                 </div>
+               </div>
+           </div>
+        )
       })
-    ) : (
-    <p className="center">Start a new timer by adding a task above</p>
-    )
+    ) : <p className="center">Create your first task using the field above!</p>
 
     return (
       <div className="container">
@@ -71,7 +73,7 @@ class Tasks extends Component {
         <AddTask addTask={this.addTask} />
 
         <div className="collection">
-          {taskList}
+          {currentTasks}
         </div>
 
       </div>
