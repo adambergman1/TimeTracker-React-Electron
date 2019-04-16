@@ -4,15 +4,15 @@ import AddTask from './AddTask'
 class Tasks extends Component {
     state = {
         project_name: this.props.match.params.project_name,
-        tasks: [
-            {id: 1, title: 'Learn C#', parent: '1dv024'},
-            {id: 2, title: 'Learn OOP', parent: '1dv024'},
-            {id: 3, title: 'Learn Int', parent: '1dv024'},
-            {id: 4, title: 'Learn Double', parent: '1dv024'},
-            {id: 5, title: 'Learn Methods', parent: '1dv024'},
-            {id: 6, title: 'Learn Classes', parent: '1dv024'},
-            {id: 7, title: 'Learn React', parent: '1dv430'}
-        ]
+        tasks: []
+    }
+
+    // Get all saved data in localStorage
+    componentWillMount() {
+      if (localStorage.hasOwnProperty('task')) {
+        const tasks = JSON.parse(localStorage.getItem('task'))
+        this.setState({ tasks })
+      }
     }
 
     deleteTask = (id) => {
@@ -20,6 +20,11 @@ class Tasks extends Component {
           return task.id !== id
         })
         this.setState({ tasks })
+
+        const dataInStorage = JSON.parse(localStorage.getItem('task'))
+        const filteredItem = [...dataInStorage.filter(task => task.id !== id)]
+        localStorage.removeItem('task')
+        localStorage.setItem('task', JSON.stringify(filteredItem))
       }
 
     addTask = (task) => {
@@ -28,6 +33,10 @@ class Tasks extends Component {
       console.log(task)
       let tasks = [...this.state.tasks, task]
       this.setState({ tasks })
+
+      // Save the added task to localStorage together with the existing
+      const allTasks = [...this.state.tasks, task]
+      localStorage.setItem('task', JSON.stringify(allTasks))
     }
 
     render() {
