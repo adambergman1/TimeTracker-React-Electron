@@ -38,11 +38,11 @@ class Home extends Component {
 
   addProject = (project) => {
     project.id = Math.random()
-    let projects = [...this.state.projects, project]
+    let projects = [project, ...this.state.projects]
     this.setState({ projects })
 
     // Save the added task to localStorage together with the existing
-    const allProjects = [...this.state.projects, project]
+    const allProjects = [project, ...this.state.projects]
     localStorage.setItem('project', JSON.stringify(allProjects))
   }
 

@@ -19,11 +19,10 @@ body {
     height: 24px;
   }
 
-  .projects .collection-item .actions {
+  .collection-item .actions {
     float: right;
-    display: inline-block;
   }
 
-  .projects .collection-item a {
+  .collection-item a {
     vertical-align: middle;
   }

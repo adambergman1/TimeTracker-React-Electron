@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import AddTask from './AddTask'
+import deleteIcon from '../../images/delete.svg'
+import { Modal } from 'react-materialize'
 
 class Tasks extends Component {
     state = {
@@ -30,12 +32,11 @@ class Tasks extends Component {
     addTask = (task) => {
       task.id = Math.random()
       task.parent = this.state.project_name
-      console.log(task)
-      let tasks = [...this.state.tasks, task]
+      let tasks = [task, ...this.state.tasks]
       this.setState({ tasks })
 
       // Save the added task to localStorage together with the existing
-      const allTasks = [...this.state.tasks, task]
+      const allTasks = [task, ...this.state.tasks]
       localStorage.setItem('task', JSON.stringify(allTasks))
     }
 
@@ -45,10 +46,16 @@ class Tasks extends Component {
     let taskList = tasks.length ? (
       tasks.map(task => {
         if (task.parent === project_name) {
-          return (
+        return (
             <div className="collection-item" key={task.id}>
               <span>{task.title}</span>
-              <span className='remove-icon' onClick={() => { this.deleteTask(task.id) }}>x</span>
+
+              <div className='actions'>
+                <Modal trigger={<span className='remove-icon'><img src={deleteIcon} className='delete-icon' alt='Delete task' /></span>}>
+                  <p>Are you sure that you want to remove this task?</p>
+                  <span className='remove-icon' onClick={() => { this.deleteTask(task.id) }}>DELETE</span>
+                </Modal>
+              </div>
           </div>
           )
         }
