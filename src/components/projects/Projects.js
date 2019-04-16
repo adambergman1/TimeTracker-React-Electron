@@ -9,7 +9,7 @@ const Projects = ({ projects, deleteProject }) => {
           <Link to={'/' + project.name}>
             <span>{project.name}</span>
           </Link>
-          <span className='remove-icon' onClick={() => { deleteProject(project.id) }}>x</span>
+          <span className='remove-icon' onClick={() => { deleteProject(project) }}>x</span>
         </div>
       )
     })
