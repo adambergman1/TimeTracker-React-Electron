@@ -31,3 +31,8 @@ body {
     display: inline-block;
     vertical-align: middle;
   }
+
+  .collection-item {
+    max-height: 200px;
+    overflow-y: scroll;
+  }

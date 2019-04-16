@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import AddTask from './AddTask'
 import deleteIcon from '../../images/delete.svg'
-import startIcon from '../../images/start.svg'
 import { Modal } from 'react-materialize'
+import Timer from './Timer'
 
 class Tasks extends Component {
     state = {
@@ -31,7 +31,6 @@ class Tasks extends Component {
       }
 
     addTask = (task) => {
-      task.id = Math.random()
       task.parent = this.state.project_name
       let tasks = [task, ...this.state.tasks]
       this.setState({ tasks })
@@ -43,23 +42,20 @@ class Tasks extends Component {
 
     render() {
     const { tasks, project_name } = this.state
-
     const filteredTasks = [...tasks.filter(task => task.parent === project_name)]
 
-    let currentTasks = filteredTasks.length ? (
+    let tasksToDisplay = filteredTasks.length ? (
       filteredTasks.map(task => {
         return (
           <div className="collection-item" key={task.id}>
-               <span>{task.title}</span>
+               <span className="title">{task.title}</span>
 
                <div className='actions'>
+                 <Timer />
                  <Modal trigger={<span className='remove-icon'><img src={deleteIcon} className='delete-icon' alt='Delete task' /></span>}>
                    <p>Are you sure that you want to remove this task?</p>
                    <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>DELETE</span>
                  </Modal>
-                 <div className="timer">
-                 <span className="start-timer" onClick={this.startTimer}><img src={startIcon} alt="Start timer" className="start-icon"/></span>
-                 </div>
                </div>
            </div>
         )
@@ -73,7 +69,7 @@ class Tasks extends Component {
         <AddTask addTask={this.addTask} />
 
         <div className="collection">
-          {currentTasks}
+          {tasksToDisplay}
         </div>
 
       </div>

@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 
 class AddTask extends Component {
   state = {
+    id: Math.random(),
     title: '',
-    parent: ''
+    parent: '',
+    totalTime: 0,
+    paused: true
   }
 
   handleChange = e => {
@@ -15,7 +18,7 @@ class AddTask extends Component {
   handleSubmit = e => {
     e.preventDefault()
     this.props.addTask(this.state)
-    this.setState({ title: '', parent: '' })
+    this.setState({ id: '', title: '', parent: '' })
   }
 
   render () {
