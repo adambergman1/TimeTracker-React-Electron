@@ -51,7 +51,8 @@ class Home extends Component {
     return (
       <div className="container">
         <h1 className='center blue-text'>Projects</h1>
-        <Projects projects={this.state.projects} deleteProject={this.deleteProject} />
+        <Projects projects={this.state.projects} 
+        deleteProject={this.deleteProject} />
         <AddProject addProject={this.addProject} />
       </div>
     )

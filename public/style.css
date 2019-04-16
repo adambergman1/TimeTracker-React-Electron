@@ -9,3 +9,21 @@ body {
     float: right;
     cursor: pointer;
   }
+
+  .actions img {
+    border: 0;
+    cursor: pointer;
+    background: transparent;
+    margin-right: 5px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .projects .collection-item .actions {
+    float: right;
+    display: inline-block;
+  }
+
+  .projects .collection-item a {
+    vertical-align: middle;
+  }
