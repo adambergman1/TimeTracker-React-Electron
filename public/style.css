@@ -19,8 +19,20 @@ body {
     height: 24px;
   }
 
+  .collection-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .collection-item .actions {
-    float: right;
+
+  }
+
+  .collection-item .task-title {
+    width: 50%;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 
   .collection-item a {
@@ -28,11 +40,41 @@ body {
   }
 
   .collection-item .actions > div {
-    display: inline-block;
+    display: inline-flex;
     vertical-align: middle;
   }
 
-  .collection-item {
+  .collection-item .large-text {
     max-height: 200px;
     overflow-y: scroll;
+  }
+
+  .collection-item .task-title {
+    display: inline-block;
+    overflow-x: auto;
+    white-space: nowrap;
+    /* width: 50%; */
+  }
+
+  .elapsed-time {
+    padding: 0 30px;
+  }
+
+  .collection-item .task-title::-webkit-scrollbar {
+    height: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
   }

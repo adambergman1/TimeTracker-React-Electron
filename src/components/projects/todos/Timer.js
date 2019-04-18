@@ -20,11 +20,13 @@ class Timer extends Component {
     this.setState({ elapsed })
   }
 
-  getElapsedTime = (elapsed) => { // 754567(ms) -> "12:34.567"
-    const hours = String(Math.floor(elapsed/(1000*60*60)) % 24)
+  getElapsedTime = (elapsed) => {
+    const hours = String(Math.floor(elapsed/(1000 * 60 * 60)) % 24)
     const minutes = String(Math.floor(elapsed / 1000 / 60) + 100).substring(1)
     const seconds = String(Math.floor((elapsed % (1000 * 60)) / 1000) + 100).substring(1)
-    return `${hours}:${minutes}:${seconds} `
+
+    const total = `${hours}:${minutes}:${seconds}`
+    return total
   }
 
 
@@ -38,28 +40,35 @@ class Timer extends Component {
       })
     } else { // Stop/pause timer
       clearInterval(this.state.timer)
+      this.props.onTimerUpdate({
+        elapsed: this.state.elapsed,
+        taskId: this.props.taskId
+      })
       this.setState({
-        timer: null,
         isStart: false,
+        timer: null,
         diff: this.state.elapsed
       })
     }
   }
 
-    resetTimer = () => {
-      clearInterval(this.state.timer)
-      this.setState({
-        timer: null,
-        isStart: false,
-        elapsed: 0,
-        diff: 0
-      })
-    }
+  resetTimer = () => {
+    clearInterval(this.state.timer)
+    this.setState({
+      isStart: false,
+      timer: null,
+      elapsed: 0,
+      diff: 0
+    })
+  }
 
   render () {
+    console.log(this.props.elapsed)
     return (
       <div className="timer">
-        <span>{this.getElapsedTime(this.state.elapsed)}</span>
+        {/* <span className="elapsed-time">{this.getElapsedTime(this.state.elapsed)}</span> */}
+        <span className="elapsed-time">{this.getElapsedTime(this.props.elapsed)}</span>
+
         <span className="toggle-timer" onClick={this.onClick}>
             {this.state.isStart ? (
               <img src={pauseIcon} alt="Pause timer"/>

@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 
 class AddTask extends Component {
   state = {
-    id: Math.random(),
+    id: '',
     title: '',
     parent: '',
-    totalTime: 0,
-    paused: true
+    elapsed: 0
   }
 
   handleChange = e => {

@@ -3,6 +3,7 @@ import AddTask from './AddTask'
 import deleteIcon from '../../images/delete.svg'
 import { Modal } from 'react-materialize'
 import Timer from './Timer'
+import uuid from 'uuid'
 
 class Tasks extends Component {
     state = {
@@ -28,16 +29,29 @@ class Tasks extends Component {
         const filteredItem = [...dataInStorage.filter(task => task.id !== id)]
         localStorage.removeItem('task')
         localStorage.setItem('task', JSON.stringify(filteredItem))
-      }
+    }
 
     addTask = (task) => {
       task.parent = this.state.project_name
+      task.id = uuid()
       let tasks = [task, ...this.state.tasks]
       this.setState({ tasks })
 
       // Save the added task to localStorage together with the existing
       const allTasks = [task, ...this.state.tasks]
       localStorage.setItem('task', JSON.stringify(allTasks))
+    }
+
+    getData = (timerDetails) => {
+      const filteredTask = [...this.state.tasks.filter(task => task.id === timerDetails.taskId)]
+      filteredTask[0].elapsed = timerDetails.elapsed
+
+      const tasks = [filteredTask, ...this.state.tasks]
+      this.setState({ tasks })
+
+      localStorage.removeItem('task')
+      localStorage.setItem('task', JSON.stringify(tasks))
+      
     }
 
     render() {
@@ -48,10 +62,12 @@ class Tasks extends Component {
       filteredTasks.map(task => {
         return (
           <div className="collection-item" key={task.id}>
-               <span className="title">{task.title}</span>
-
+            <div className="task-title">
+              <span>{task.title}</span>
+              {/* <span className="saved-time">{task.elapsed}</span> */}
+            </div>
                <div className='actions'>
-                 <Timer />
+                 <Timer onTimerUpdate={this.getData} taskId={task.id} elapsed={task.elapsed} />
                  <Modal trigger={<span className='remove-icon'><img src={deleteIcon} className='delete-icon' alt='Delete task' /></span>}>
                    <p>Are you sure that you want to remove this task?</p>
                    <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>DELETE</span>
