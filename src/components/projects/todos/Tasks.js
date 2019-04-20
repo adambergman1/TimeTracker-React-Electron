@@ -43,15 +43,16 @@ class Tasks extends Component {
     }
 
     getData = (timerDetails) => {
-      const filteredTask = [...this.state.tasks.filter(task => task.id === timerDetails.taskId)]
-      filteredTask[0].elapsed = timerDetails.elapsed
+      const filteredTask = this.state.tasks.filter(task => task.id === timerDetails.taskId)
+      const allTasks = this.state.tasks.filter(task => task.id !== timerDetails.taskId)
 
-      const tasks = [filteredTask, ...this.state.tasks]
-      this.setState({ tasks })
+      filteredTask[0].elapsed = timerDetails.elapsed
+ 
+      const tasks = [filteredTask[0], ...allTasks]
+      // this.setState({ tasks })
 
       localStorage.removeItem('task')
       localStorage.setItem('task', JSON.stringify(tasks))
-      
     }
 
     render() {
@@ -64,7 +65,6 @@ class Tasks extends Component {
           <div className="collection-item" key={task.id}>
             <div className="task-title">
               <span>{task.title}</span>
-              {/* <span className="saved-time">{task.elapsed}</span> */}
             </div>
                <div className='actions'>
                  <Timer onTimerUpdate={this.getData} taskId={task.id} elapsed={task.elapsed} />

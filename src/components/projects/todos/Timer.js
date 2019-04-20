@@ -10,9 +10,18 @@ class Timer extends Component {
     diff: 0
   }
 
+  componentDidMount () {
+    const savedElapsed = JSON.parse(localStorage.getItem('task'))
+    const savedTimerInfo = savedElapsed.filter(task => task.id === this.props.taskId)
+
+    if (savedTimerInfo) {
+      this.setState({ elapsed: savedTimerInfo[0].elapsed, diff: savedTimerInfo[0].elapsed })
+    }
+  }
+
   componentWillUnmount () { // clear timer
     clearInterval(this.state.timer)
-    this.setState({timer: null})
+    this.setState({timer: null, diff: 0, elapsed: 0})
   }
 
   tick = () => {
@@ -21,7 +30,7 @@ class Timer extends Component {
   }
 
   getElapsedTime = (elapsed) => {
-    const hours = String(Math.floor(elapsed/(1000 * 60 * 60)) % 24)
+    const hours = String(Math.floor(elapsed / (1000 * 60 * 60)) % 24)
     const minutes = String(Math.floor(elapsed / 1000 / 60) + 100).substring(1)
     const seconds = String(Math.floor((elapsed % (1000 * 60)) / 1000) + 100).substring(1)
 
@@ -33,16 +42,17 @@ class Timer extends Component {
   onClick = () => {
     if(!this.state.isStart) { // Start timer
       let timer = setInterval(this.tick, 1000)
-      this.setState({
-        isStart: true,
-        timer,
-        start: new Date()
-      })
+        this.setState({
+          isStart: true,
+          timer,
+          start: new Date(),
+        })
+
     } else { // Stop/pause timer
       clearInterval(this.state.timer)
       this.props.onTimerUpdate({
         elapsed: this.state.elapsed,
-        taskId: this.props.taskId
+        taskId: this.props.taskId,
       })
       this.setState({
         isStart: false,
@@ -63,11 +73,10 @@ class Timer extends Component {
   }
 
   render () {
-    console.log(this.props.elapsed)
+    console.log('timer props elapsed', this.props.elapsed)
     return (
       <div className="timer">
-        {/* <span className="elapsed-time">{this.getElapsedTime(this.state.elapsed)}</span> */}
-        <span className="elapsed-time">{this.getElapsedTime(this.props.elapsed)}</span>
+        <span className="elapsed-time">{this.getElapsedTime(this.state.elapsed)}</span>
 
         <span className="toggle-timer" onClick={this.onClick}>
             {this.state.isStart ? (
