@@ -7,11 +7,19 @@ export class Reports extends Component {
     }
 
     componentWillMount() {
-        if (localStorage.hasOwnProperty('task')) {
-            const tasks = JSON.parse(localStorage.getItem('task'))
-            this.setState({
-            projects: tasks
+        if (localStorage.hasOwnProperty('project')) {
+            const savedProjects = JSON.parse(localStorage.getItem('project'))
+            this.setState({ projects: savedProjects})
+            const savedTasks = JSON.parse(localStorage.getItem('task'))
+            savedProjects.map(project => {
+                project.tasks = []
+                savedTasks.forEach(task => {
+                    if (project.name === task.parent) {
+                        project.tasks.push(task.elapsed)
+                    }
+                })
             })
+            this.setState({ projects: savedProjects })
         }
     }
 
@@ -27,35 +35,21 @@ export class Reports extends Component {
 
       render() {
         const { projects } = this.state
+        console.log(projects)
 
-        let previousTaskParent = false
-        let mappedTasks = []
-
-        projects.map(task => {
-            if (task.parent === previousTaskParent) {
-                let lastItem = mappedTasks.pop()
-                lastItem.tasks.push(task.elapsed)
-                mappedTasks.push(lastItem)
-            } else {
-                let newEntry = {
-                    project: task.parent,
-                    tasks: [task.elapsed],
-                    id: task.id
-                }
-                mappedTasks.push(newEntry)
-            }
-            previousTaskParent = task.parent
-        })
-
-        let tasksToDisplay = mappedTasks.length ? (
-            mappedTasks.map(task => {
+        let projectsToDisplay = projects.length ? (
+            projects.map(project => {
             return (
-              <div className="collection-item" key={task.id}>
+              <div className="collection-item" key={project.id}>
                 <div className="project-title">
-                  <span>{task.project}</span>
+                  <span>{project.name}</span>
+                </div>
+
+                <div className="hourly-rate">
+                    <span>{project.rate}</span>
                 </div>
                    <div className='total-time'>
-                   <span>{this.getElapsedTime(task.tasks.reduce((a, b) => a + b))}</span>
+                   <span>{project.tasks.length ? (this.getElapsedTime(project.tasks.reduce((a, b) => a + b))) : (<span>0</span>)}</span>
                    </div>
                </div>
             )
@@ -66,7 +60,7 @@ export class Reports extends Component {
           <div className="container">
           <h1>Reports</h1>
             <div className="collection">
-              {tasksToDisplay}
+              {projectsToDisplay}
             </div>
     
           </div>
