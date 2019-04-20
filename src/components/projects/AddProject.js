@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 class AddProject extends Component {
   state = {
-    name: ''
+    name: '',
+    rate: ''
   }
 
   handleChange = e => {
@@ -11,10 +12,16 @@ class AddProject extends Component {
     })
   }
 
+  handleRateChange = e => {
+    this.setState({
+      rate: e.target.value
+    })
+  }
+
   handleSubmit = e => {
     e.preventDefault()
     this.props.addProject(this.state)
-    this.setState({ name: '' })
+    this.setState({ name: '', rate: '' })
   }
 
   render () {
@@ -22,6 +29,9 @@ class AddProject extends Component {
       <form onSubmit={this.handleSubmit}>
         <label>Add new project:</label>
         <input type="text" onChange={this.handleChange} value={this.state.name} placeholder="The name of your project" />
+        <input type="number" onChange={this.handleRateChange} value={this.state.rate} placeholder="Hourly rate (if any)"
+        min="1" max="5000" />
+        <button className="btn">Add Project</button>
       </form>
     )
   }
