@@ -6,6 +6,7 @@
     "moment": "^2.24.0",
     "moment-duration-format": "^2.2.2",
     "react": "^16.8.6",
+    "react-contenteditable": "^3.2.6",
     "react-dom": "^16.8.6",
     "react-materialize": "^3.0.5",
     "react-router-dom": "^5.0.0",

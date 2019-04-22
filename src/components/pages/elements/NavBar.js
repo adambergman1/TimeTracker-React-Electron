@@ -9,9 +9,9 @@ const NavBar = () => {
         <NavLink to='/' className='brand-logo hide-on-med-and-down'>Time Tracker</NavLink>
         <ul className='right'>
           <li><NavLink to='/'>Home</NavLink></li>
+          <li><NavLink to='/Reports'>Reports</NavLink></li>
           <li><NavLink to='/About'>About</NavLink></li>
           <li><NavLink to='/Contact'>Contact</NavLink></li>
-          <li><NavLink to='/Reports'>Reports</NavLink></li>
         </ul>
       </div>
     </nav>

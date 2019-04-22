@@ -19,14 +19,14 @@ body {
     height: 24px;
   }
 
-  .collection-item {
+  .collection-item, .collection-heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
-  .collection-item .actions {
-
+  .collection-heading {
+    font-weight: bold;
   }
 
   .collection-item .task-title {

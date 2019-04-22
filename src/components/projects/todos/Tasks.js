@@ -34,6 +34,7 @@ class Tasks extends Component {
     addTask = (task) => {
       task.parent = this.state.project_name
       task.id = uuid()
+      task.created = new Date().toLocaleString().slice(0, 10)
       let tasks = [task, ...this.state.tasks]
       this.setState({ tasks })
 
@@ -43,19 +44,22 @@ class Tasks extends Component {
     }
 
     getData = (timerDetails) => {
-      const filteredTask = this.state.tasks.filter(task => task.id === timerDetails.taskId)
-      const allTasks = this.state.tasks.filter(task => task.id !== timerDetails.taskId)
+          const filteredTask = this.state.tasks.filter(task => task.id === timerDetails.taskId)
+          const allTasks = this.state.tasks.filter(task => task.id !== timerDetails.taskId)
 
-      filteredTask[0].elapsed = timerDetails.elapsed
- 
-      const tasks = [filteredTask[0], ...allTasks]
-      // this.setState({ tasks })
-
-      localStorage.removeItem('task')
-      localStorage.setItem('task', JSON.stringify(tasks))
+          if (filteredTask.length && timerDetails.elapsed) {
+            filteredTask[0].elapsed = timerDetails.elapsed
+            filteredTask[0].updated = new Date().toLocaleString().slice(0, 10)
+            const tasks = [filteredTask[0], ...allTasks]
+  
+            // Save the task with updated elapsed time to localStorage
+            localStorage.removeItem('task')
+            localStorage.setItem('task', JSON.stringify(tasks))
+          }
     }
 
     render() {
+    console.log('TASKS render state', this.state)
     const { tasks, project_name } = this.state
     const filteredTasks = [...tasks.filter(task => task.parent === project_name)]
 
@@ -68,6 +72,7 @@ class Tasks extends Component {
             </div>
                <div className='actions'>
                  <Timer onTimerUpdate={this.getData} taskId={task.id} elapsed={task.elapsed} />
+
                  <Modal trigger={<span className='remove-icon'><img src={deleteIcon} className='delete-icon' alt='Delete task' /></span>}>
                    <p>Are you sure that you want to remove this task?</p>
                    <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>DELETE</span>
@@ -76,7 +81,7 @@ class Tasks extends Component {
            </div>
         )
       })
-    ) : <p className="center">Create your first task using the field above!</p>
+    ) : <p className="center">Create your first task using the field above.</p>
 
     return (
       <div className="container">

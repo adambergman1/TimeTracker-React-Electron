@@ -30,7 +30,7 @@ class AddProject extends Component {
         <label>Add new project:</label>
         <input type="text" onChange={this.handleChange} value={this.state.name} placeholder="The name of your project" />
         <input type="number" onChange={this.handleRateChange} value={this.state.rate} placeholder="Hourly rate (if any)"
-        min="1" max="5000" />
+        min="0" max="5000" />
         <button className="btn">Add Project</button>
       </form>
     )

@@ -27,7 +27,7 @@ const Projects = ({ projects, deleteProject }) => {
       )
     })
   ) : (
-    <p className='center'>You have no projects yet</p>
+    <p className='center'>No projects yet.</p>
   )
 
   return (
@@ -45,6 +45,7 @@ export default Projects
 // import { Modal } from 'react-materialize'
 
 // class Projects extends Component {
+
 //   render () {
 //     const projectList = this.props.projects.length ? (
 //       this.props.projects.map(project => {
@@ -63,7 +64,6 @@ export default Projects
 //                 <p>Are you sure that you want to remove this project? All tasks related to it will be removed.</p>
 //                 <span className='btn red' onClick={() => { this.props.deleteProject(project) }}>DELETE</span>
 //               </Modal>
-
 //             </div>
 //           </div>
 //         )

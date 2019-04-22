@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-
 export class Reports extends Component {
     state = {
         projects: []
@@ -9,14 +8,11 @@ export class Reports extends Component {
     componentWillMount() {
         if (localStorage.hasOwnProperty('project')) {
             const savedProjects = JSON.parse(localStorage.getItem('project'))
-            this.setState({ projects: savedProjects})
             const savedTasks = JSON.parse(localStorage.getItem('task'))
             savedProjects.map(project => {
                 project.tasks = []
-                savedTasks.forEach(task => {
-                    if (project.name === task.parent) {
-                        project.tasks.push(task.elapsed)
-                    }
+                return savedTasks.forEach(task => {
+                    if (project.name === task.parent) project.tasks.push(task.elapsed)
                 })
             })
             this.setState({ projects: savedProjects })
@@ -28,14 +24,11 @@ export class Reports extends Component {
         const hours = String(Math.floor(elapsed / (1000 * 60 * 60)) % 24)
         const minutes = String(Math.floor(elapsed / 1000 / 60) + 100).substring(1)
         const seconds = String(Math.floor((elapsed % (1000 * 60)) / 1000) + 100).substring(1)
-
-        const total = `${hours}:${minutes}:${seconds}`
-        return total
+        return `${hours}:${minutes}:${seconds}`
     }
 
       render() {
         const { projects } = this.state
-        console.log(projects)
 
         let projectsToDisplay = projects.length ? (
             projects.map(project => {
@@ -44,7 +37,6 @@ export class Reports extends Component {
                 <div className="project-title">
                   <span>{project.name}</span>
                 </div>
-
                 <div className="hourly-rate">
                     <span>{project.rate}</span>
                 </div>
@@ -59,10 +51,14 @@ export class Reports extends Component {
         return (
           <div className="container">
           <h1>Reports</h1>
+          <div className="collection-heading">
+            <div className="name"><span>Name</span></div>
+            <div className="hourly-rate"><span>Hourly rate</span></div>
+            <div className="total-time"><span>Total time</span></div>
+          </div>
             <div className="collection">
               {projectsToDisplay}
             </div>
-    
           </div>
         )
       }

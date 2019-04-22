@@ -21,6 +21,12 @@ class Timer extends Component {
 
   componentWillUnmount () { // clear timer
     clearInterval(this.state.timer)
+
+    this.props.onTimerUpdate({
+      elapsed: this.state.elapsed,
+      taskId: this.props.taskId,
+    })
+    
     this.setState({timer: null, diff: 0, elapsed: 0})
   }
 
@@ -73,7 +79,6 @@ class Timer extends Component {
   }
 
   render () {
-    console.log('timer props elapsed', this.props.elapsed)
     return (
       <div className="timer">
         <span className="elapsed-time">{this.getElapsedTime(this.state.elapsed)}</span>

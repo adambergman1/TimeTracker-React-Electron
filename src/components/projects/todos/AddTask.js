@@ -5,7 +5,9 @@ class AddTask extends Component {
     id: '',
     title: '',
     parent: '',
-    elapsed: 0
+    elapsed: 0,
+    created: '',
+    updated: ''
   }
 
   handleChange = e => {
