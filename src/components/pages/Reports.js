@@ -31,12 +31,12 @@ export class Reports extends Component {
     }
 
     changeStartDate = (start) => {
-      console.log('Updating START state @ Reports.js')
+      console.log('Start date from dateRangePicker', start.start)
       this.setState({ startDate: new Date(start.start) })
     }
 
     changeEndDate = (end) => {
-      console.log('Updating END state @ Reports.js')
+      console.log('End date from dateRangePicker', end.end)
       this.setState({ endDate: new Date(end.end) })
     }
 
