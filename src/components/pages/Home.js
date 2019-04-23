@@ -54,7 +54,7 @@ class Home extends Component {
       <div className="container home">
         <h1 className='center'>Projects</h1>
         <Modal trigger={<Button>Add project</Button>}>
-          <AddProject addProject={this.addProject} />
+          <AddProject addProject={this.addProject} projects={this.state.projects} />
         </Modal>
         <Projects projects={this.state.projects} deleteProject={this.deleteProject} />
       </div>

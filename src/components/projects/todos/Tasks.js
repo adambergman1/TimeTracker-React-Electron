@@ -34,7 +34,7 @@ class Tasks extends Component {
     addTask = (task) => {
       task.parent = this.state.project_name
       task.id = uuid()
-      task.created = new Date().toLocaleString().slice(0, 10)
+      task.created = new Date().toString() // new Date(new Date().setDate(new Date().getDate() - 3)).toString()
       let tasks = [task, ...this.state.tasks]
       this.setState({ tasks })
 
@@ -44,18 +44,17 @@ class Tasks extends Component {
     }
 
     getData = (timerDetails) => {
-          const filteredTask = this.state.tasks.filter(task => task.id === timerDetails.taskId)
-          const allTasks = this.state.tasks.filter(task => task.id !== timerDetails.taskId)
+      const filteredTask = this.state.tasks.filter(task => task.id === timerDetails.taskId)
+      const allTasks = this.state.tasks.filter(task => task.id !== timerDetails.taskId)
 
-          if (filteredTask.length && timerDetails.elapsed) {
-            filteredTask[0].elapsed = timerDetails.elapsed
-            filteredTask[0].updated = new Date().toLocaleString().slice(0, 10)
-            const tasks = [filteredTask[0], ...allTasks]
-  
-            // Save the task with updated elapsed time to localStorage
-            localStorage.removeItem('task')
-            localStorage.setItem('task', JSON.stringify(tasks))
-          }
+      if (filteredTask.length && timerDetails.elapsed) {
+        filteredTask[0].elapsed = timerDetails.elapsed
+        const tasks = [filteredTask[0], ...allTasks]
+
+        // Save the task with updated elapsed time to localStorage
+        localStorage.removeItem('task')
+        localStorage.setItem('task', JSON.stringify(tasks))
+      }
     }
 
     render() {
@@ -70,6 +69,7 @@ class Tasks extends Component {
             <div className="task-title">
               <span>{task.title}</span>
             </div>
+            <div className="info">{task.created.length ? task.created.slice(4, 15) : ''}</div>
                <div className='actions'>
                  <Timer onTimerUpdate={this.getData} taskId={task.id} elapsed={task.elapsed} />
 
@@ -87,7 +87,7 @@ class Tasks extends Component {
       <div className="container">
       <h4>{this.state.project_name}</h4>
 
-        <AddTask addTask={this.addTask} />
+        <AddTask addTask={this.addTask} tasks={this.state.tasks} />
 
         <div className="collection">
           {tasksToDisplay}

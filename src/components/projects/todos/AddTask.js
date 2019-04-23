@@ -7,7 +7,7 @@ class AddTask extends Component {
     parent: '',
     elapsed: 0,
     created: '',
-    updated: ''
+    error: ''
   }
 
   handleChange = e => {
@@ -18,13 +18,30 @@ class AddTask extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    this.props.addTask(this.state)
-    this.setState({ id: '', title: '', parent: '' })
+    // this.props.addTask(this.state)
+
+    console.log(this.props.tasks)
+
+    const find = this.props.tasks.some(task => this.state.title === task.title)
+
+    if (!find) {
+      this.props.addTask({
+        id: this.state.id,
+        title: this.state.title,
+        parent: this.state.title,
+        elapsed: this.state.elapsed,
+        created: this.state.created
+      })
+      this.setState({ id: '', title: '', parent: '', error: '' })
+    } else {
+      this.setState({ error: 'A task with the same name already exists. Please change the name of your new task.' })
+    }
   }
 
   render () {
     return (
       <form onSubmit={this.handleSubmit}>
+      {this.state.error ? (<p className="error">{this.state.error}</p>) : null}
         <input type="text" onChange={this.handleChange} value={this.state.title} placeholder="What are you working on?" />
       </form>
     )
