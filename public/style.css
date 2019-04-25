@@ -10,13 +10,17 @@ body {
     cursor: pointer;
   }
 
-  .actions img {
+  .actions img, .icon {
     border: 0;
     cursor: pointer;
     background: transparent;
     margin-right: 5px;
     width: 24px;
     height: 24px;
+  }
+
+  .icon {
+    cursor: default;
   }
 
   .collection-item, .collection-heading {
@@ -27,7 +31,8 @@ body {
 
   .collection-heading {
     font-weight: bold;
-    padding: 10px 0;
+    padding: 10px 20px;
+    background: #eee;
   }
 
   .collection-item .task-title, .collection-item .project-title {
@@ -94,16 +99,32 @@ body {
     padding: 10px;
   }
 
+  .container.home {
+    width: 90%;
+  }
+
+  .link {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+    color: #039be5;
+    text-decoration: none;
+  }
+
+  .link:focus {
+    background-color: transparent;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .list-of-projects {
-    width: 40%;
-    float: left;
+    width: 30%;
   }
 
   .list-of-tasks {
-    width: 60%;
-    float: left;
-  }
-
-  .container.home {
-    width: 90%;
+    width: 70%;
   }

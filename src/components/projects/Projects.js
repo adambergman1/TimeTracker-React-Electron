@@ -41,8 +41,10 @@
 // export default Projects
 
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import deleteIcon from '../images/delete.svg'
+import removeIcon from '../images/remove.svg'
+import listIcon from '../images/list.svg'
+import moneyIcon from '../images/money.svg'
 import { Modal } from 'react-materialize'
 
 class Projects extends Component {
@@ -58,10 +60,10 @@ class Projects extends Component {
       projects.map(project => {
         return (
           <div className='collection-item' key={project.id}>
-            {/* <Link className='project-title' to={'/' + project.name}>
-              <span>{project.name}</span>
-            </Link> */}
-            <span onClick={() => this.props.selectedProject(project.name)}>{project.name}</span>
+
+            <div className="project-name">
+              <button className="link" onClick={() => this.props.selectedProject(project.name)}>{project.name}</button>
+            </div>
 
             <div className='rate'>
               <span>{project.rate}</span>
@@ -83,6 +85,11 @@ class Projects extends Component {
 
     return (
       <div className='projects collection'>
+        <div className="collection-heading">
+          <img src={listIcon} alt="Name" className="icon" />
+          <img src={moneyIcon} alt="Hourly rate" className="icon" />
+          <img src={removeIcon} alt="Remove" className="icon" />
+        </div>
         {projectList}
       </div>
     )

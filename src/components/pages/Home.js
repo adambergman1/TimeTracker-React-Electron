@@ -59,16 +59,19 @@ class Home extends Component {
   render () {
     return (
       <div className="container home">
-        <h1 className='center'>Projects</h1>
-
-        <div className="list-of-projects">
-          <Modal trigger={<Button>Add project</Button>}>
-            <AddProject addProject={this.addProject} projects={this.state.projects} />
-          </Modal>
-          <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.showTasks} />
-        </div>
-        <div className="list-of-tasks">
-        {this.state.selectedProject ? <Tasks project={this.state.selectedProject}></Tasks> : ''}
+          <h1 className="center">Time Tracker</h1>
+          <div className="divider"></div>
+          <h5>Projects</h5>
+            <Modal trigger={<Button>Add project</Button>}>
+              <AddProject addProject={this.addProject} projects={this.state.projects} />
+            </Modal>
+        <div className="flex">
+          <div className="list-of-projects">
+            <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.showTasks} />
+          </div>
+          <div className="list-of-tasks">
+          {this.state.selectedProject ? <Tasks project={this.state.selectedProject}></Tasks> : ''}
+          </div>
         </div>
       </div>
     )

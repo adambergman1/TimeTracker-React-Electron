@@ -7,7 +7,7 @@ import uuid from 'uuid'
 
 class Tasks extends Component {
     state = {
-        project_name: this.props.project || '', // this.props.match.params.project_name // 1dv430
+        project_name: this.props.project,
         tasks: []
     }
 
