@@ -1,6 +1,5 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-// import { SideNav, SideNavItem, Button } from 'react-materialize'
 
 const NavBar = () => {
   return (
@@ -15,6 +14,7 @@ const NavBar = () => {
         </ul>
       </div>
     </nav>
+
   )
 }
 

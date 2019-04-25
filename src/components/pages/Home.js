@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Projects from '../projects/Projects'
 import AddProject from '../projects/AddProject'
 import { Modal, Button } from 'react-materialize'
+import Tasks from '../projects/todos/Tasks'
 
 
 class Home extends Component {
@@ -48,15 +49,27 @@ class Home extends Component {
     localStorage.setItem('project', JSON.stringify(allProjects))
   }
 
+  showTasks = (project) => {
+      this.setState({ selectedProject: '' }, () => {
+        this.setState({ selectedProject: project})
+      })
+  }
+
 
   render () {
     return (
       <div className="container home">
         <h1 className='center'>Projects</h1>
-        <Modal trigger={<Button>Add project</Button>}>
-          <AddProject addProject={this.addProject} projects={this.state.projects} />
-        </Modal>
-        <Projects projects={this.state.projects} deleteProject={this.deleteProject} />
+
+        <div className="list-of-projects">
+          <Modal trigger={<Button>Add project</Button>}>
+            <AddProject addProject={this.addProject} projects={this.state.projects} />
+          </Modal>
+          <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.showTasks} />
+        </div>
+        <div className="list-of-tasks">
+        {this.state.selectedProject ? <Tasks project={this.state.selectedProject}></Tasks> : ''}
+        </div>
       </div>
     )
   }

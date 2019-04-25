@@ -93,3 +93,17 @@ body {
     background: lightcoral;
     padding: 10px;
   }
+
+  .list-of-projects {
+    width: 40%;
+    float: left;
+  }
+
+  .list-of-tasks {
+    width: 60%;
+    float: left;
+  }
+
+  .container.home {
+    width: 90%;
+  }

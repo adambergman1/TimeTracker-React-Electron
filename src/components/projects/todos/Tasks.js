@@ -7,13 +7,13 @@ import uuid from 'uuid'
 
 class Tasks extends Component {
     state = {
-        project_name: this.props.match.params.project_name,
+        project_name: this.props.project || '', // this.props.match.params.project_name // 1dv430
         tasks: []
     }
 
     // Get all saved data in localStorage
     componentWillMount() {
-      if (localStorage.hasOwnProperty('task')) {
+      if (this.state.project_name && localStorage.hasOwnProperty('task')) {
         const tasks = JSON.parse(localStorage.getItem('task'))
         this.setState({ tasks })
       }
@@ -58,8 +58,9 @@ class Tasks extends Component {
     }
 
     render() {
-    const { tasks, project_name } = this.state
-    const filteredTasks = [...tasks.filter(task => task.parent === project_name)]
+      console.log('State from Tasks', this.state)
+      const { tasks, project_name } = this.state
+      const filteredTasks = [...tasks.filter(task => task.parent === project_name)]
 
     let tasksToDisplay = filteredTasks.length ? (
       filteredTasks.map(task => {
@@ -82,19 +83,25 @@ class Tasks extends Component {
       })
     ) : <p className="center">Create your first task using the field above.</p>
 
-    return (
-      <div className="container">
+    const tasksHasProject = this.state.project_name.length ? (
+      <React.Fragment>
       <h4>{this.state.project_name}</h4>
-
         <AddTask addTask={this.addTask} tasks={this.state.tasks} />
-
+        
         <div className="collection">
           {tasksToDisplay}
         </div>
+        
+        </React.Fragment>
+    ) : ('')
 
+    return (
+      <div className="container">
+        {tasksHasProject}
       </div>
     )
   }
 }
+
 
 export default Tasks

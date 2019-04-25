@@ -6,6 +6,7 @@ import About from './components/pages/About'
 import Contact from './components/pages/Contact'
 import Reports from './components/pages/Reports'
 import Tasks from './components/projects/todos/Tasks'
+// import NotFound from './components/pages/NotFound'
 
 class App extends Component {
   render () {
@@ -18,6 +19,7 @@ class App extends Component {
           <Route path='/Contact' component={Contact} />
           <Route path='/Reports' component={Reports} />
           <Route path='/:project_name' component={Tasks} />
+          {/* <Route path='*' component={NotFound} status={404} /> */}
         </Switch>
       </BrowserRouter>
     )
