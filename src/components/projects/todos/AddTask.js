@@ -18,10 +18,6 @@ class AddTask extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    // this.props.addTask(this.state)
-
-    console.log(this.props.tasks)
-
     const find = this.props.tasks.some(task => this.state.title === task.title)
 
     if (!find) {

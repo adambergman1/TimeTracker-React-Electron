@@ -58,7 +58,6 @@ class Tasks extends Component {
     }
 
     render() {
-    console.log('TASKS render state', this.state)
     const { tasks, project_name } = this.state
     const filteredTasks = [...tasks.filter(task => task.parent === project_name)]
 

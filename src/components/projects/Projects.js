@@ -8,7 +8,7 @@ const Projects = ({ projects, deleteProject }) => {
     projects.map(project => {
       return (
         <div className='collection-item' key={project.id}>
-          <Link to={'/' + project.name}>
+          <Link className='project-title' to={'/' + project.name}>
             <span>{project.name}</span>
           </Link>
 

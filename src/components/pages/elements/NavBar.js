@@ -1,12 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-// import { Navbar } from 'react-materialize'
+// import { SideNav, SideNavItem, Button } from 'react-materialize'
 
 const NavBar = () => {
   return (
     <nav className='nav-wrapper red darken-3'>
       <div className='container'>
-        <NavLink to='/' className='brand-logo hide-on-med-and-down'>Time Tracker</NavLink>
+        <NavLink to='/' className='brand-logo'>Time Tracker</NavLink>
         <ul className='right'>
           <li><NavLink to='/'>Home</NavLink></li>
           <li><NavLink to='/Reports'>Reports</NavLink></li>

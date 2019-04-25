@@ -31,12 +31,10 @@ export class Reports extends Component {
     }
 
     changeStartDate = (start) => {
-      console.log('Start date from dateRangePicker', start.start)
       this.setState({ startDate: new Date(start.start) })
     }
 
     changeEndDate = (end) => {
-      console.log('End date from dateRangePicker', end.end)
       this.setState({ endDate: new Date(end.end) })
     }
 
@@ -64,7 +62,6 @@ export class Reports extends Component {
                   // }
                 }
               })
-              console.log(elapsed)
 
             return (
               <div className="collection-item" key={project.id}>
@@ -75,7 +72,7 @@ export class Reports extends Component {
                     <span>{project.rate}</span>
                 </div>
                    <div className='total-time'>
-                   <span>{project.tasks.length ? elapsed.length ? (this.getElapsedTime(elapsed.reduce((a, b) => a + b))) : 'Could not find anything' : '0'}</span>
+                   <span>{project.tasks.length ? elapsed.length ? (this.getElapsedTime(elapsed.reduce((a, b) => a + b))) : '0:00:00' : '0:00:00'}</span>
                    </div>
                </div>
             )

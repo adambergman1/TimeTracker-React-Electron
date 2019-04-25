@@ -25,7 +25,7 @@ class DatePicker extends Component {
   render () {
     return (
     <div className="date-range-picker">
-        <span>From</span>
+        <span style={{ marginRight: '10px'}}>From</span>
         <ReactDatePicker
             maxDate={new Date()}
             selected={this.state.startDate}
@@ -34,7 +34,7 @@ class DatePicker extends Component {
             onChange={this.handleChangeStart}
             />
 
-    <span>To</span>
+    <span style={{ marginRight: '10px' }}>To</span>
         <ReactDatePicker
             minDate={this.state.startDate}
             maxDate={new Date()}
