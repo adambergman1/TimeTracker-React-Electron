@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Projects from '../projects/Projects'
 import AddProject from '../projects/AddProject'
-import { Modal, Button } from 'react-materialize'
+import { Modal, Button, SideNav, SideNavItem } from 'react-materialize'
 import Tasks from '../projects/todos/Tasks'
 
 
@@ -58,22 +58,43 @@ class Home extends Component {
 
   render () {
     return (
-      <div className="container home">
-          <h1 className="center">Time Tracker</h1>
-          <div className="divider"></div>
-          <h5>Projects</h5>
-            <Modal trigger={<Button>Add project</Button>}>
-              <AddProject addProject={this.addProject} projects={this.state.projects} />
-            </Modal>
-        <div className="flex">
-          <div className="list-of-projects">
-            <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.showTasks} />
+      <main>
+        <div className="section">
+        <div className="container home">
+
+          <div className="row">  
+            <div className="col s4">
+            <h5>Projects</h5>
+
+
+            <SideNav trigger={<Button>Projects</Button>} options={{closeOnClick: true}}>
+            <div className="container">
+            <Modal trigger={<Button>Add new project</Button>}>
+                <AddProject addProject={this.addProject} projects={this.state.projects} />
+              </Modal>
+              <h5>Projects</h5>
+              <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.showTasks} />
+            </div>
+              </SideNav>
+
+
+
+
+
+              <Modal trigger={<Button>Add project</Button>}>
+                <AddProject addProject={this.addProject} projects={this.state.projects} />
+              </Modal>
+              <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.showTasks} />
+            </div>
+          
+            <div className="col s8">
+            {this.state.selectedProject ? <Tasks project={this.state.selectedProject}></Tasks> : ''}
+            </div>
           </div>
-          <div className="list-of-tasks">
-          {this.state.selectedProject ? <Tasks project={this.state.selectedProject}></Tasks> : ''}
-          </div>
+
         </div>
-      </div>
+        </div>
+      </main>
     )
   }
 }

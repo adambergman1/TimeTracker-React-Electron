@@ -4,29 +4,13 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
-  .remove-icon {
-    float: right;
-    cursor: pointer;
-  }
 
-  .actions img, .icon {
-    border: 0;
-    cursor: pointer;
-    background: transparent;
-    margin-right: 5px;
-    width: 24px;
-    height: 24px;
-  }
-
-  .icon {
+  .collection-heading .icon {
     cursor: default;
   }
 
-  .collection-item, .collection-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .collection-item .icon {
+    cursor: pointer;
   }
 
   .collection-heading {
@@ -35,22 +19,21 @@ body {
     background: #eee;
   }
 
-  .collection-item .task-title, .collection-item .project-title {
-    width: 50%;
+  .collection-heading .icon {
+    opacity: 0.3;
+  }
+
+  .collection-heading.row {
+    margin-bottom: auto;
+  }
+
+  .collection-item .task-title, .collection-item .project-name, .task-header {
     overflow-x: auto;
+    overflow-y: hidden;
     white-space: nowrap;
   }
 
-  .collection-item .project-title {
-    width: 33.333%;
-  }
-
   .collection-item a {
-    vertical-align: middle;
-  }
-
-  .collection-item .actions > div {
-    display: inline-flex;
     vertical-align: middle;
   }
 
@@ -59,18 +42,16 @@ body {
     overflow-y: scroll;
   }
 
-  .collection-item .task-title, .collection-item .project-title {
-    display: inline-block;
-    overflow-x: auto;
-    white-space: nowrap;
-    /* width: 50%; */
-  }
-
   .elapsed-time {
-    padding: 0 30px;
+    padding-right: 5px;
+    vertical-align: super;
+  }
+  
+  .elapsed-time.counting {
+    font-weight: 600;
   }
 
-  .collection-item .task-title::-webkit-scrollbar,   .collection-item .project-title::-webkit-scrollbar {
+  .collection-item .task-title::-webkit-scrollbar, .collection-item .project-title::-webkit-scrollbar,  .collection-item .project-name::-webkit-scrollbar, .task-header::-webkit-scrollbar {
     height: 5px;
   }
   

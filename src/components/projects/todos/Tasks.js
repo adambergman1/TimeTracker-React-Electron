@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import AddTask from './AddTask'
 import deleteIcon from '../../images/delete.svg'
+import titleIcon from '../../images/title.svg'
+import dateIcon from '../../images/date.svg'
+import timerIcon from '../../images/timer.svg'
 import { Modal } from 'react-materialize'
 import Timer from './Timer'
 import uuid from 'uuid'
@@ -58,22 +61,24 @@ class Tasks extends Component {
     }
 
     render() {
-      console.log('State from Tasks', this.state)
-      const { tasks, project_name } = this.state
-      const filteredTasks = [...tasks.filter(task => task.parent === project_name)]
+    const { tasks, project_name } = this.state
+    const filteredTasks = [...tasks.filter(task => task.parent === project_name)]
 
     let tasksToDisplay = filteredTasks.length ? (
       filteredTasks.map(task => {
         return (
-          <div className="collection-item" key={task.id}>
-            <div className="task-title">
+          <div className="collection-item row" key={task.id}>
+            <div className="task-title col s3">
               <span>{task.title}</span>
             </div>
-            <div className="info">{task.created.length ? task.created.slice(4, 15) : ''}</div>
-               <div className='actions'>
-                 <Timer onTimerUpdate={this.getData} taskId={task.id} elapsed={task.elapsed} />
+            <div className="info col s3">{task.created.length ? task.created.slice(4, 15) : ''}</div>
 
-                 <Modal trigger={<span className='remove-icon'><img src={deleteIcon} className='delete-icon' alt='Delete task' /></span>}>
+            <div className="col s3">
+             <Timer onTimerUpdate={this.getData} taskId={task.id} elapsed={task.elapsed} />
+            </div>
+
+               <div className='actions col s3'>
+                 <Modal trigger={<span className='right'><img src={deleteIcon} className='icon' alt='Delete task' /></span>}>
                    <p>Are you sure that you want to remove this task?</p>
                    <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>DELETE</span>
                  </Modal>
@@ -85,10 +90,25 @@ class Tasks extends Component {
 
     const tasksHasProject = this.state.project_name.length ? (
       <React.Fragment>
-      <h4>{this.state.project_name}</h4>
+        <h4 className="task-header">{this.state.project_name}</h4>
         <AddTask addTask={this.addTask} tasks={this.state.tasks} />
         
         <div className="collection">
+          <div className="collection-heading row">
+          <div className='col s3'>
+            <img src={titleIcon} alt='Name' className='icon' />
+          </div>
+          <div className='col s3'>
+            <img src={dateIcon} alt='Date' className='icon' />
+          </div>
+          <div className='col s3'>
+            <img src={timerIcon} alt='Date' className='icon' />
+          </div>
+          <div className='col s3'>
+            <img src={deleteIcon} alt='Remove' className='icon right' />
+          </div>
+        </div>
+        
           {tasksToDisplay}
         </div>
         
@@ -96,9 +116,9 @@ class Tasks extends Component {
     ) : ('')
 
     return (
-      <div className="container">
+      <React.Fragment>
         {tasksHasProject}
-      </div>
+      </React.Fragment>
     )
   }
 }

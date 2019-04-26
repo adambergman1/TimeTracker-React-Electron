@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import startIcon from '../../images/start.svg'
+import startIcon from '../../images/play.svg'
 import pauseIcon from '../../images/stop.svg'
 
 class Timer extends Component {
@@ -80,19 +80,21 @@ class Timer extends Component {
 
   render () {
     return (
-      <div className="timer">
-        <span className="elapsed-time">{this.getElapsedTime(this.state.elapsed)}</span>
+      <React.Fragment>
+        <span className={this.state.isStart ? "elapsed-time counting" : "elapsed-time"}>
+          {this.getElapsedTime(this.state.elapsed)}
+        </span>
 
         <span className="toggle-timer" onClick={this.onClick}>
             {this.state.isStart ? (
-              <img src={pauseIcon} alt="Pause timer"/>
+              <img src={pauseIcon} alt="Pause timer" className="icon"/>
             ) : (
-              <img src={startIcon} alt="Start timer"/>
+              <img src={startIcon} alt="Start timer" className="icon"/>
             )
             }
           </span>
           {/* <button className="btn red" onClick={this.resetTimer}>Reset</button> */}
-      </div>
+        </React.Fragment>
     )
   }
 }
