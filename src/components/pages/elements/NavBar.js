@@ -5,8 +5,8 @@ const NavBar = () => {
   return (
     <nav className='nav-wrapper red darken-3'>
       <div className='container'>
-        <NavLink to='/' className='brand-logo'>Time Tracker</NavLink>
-        <ul className='right'>
+        <a href='/' className='brand-logo'>Time Tracker</a>
+        <ul className='right hide-on-small-only'>
           <li><NavLink to='/'>Home</NavLink></li>
           <li><NavLink to='/Reports'>Reports</NavLink></li>
           <li><NavLink to='/About'>About</NavLink></li>

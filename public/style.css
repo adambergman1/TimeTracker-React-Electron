@@ -11,11 +11,12 @@ body {
 
   .collection-item .icon {
     cursor: pointer;
+    vertical-align: middle;
   }
 
   .collection-heading {
     font-weight: bold;
-    padding: 10px 20px;
+    padding: 10px;
     background: #eee;
   }
 
@@ -44,11 +45,12 @@ body {
 
   .elapsed-time {
     padding-right: 5px;
-    vertical-align: super;
+    color: #555;
   }
   
   .elapsed-time.counting {
-    font-weight: 600;
+    color: #000;
+    font-size: 140%;
   }
 
   .collection-item .task-title::-webkit-scrollbar, .collection-item .project-title::-webkit-scrollbar,  .collection-item .project-name::-webkit-scrollbar, .task-header::-webkit-scrollbar {
@@ -108,4 +110,85 @@ body {
 
   .list-of-tasks {
     width: 70%;
+  }
+
+  .inline-block {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .inline-block > div {
+    display: inline-block;
+  }
+
+  .inline-block > div .btn {
+    margin-left: 5%;
+  }
+
+  .padding-up-and-down {
+    padding: 40px 0.75rem !important;
+  }
+
+  .padding-up-and-down h4 {
+    margin: 0;
+    border-bottom: 5px solid #ee6e73;
+    padding-bottom: 1rem;
+    display: inline-block;
+  }
+
+  .sidenav {
+    padding: 30px !important;
+    width: 50% !important;
+    height: 70vh !important;
+    top: 5% !important;
+  }
+
+  .task-created {
+    font-size: 80%;
+    position: relative;
+    color: #555;
+  }
+
+  .task-created .icon {
+    opacity: 0.5;
+  }
+
+  .collection .collection-item {
+    padding: 10px !important;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    opacity: 0;
+    transition: .5s ease;
+    background: #fff;
+  }
+
+  .task-created:hover .overlay {
+    opacity: 1;
+  }
+
+@media only screen and (max-width: 992px) {
+    nav .brand-logo {
+      left: inherit !important;
+      -webkit-transform: translateX(0) !important;
+      transform: translateX(0) !important;
+      position: relative !important;
+    }
+
+    .sidenav {
+      width: 50% !important;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    nav .brand-logo {
+      font-size: 18px !important;
+    }
+
+    .sidenav {
+      width: 85% !important;
+    }
   }

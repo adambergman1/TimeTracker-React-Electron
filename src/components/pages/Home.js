@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Projects from '../projects/Projects'
 import AddProject from '../projects/AddProject'
-import { Modal, Button, SideNav, SideNavItem } from 'react-materialize'
+import { Modal, Button, SideNav } from 'react-materialize'
 import Tasks from '../projects/todos/Tasks'
 
 
@@ -63,36 +63,38 @@ class Home extends Component {
         <div className="container home">
 
           <div className="row">  
-            <div className="col s4">
-            <h5>Projects</h5>
+            {this.state.selectedProject ? (
+              <React.Fragment>
+                <div className="col m6 padding-up-and-down right">
+                <SideNav trigger={<Button className="right">Projects</Button>} options={{closeOnClick: true}}>
+                  <Modal trigger={<Button>Add new project</Button>}>
+                    <AddProject addProject={this.addProject} projects={this.state.projects} />
+                  </Modal>
+                  <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.showTasks} />
+                </SideNav>
+                </div>
+              </React.Fragment>
+            )
+            : (
+              <React.Fragment>
+                <div className="col m6 padding-up-and-down">
+                    <h4>Projects</h4>
+                </div>
+                <div className="col m6 padding-up-and-down right">
+                    <Modal trigger={<Button className="right">+ Add</Button>}>
+                      <AddProject addProject={this.addProject} projects={this.state.projects} />
+                    </Modal>
+                </div>
+                <div className="col s12">
+                  <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.showTasks} />
+                </div>
+              </React.Fragment>
+            )
+            }
 
-
-            <SideNav trigger={<Button>Projects</Button>} options={{closeOnClick: true}}>
-            <div className="container">
-            <Modal trigger={<Button>Add new project</Button>}>
-                <AddProject addProject={this.addProject} projects={this.state.projects} />
-              </Modal>
-              <h5>Projects</h5>
-              <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.showTasks} />
-            </div>
-              </SideNav>
-
-
-
-
-
-              <Modal trigger={<Button>Add project</Button>}>
-                <AddProject addProject={this.addProject} projects={this.state.projects} />
-              </Modal>
-              <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.showTasks} />
-            </div>
-          
-            <div className="col s8">
             {this.state.selectedProject ? <Tasks project={this.state.selectedProject}></Tasks> : ''}
             </div>
           </div>
-
-        </div>
         </div>
       </main>
     )

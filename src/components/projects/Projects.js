@@ -2,6 +2,7 @@ import React from 'react'
 import deleteIcon from '../images/delete.svg'
 import titleIcon from '../images/title.svg'
 import moneyIcon from '../images/money.svg'
+import arrowRightIcon from '../images/arrow-right.svg'
 import { Modal } from 'react-materialize'
 
 const Projects = ({ projects, deleteProject, selectedProject }) => {
@@ -11,7 +12,7 @@ const Projects = ({ projects, deleteProject, selectedProject }) => {
         <div className='collection-item row' key={project.id}>
 
           <div className='project-name col s8'>
-            <button className='link' onClick={() => selectedProject(project.name)}>{project.name}</button>
+            <button className='link' onClick={() => selectedProject(project.name)}><img src={arrowRightIcon} className='icon' alt='View project' /> {project.name}</button>
           </div>
 
           <div className='rate col s2'>

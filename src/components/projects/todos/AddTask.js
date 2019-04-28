@@ -18,6 +18,11 @@ class AddTask extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
+
+    if (!this.state.title) {
+      this.setState({ error: 'The title cannot be empty.'})
+    }
+    
     const find = this.props.tasks.some(task => this.state.title === task.title)
 
     if (!find) {
