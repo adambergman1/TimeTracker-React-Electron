@@ -2,17 +2,19 @@ import React from 'react'
 import deleteIcon from '../images/delete.svg'
 import titleIcon from '../images/title.svg'
 import moneyIcon from '../images/money.svg'
+import editIcon from '../images/edit.svg'
 import arrowRightIcon from '../images/arrow-right.svg'
 import { Modal } from 'react-materialize'
+import EditProject from './EditProject'
 
-const Projects = ({ projects, deleteProject, selectedProject }) => {
+const Projects = ({ projects, deleteProject, selectedProject, editProject }) => {
   const projectList = projects.length ? (
     projects.map(project => {
       return (
         <div className='collection-item row' key={project.id}>
 
           <div className='project-name col s8'>
-            <button className='link' onClick={() => selectedProject(project.name)}><img src={arrowRightIcon} className='icon' alt='View project' /> {project.name}</button>
+            <button className='link' onClick={() => selectedProject(project.name, project.id)}><img src={arrowRightIcon} className='icon' alt='View project' /> {project.name}</button>
           </div>
 
           <div className='rate col s2'>
@@ -25,6 +27,9 @@ const Projects = ({ projects, deleteProject, selectedProject }) => {
               <span className='btn red' onClick={() => { deleteProject(project) }}>DELETE</span>
             </Modal>
 
+            <Modal trigger={<img src={editIcon} onClick={() => { editProject(project) }} className='icon' alt='Edit project' />}>
+              <EditProject project={project} onEdit={editProject} projects={projects} />
+            </Modal>
           </div>
         </div>
       )

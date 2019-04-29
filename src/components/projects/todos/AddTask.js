@@ -26,6 +26,7 @@ class AddTask extends Component {
     const find = this.props.tasks.some(task => this.state.title === task.title)
 
     if (!find) {
+      console.log(this.state.title)
       this.props.addTask({
         id: this.state.id,
         title: this.state.title,

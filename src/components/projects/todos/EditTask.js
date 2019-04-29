@@ -19,8 +19,7 @@ class EditTask extends Component {
 
     handleSubmit = e => {
       e.preventDefault()
-      console.log('Submitting...', this.state.newTitle)
-
+      
       if (!this.state.newTitle) {
         this.setState({ error: 'The title cannot be empty.'})
       }

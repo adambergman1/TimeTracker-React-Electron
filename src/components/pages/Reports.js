@@ -16,7 +16,7 @@ export class Reports extends Component {
             savedProjects.map(project => {
                 project.tasks = []
                 return savedTasks.forEach(task => {
-                    if (project.name === task.parent) project.tasks.push(task)
+                    if (project.id === task.parent) project.tasks.push(task)
                 })
             })
             this.setState({ projects: savedProjects })
@@ -49,7 +49,7 @@ export class Reports extends Component {
             projects.map(project => {
               let elapsed = []
               project.tasks.forEach(task => {
-                if (project.name === task.parent) {
+                if (project.id === task.parent) {
 
                   if (this.withoutTime(task.created) >= this.withoutTime(startDate) && 
                   this.withoutTime(task.created) <= this.withoutTime(endDate)) {
@@ -64,14 +64,14 @@ export class Reports extends Component {
               })
 
             return (
-              <div className="collection-item" key={project.id}>
-                <div className="project-title">
+              <div className="collection-item row" key={project.id}>
+                <div className="project-title col s6">
                   <span>{project.name}</span>
                 </div>
-                <div className="hourly-rate">
+                <div className="hourly-rate col s3">
                     <span>{project.rate}</span>
                 </div>
-                   <div className='total-time'>
+                   <div className='total-time col s3 right-align'>
                    <span>{project.tasks.length ? elapsed.length ? (this.getElapsedTime(elapsed.reduce((a, b) => a + b))) : '0:00:00' : '0:00:00'}</span>
                    </div>
                </div>
@@ -82,14 +82,16 @@ export class Reports extends Component {
         return (
           <div className="container">
 
-          <h1>Reports</h1>
+          <div className="padding-up-and-down">
+            <h4>Reports</h4>
+          </div>
           
           <DateRangePicker projects={this.state.projects} onStartChange={this.changeStartDate} onEndChange={this.changeEndDate} />
 
-          <div className="collection-heading">
-            <div className="name"><span>Name</span></div>
-            <div className="hourly-rate"><span>Hourly rate</span></div>
-            <div className="total-time"><span>Total time</span></div>
+          <div className="collection-heading row">
+            <div className="name col s6"><span>Name</span></div>
+            <div className="hourly-rate col s3"><span>Hourly rate</span></div>
+            <div className="total-time col s3 right-align"><span>Total time</span></div>
           </div>
           
             <div className="collection">

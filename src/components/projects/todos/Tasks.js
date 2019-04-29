@@ -12,13 +12,13 @@ import uuid from 'uuid'
 
 class Tasks extends Component {
     state = {
-        project_name: this.props.project,
+        project_id: this.props.project.projectId,
         tasks: [],
     }
 
     // Get all saved data in localStorage
     componentWillMount() {
-      if (this.state.project_name && localStorage.hasOwnProperty('task')) {
+      if (this.state.project_id && localStorage.hasOwnProperty('task')) {
         const tasks = JSON.parse(localStorage.getItem('task'))
         this.setState({ tasks })
       }
@@ -37,7 +37,7 @@ class Tasks extends Component {
     }
 
     addTask = (task) => {
-      task.parent = this.state.project_name
+      task.parent = this.state.project_id
       task.id = uuid()
       task.created = new Date().toString() // new Date(new Date().setDate(new Date().getDate() - 3)).toString()
       let tasks = [task, ...this.state.tasks]
@@ -74,8 +74,6 @@ class Tasks extends Component {
       const taskToEdit = this.state.tasks.filter(task => task.title === editedTask.oldTitle)[0].id
       this.deleteTask(taskToEdit)
 
-      console.log(editedTask)
-
       let task = {
         id: editedTask.id,
         title: editedTask.newTitle,
@@ -85,17 +83,16 @@ class Tasks extends Component {
       }
 
       const allTasks = this.state.tasks.filter(task => task.id !== editedTask.id)
-
       let tasks = [task, ...allTasks]
-      console.log(tasks)
-      this.setState({ tasks })
 
+      this.setState({ tasks })
+      delete this.state.taskToEdit
       localStorage.setItem('task', JSON.stringify(tasks))
     }
 
     render() {
-    const { tasks, project_name } = this.state
-    const filteredTasks = [...tasks.filter(task => task.parent === project_name)]
+    const { tasks, project_id } = this.state
+    const filteredTasks = [...tasks.filter(task => task.parent === project_id)]
 
     let tasksToDisplay = filteredTasks.length ? (
       filteredTasks.map(task => {
@@ -111,34 +108,27 @@ class Tasks extends Component {
               <Timer onTimerUpdate={this.getData} taskId={task.id} elapsed={task.elapsed} />
             </div>
             <div className='col s1 right'>
-
            <Modal trigger={<img src={editIcon} className='icon' alt='Edit task' />}>
             <Collapsible>
-            <CollapsibleItem header={<span className='btn' onClick={() => this.setState({taskToEdit: task})}>Edit title</span>}>
-              {this.state.taskToEdit ? <EditTask task={this.state.taskToEdit} onEdit={this.editTask} tasks={this.state.tasks}></EditTask> : ''}
-            </CollapsibleItem>
-            <CollapsibleItem header={<span className='btn red right'>Delete</span>}>
-              <p>Are you sure that you want to remove {task.title}?</p>
-              <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>Yes, delete</span>
-            </CollapsibleItem>
+              <CollapsibleItem header={<span className='btn' onClick={() => this.setState({taskToEdit: task})}>Edit title</span>}>
+                {this.state.taskToEdit ? <EditTask task={this.state.taskToEdit} onEdit={this.editTask} tasks={this.state.tasks}></EditTask> : <span style={{color: 'green'}}>Successfully edited the title!</span>}
+              </CollapsibleItem>
+              <CollapsibleItem header={<span className='btn red right'>Delete</span>}>
+                <p>Are you sure that you want to remove {task.title}?</p>
+                <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>Yes, delete</span>
+              </CollapsibleItem>
             </Collapsible>
-
             </Modal>
-
-              {/* <Modal trigger={<span className='right'><img src={deleteIcon} className='icon' alt='Delete task' /></span>}>
-                <p>Are you sure that you want to remove this task?</p>
-                <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>DELETE</span>
-              </Modal> */}
             </div>
            </div>
         )
       })
     ) : <p className="center">Create your first task using the field above.</p>
 
-    const tasksHasProject = this.state.project_name.length ? (
+    const tasksHasProject = this.state.project_id.length ? (
       <React.Fragment>
         <div className="col m6 padding-up-and-down left">
-          <h4 className="task-header">{this.state.project_name}</h4>
+          <h4 className="task-header">{this.props.project.projectName}</h4>
         </div>
         <AddTask addTask={this.addTask} tasks={this.state.tasks} />
         
