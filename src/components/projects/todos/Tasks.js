@@ -6,7 +6,7 @@ import titleIcon from '../../images/title.svg'
 import dateIcon from '../../images/date.svg'
 import timerIcon from '../../images/timer.svg'
 import editIcon from '../../images/edit.svg'
-import { Modal, Collapsible, CollapsibleItem } from 'react-materialize'
+import { Modal } from 'react-materialize'
 import Timer from './Timer'
 import uuid from 'uuid'
 
@@ -39,7 +39,7 @@ class Tasks extends Component {
     addTask = (task) => {
       task.parent = this.state.project_id
       task.id = uuid()
-      task.created = new Date().toString() // new Date(new Date().setDate(new Date().getDate() - 3)).toString()
+      task.created = new Date().toString()
       let tasks = [task, ...this.state.tasks]
       this.setState({ tasks })
 
@@ -65,28 +65,25 @@ class Tasks extends Component {
     getShortDate = date => {
       const d = new Date(date)
       const dateOfMonth = d.getUTCDate()
-      const monthOfYear = d.getUTCMonth()
+      const monthOfYear = d.getUTCMonth() + 1
       const year = d.getUTCFullYear()
       return dateOfMonth + '/' + monthOfYear + '/' + year
     }
 
     editTask = editedTask => {
-      const taskToEdit = this.state.tasks.filter(task => task.title === editedTask.oldTitle)[0].id
-      this.deleteTask(taskToEdit)
-
-      let task = {
+      const task = {
         id: editedTask.id,
-        title: editedTask.newTitle,
+        title: editedTask.title,
         parent: editedTask.parent,
         elapsed: editedTask.elapsed,
         created: editedTask.created,
       }
 
-      const allTasks = this.state.tasks.filter(task => task.id !== editedTask.id)
-      let tasks = [task, ...allTasks]
+      const allTasksExceptEdited = this.state.tasks.filter(task => task.id !== editedTask.id)
+      const tasks = [task, ...allTasksExceptEdited]
 
       this.setState({ tasks })
-      delete this.state.taskToEdit
+      localStorage.removeItem('task')
       localStorage.setItem('task', JSON.stringify(tasks))
     }
 
@@ -108,17 +105,16 @@ class Tasks extends Component {
               <Timer onTimerUpdate={this.getData} taskId={task.id} elapsed={task.elapsed} />
             </div>
             <div className='col s1 right'>
-           <Modal trigger={<img src={editIcon} className='icon' alt='Edit task' />}>
-            <Collapsible>
-              <CollapsibleItem header={<span className='btn' onClick={() => this.setState({taskToEdit: task})}>Edit title</span>}>
-                {this.state.taskToEdit ? <EditTask task={this.state.taskToEdit} onEdit={this.editTask} tasks={this.state.tasks}></EditTask> : <span style={{color: 'green'}}>Successfully edited the title!</span>}
-              </CollapsibleItem>
-              <CollapsibleItem header={<span className='btn red right'>Delete</span>}>
-                <p>Are you sure that you want to remove {task.title}?</p>
+            <Modal trigger={<img src={editIcon} className='icon right' alt='Edit task' />}>
+             <EditTask task={task} onEdit={this.editTask} tasks={this.state.tasks}></EditTask>
+
+              <Modal trigger={<button className='btn red margin-top-20'>Delete</button>}>
+              <p>Are you sure that you want to remove {task.title}?</p>
                 <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>Yes, delete</span>
-              </CollapsibleItem>
-            </Collapsible>
+              </Modal>
+
             </Modal>
+
             </div>
            </div>
         )

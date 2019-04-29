@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import DateRangePicker from '../Reports/DateRangePicker'
+import getElapsedTime from '../Reports/getElapsedTime'
 
 export class Reports extends Component {
     state = {
@@ -23,13 +24,6 @@ export class Reports extends Component {
         }
     }
 
-    getElapsedTime = (elapsed) => {
-        const hours = String(Math.floor(elapsed / (1000 * 60 * 60)) % 24)
-        const minutes = String(Math.floor(elapsed / 1000 / 60) + 100).substring(1)
-        const seconds = String(Math.floor((elapsed % (1000 * 60)) / 1000) + 100).substring(1)
-        return `${hours}:${minutes}:${seconds}`
-    }
-
     changeStartDate = (start) => {
       this.setState({ startDate: new Date(start.start) })
     }
@@ -42,6 +36,13 @@ export class Reports extends Component {
       return new Date(date).setHours(0, 0, 0, 0)
     }
 
+    calculateCost = (rate, elapsed) => {
+      const elapsedTime = elapsed.filter(time => time !== 0)
+      const sum = elapsedTime.length > 1 ? elapsedTime.reduce((a, b) => a + b) : elapsedTime
+
+      return ((rate / 3600) * (parseInt(sum / 1000))).toFixed(2)
+    }
+
       render() {
         const { projects, startDate, endDate } = this.state
 
@@ -50,30 +51,26 @@ export class Reports extends Component {
               let elapsed = []
               project.tasks.forEach(task => {
                 if (project.id === task.parent) {
-
                   if (this.withoutTime(task.created) >= this.withoutTime(startDate) && 
                   this.withoutTime(task.created) <= this.withoutTime(endDate)) {
                     elapsed.push(task.elapsed)
                   }
-
-                  // if (new Date(task.created).getTime() >= new Date(startDate).getTime() && 
-                  // new Date(task.created).getTime() <= new Date(endDate).getTime()) {
-                  //   elapsed.push(task.elapsed)
-                  // }
                 }
               })
-
             return (
               <div className="collection-item row" key={project.id}>
-                <div className="project-title col s6">
+                <div className="project-title col s5">
                   <span>{project.name}</span>
                 </div>
-                <div className="hourly-rate col s3">
+                <div className="hourly-rate col s2">
                     <span>{project.rate}</span>
                 </div>
-                   <div className='total-time col s3 right-align'>
-                   <span>{project.tasks.length ? elapsed.length ? (this.getElapsedTime(elapsed.reduce((a, b) => a + b))) : '0:00:00' : '0:00:00'}</span>
+                   <div className='total-time col s2'>
+                   <span>{project.tasks.length ? elapsed.length ? (getElapsedTime(elapsed.reduce((a, b) => a + b))) : '0:00:00' : '0:00:00'}</span>
                    </div>
+                <div className="col s3 right-align">
+                  {project.rate.length ? <span>{this.calculateCost(project.rate, elapsed)}</span> : ''}
+                </div>
                </div>
             )
           })
@@ -89,9 +86,10 @@ export class Reports extends Component {
           <DateRangePicker projects={this.state.projects} onStartChange={this.changeStartDate} onEndChange={this.changeEndDate} />
 
           <div className="collection-heading row">
-            <div className="name col s6"><span>Name</span></div>
-            <div className="hourly-rate col s3"><span>Hourly rate</span></div>
-            <div className="total-time col s3 right-align"><span>Total time</span></div>
+            <div className="name col s5"><span>Name</span></div>
+            <div className="hourly-rate col s2"><span>Hourly rate</span></div>
+            <div className="total-time col s2"><span>Total time</span></div>
+            <div className="earned-money col s3 right-align"><span>$</span></div>
           </div>
           
             <div className="collection">

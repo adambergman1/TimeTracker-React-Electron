@@ -1,5 +1,4 @@
 import React from 'react'
-import deleteIcon from '../images/delete.svg'
 import titleIcon from '../images/title.svg'
 import moneyIcon from '../images/money.svg'
 import editIcon from '../images/edit.svg'
@@ -21,14 +20,15 @@ const Projects = ({ projects, deleteProject, selectedProject, editProject }) => 
             <span>{project.rate}</span>
           </div>
 
-          <div className='actions col s2'>
-            <Modal trigger={<span className='right'><img src={deleteIcon} className='icon' alt='Delete project' /></span>}>
-              <p>Are you sure that you want to remove this project? All tasks related to it will be removed.</p>
-              <span className='btn red' onClick={() => { deleteProject(project) }}>DELETE</span>
-            </Modal>
-
+          <div className='actions col s2 right-align'>
             <Modal trigger={<img src={editIcon} onClick={() => { editProject(project) }} className='icon' alt='Edit project' />}>
               <EditProject project={project} onEdit={editProject} projects={projects} />
+
+              <Modal trigger={<button className='btn red margin-top-20'>Delete</button>}>
+                <p>Are you sure that you want to remove this project? All tasks related to it will be removed.</p>
+                <span className='btn red' onClick={() => { deleteProject(project) }}>DELETE</span>
+              </Modal>
+
             </Modal>
           </div>
         </div>
@@ -48,7 +48,7 @@ const Projects = ({ projects, deleteProject, selectedProject, editProject }) => 
           <img src={moneyIcon} alt='Hourly rate' className='icon' />
         </div>
         <div className='col s2'>
-          <img src={deleteIcon} alt='Remove' className='icon right' />
+          <img src={editIcon} alt='Edit' className='icon right' />
         </div>
       </div>
       {projectList}

@@ -82,6 +82,12 @@ body {
     padding: 10px;
   }
 
+  .success {
+    transition: ease-in .3s;
+    background: lightgreen;
+    padding: 10px;
+  }
+
   .container.home {
     width: 90%;
   }
@@ -134,6 +140,10 @@ body {
     border-bottom: 5px solid #ee6e73;
     padding-bottom: 1rem;
     display: inline-block;
+  }
+
+  .margin-top-20 {
+    margin-top: 20px;
   }
 
   .sidenav {

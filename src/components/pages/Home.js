@@ -66,7 +66,7 @@ class Home extends Component {
     return (
       <React.Fragment>
         <div className="col m6 padding-up-and-down right">
-          <SideNav trigger={<Button className="right">Projects</Button>} options={{closeOnClick: true}}>
+          <SideNav trigger={<Button className="right">All projects</Button>} options={{closeOnClick: true}}>
             <Modal trigger={<Button>Add new project</Button>}>
               <AddProject addProject={this.addProject} projects={this.state.projects} />
             </Modal>

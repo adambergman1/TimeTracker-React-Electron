@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import startIcon from '../../images/play.svg'
 import pauseIcon from '../../images/stop.svg'
+import getElapsedTime from '../../Reports/getElapsedTime'
 
 class Timer extends Component {
   state = {
@@ -12,10 +13,10 @@ class Timer extends Component {
 
   componentDidMount () {
     const savedElapsed = JSON.parse(localStorage.getItem('task'))
-    const savedTimerInfo = savedElapsed.filter(task => task.id === this.props.taskId)
+    const savedTimerInfo = savedElapsed.filter(task => task.id === this.props.taskId)[0]
 
     if (savedTimerInfo) {
-      this.setState({ elapsed: savedTimerInfo[0].elapsed, diff: savedTimerInfo[0].elapsed })
+      this.setState({ elapsed: savedTimerInfo.elapsed, diff: savedTimerInfo.elapsed })
     }
   }
 
@@ -34,16 +35,6 @@ class Timer extends Component {
     let elapsed = Date.now() - this.state.start + this.state.diff
     this.setState({ elapsed })
   }
-
-  getElapsedTime = (elapsed) => {
-    const hours = String(Math.floor(elapsed / (1000 * 60 * 60)) % 24)
-    const minutes = String(Math.floor(elapsed / 1000 / 60) + 100).substring(1)
-    const seconds = String(Math.floor((elapsed % (1000 * 60)) / 1000) + 100).substring(1)
-
-    const total = `${hours}:${minutes}:${seconds}`
-    return total
-  }
-
 
   onClick = () => {
     if(!this.state.isStart) { // Start timer
@@ -81,9 +72,7 @@ class Timer extends Component {
   render () {
     return (
       <React.Fragment>
-        <div className={this.state.isStart ? "elapsed-time counting" : "elapsed-time"}>
-          {this.getElapsedTime(this.state.elapsed)}
-        </div>
+        <div className={this.state.isStart ? "elapsed-time counting" : "elapsed-time"}>{getElapsedTime(this.state.elapsed)}</div>
 
         <div className="toggle-timer" onClick={this.onClick}>
             {this.state.isStart ? (
