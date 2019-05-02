@@ -16,16 +16,12 @@ class Home extends Component {
   componentWillMount() {
     if (localStorage.hasOwnProperty('project')) {
       const projects = JSON.parse(localStorage.getItem('project'))
-      this.setState({
-        projects
-      })
+      this.setState({ projects })
     }
   }
 
   deleteProject = ({id}) => {
-    const projects = this.state.projects.filter(project => {
-      return project.id !== id
-    })
+    const projects = this.state.projects.filter(project => project.id !== id)
     this.setState({ projects })
 
     removeProject(id)

@@ -9,6 +9,8 @@ import editIcon from '../../images/edit.svg'
 import { Modal } from 'react-materialize'
 import Timer from './Timer'
 import uuid from 'uuid'
+import removeTaskFromLocalStorage from '../../LocalStorage/RemoveTask'
+import getShortDate from '../../formatDate'
 
 class Tasks extends Component {
     state = {
@@ -25,15 +27,10 @@ class Tasks extends Component {
     }
 
     deleteTask = (id) => {
-        const tasks = this.state.tasks.filter(task => {
-          return task.id !== id
-        })
+        const tasks = this.state.tasks.filter(task => task.id !== id)
         this.setState({ tasks })
 
-        const dataInStorage = JSON.parse(localStorage.getItem('task'))
-        const filteredItem = [...dataInStorage.filter(task => task.id !== id)]
-        localStorage.removeItem('task')
-        localStorage.setItem('task', JSON.stringify(filteredItem))
+        removeTaskFromLocalStorage(id)
     }
 
     addTask = (task) => {
@@ -50,24 +47,15 @@ class Tasks extends Component {
 
     getData = (timerDetails) => {
       const filteredTask = this.state.tasks.filter(task => task.id === timerDetails.taskId)
-      const allTasks = this.state.tasks.filter(task => task.id !== timerDetails.taskId)
 
       if (filteredTask.length && timerDetails.elapsed) {
         filteredTask[0].elapsed = timerDetails.elapsed
-        const tasks = [filteredTask[0], ...allTasks]
+        const tasks = [filteredTask[0], ...this.state.tasks.filter(task => task.id !== timerDetails.taskId)]
 
         // Save the task with updated elapsed time to localStorage
         localStorage.removeItem('task')
         localStorage.setItem('task', JSON.stringify(tasks))
       }
-    }
-
-    getShortDate = date => {
-      const d = new Date(date)
-      const dateOfMonth = d.getUTCDate()
-      const monthOfYear = d.getUTCMonth() + 1
-      const year = d.getUTCFullYear()
-      return dateOfMonth + '/' + monthOfYear + '/' + year
     }
 
     editTask = editedTask => {
@@ -79,10 +67,9 @@ class Tasks extends Component {
         created: editedTask.created,
       }
 
-      const allTasksExceptEdited = this.state.tasks.filter(task => task.id !== editedTask.id)
-      const tasks = [task, ...allTasksExceptEdited]
-
+      const tasks = [task, this.state.tasks.filter(task => task.id !== editedTask.id)]
       this.setState({ tasks })
+
       localStorage.removeItem('task')
       localStorage.setItem('task', JSON.stringify(tasks))
     }
@@ -99,7 +86,7 @@ class Tasks extends Component {
               <span>{task.title}</span>
             </div>
             <div className="col s3 task-created">
-              {task.created.length ? this.getShortDate(task.created) : ''}
+              {task.created.length ? getShortDate(task.created) : ''}
             </div>
             <div className="col s3 flex">
               <Timer onTimerUpdate={this.getData} taskId={task.id} elapsed={task.elapsed} />

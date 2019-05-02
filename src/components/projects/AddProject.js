@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 class AddProject extends Component {
   state = {
     name: '',
-    rate: '',
-    error: ''
+    rate: ''
   }
 
   handleChange = e => {
@@ -21,28 +20,35 @@ class AddProject extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-
-    const find = this.props.projects.some(name => this.state.name === name.name)
-    if (!find) {
-      this.props.addProject({
-        name: this.state.name,
-        rate: this.state.rate
-      })
-      this.setState({ name: '', rate: '', error: '' })
+    const findProjectByName = this.props.projects.some(name => this.state.name === name.name)
+    
+    if (!findProjectByName) {
+      this.props.addProject({ name: this.state.name, rate: this.state.rate })
+      this.setState({ name: '', rate: '', errorMessage: '' })
+      this.showTempMessage('Project successfully added')
     } else {
-      this.setState({ error: 'A project with the same name already exists' })
+      this.setState({ errorMessage: 'A project with the same name already exists'})
     }
-
   }
+
+  showTempMessage = (msg) => {
+    this.setState({message: msg})
+    setTimeout(() => this.setState({message: ''}), 2500)
+  }
+
+  
 
   render () {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>Add new project:</label>
-        {this.state.error ? (<p className="error">{this.state.error}</p>) : null}
-        <input type="text" onChange={this.handleChange} value={this.state.name} placeholder="The name of your project" />
+        
+        {this.state.errorMessage && <span className='error'>{this.state.errorMessage}</span>}
+          {this.state.message && <span className='success'>{this.state.message}</span>}
+
+        <input type="text" onChange={this.handleChange} value={this.state.name} placeholder="The name of your project" minLength="1" required />
         <input type="number" onChange={this.handleRateChange} value={this.state.rate} placeholder="Hourly rate (if any)"
-        min="0" max="5000" />
+        min="0" max="9999999" />
         <button className="btn">Add Project</button>
       </form>
     )
