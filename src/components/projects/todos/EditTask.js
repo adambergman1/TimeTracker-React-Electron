@@ -18,7 +18,6 @@ class EditTask extends Component {
 
     handleSubmit = e => {
       e.preventDefault()
-      
       if (!this.state.title) {
         this.setState({ error: 'The title cannot be empty.'})
       }
@@ -32,9 +31,8 @@ class EditTask extends Component {
           parent: this.state.parent,
           created: this.state.created,
           elapsed: this.state.elapsed
-        },
+        })
         this.setState({ success: 'Task has successfully been edited', error: '', msg: '' })
-        )
       } else if (this.state.title === this.props.task.title) {
         this.setState({ msg: 'No changes has been made.', success: '', error: ''})
       } else {
@@ -48,6 +46,7 @@ class EditTask extends Component {
         {this.state.error ? (<p className='error'>{this.state.error}</p>) : null}
         {this.state.success ? (<p className='success'>{this.state.success}</p>) : null}
         {this.state.msg ? (<p>{this.state.msg}</p>) : null}
+
         <input type='text' onChange={this.handleChange} placeholder={this.state.oldTitle} value={this.state.title} />
       </form>
     )

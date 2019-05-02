@@ -8,15 +8,11 @@ class EditProject extends Component {
   }
 
   handleChange = e => {
-    this.setState({
-      name: e.target.value
-    })
+    this.setState({ name: e.target.value })
   }
 
   handleRateChange = e => {
-    this.setState({
-      rate: e.target.value
-    })
+    this.setState({ rate: e.target.value })
   }
 
   handleSubmit = e => {
@@ -29,10 +25,12 @@ class EditProject extends Component {
       this.setState({ msg: 'No changes made.', success: '', error: '' })
     } else if (!this.state.name) {
       this.setState({ errorMessage: 'Project name cannot be empty.', success: '', msg: ''})
+
     } else if (!findProjectByName || this.state.name === this.props.project.name) {
       this.props.onEdit({ name: this.state.name, rate: this.state.rate, id: this.state.id })
       this.setState({ errorMessage: '', msg: '' })
-      this.showTempMessage('Projet has successfully been edited')
+      this.showTempMessage('Project has successfully been edited')
+    
     } else {
       this.setState({ success: '', errorMessage: 'A project with the same name already exists. Pick another name.', msg: '' })
     }

@@ -7,15 +7,11 @@ class AddProject extends Component {
   }
 
   handleChange = e => {
-    this.setState({
-      name: e.target.value
-    })
+    this.setState({ name: e.target.value })
   }
 
   handleRateChange = e => {
-    this.setState({
-      rate: e.target.value
-    })
+    this.setState({ rate: e.target.value })
   }
 
   handleSubmit = e => {
@@ -23,8 +19,9 @@ class AddProject extends Component {
     const findProjectByName = this.props.projects.some(name => this.state.name === name.name)
     
     if (!findProjectByName) {
-      this.props.addProject({ name: this.state.name, rate: this.state.rate })
-      this.setState({ name: '', rate: '', errorMessage: '' })
+      this.props.addProject({ name: this.state.name, rate: this.state.rate },
+        this.setState({ name: '', rate: '', errorMessage: '' })
+        )
       this.showTempMessage('Project successfully added')
     } else {
       this.setState({ errorMessage: 'A project with the same name already exists'})
