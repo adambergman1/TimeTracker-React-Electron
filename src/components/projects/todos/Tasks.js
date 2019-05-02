@@ -10,6 +10,7 @@ import { Modal } from 'react-materialize'
 import Timer from './Timer'
 import removeTaskFromLocalStorage from '../../LocalStorage/RemoveTask'
 import getShortDate from '../../formatDate'
+import { findInLocalStorage, deleteItemFromArray } from '../../../lib/crudHelpers';
 
 class Tasks extends Component {
     state = {
@@ -20,12 +21,13 @@ class Tasks extends Component {
     // Get all saved data in localStorage
     componentWillMount() {
       if (this.state.project_id && localStorage.hasOwnProperty('task')) {
-        this.setState({ tasks: JSON.parse(localStorage.getItem('task')) })
+        this.setState({ tasks: findInLocalStorage('task') })
       }
     }
 
     deleteTask = (id) => {
-        const tasks = this.state.tasks.filter(task => task.id !== id)
+        // const tasks = this.state.tasks.filter(task => task.id !== id)
+        const tasks = deleteItemFromArray(id, this.state.tasks)
         this.setState({ tasks })
         removeTaskFromLocalStorage(id)
     }

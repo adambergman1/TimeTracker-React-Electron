@@ -3,9 +3,7 @@ import Projects from '../projects/Projects'
 import AddProject from '../projects/AddProject'
 import { Modal, Button, SideNav } from 'react-materialize'
 import Tasks from '../projects/todos/Tasks'
-import removeProject from '../LocalStorage/RemoveProject'
-import removeTasksFromProject from '../LocalStorage/RemoveTasksFromProject'
-import uuid from 'uuid'
+import { addItemToArray, deleteItemFromArray, saveToLocalStorage, findInLocalStorage, removeFromLocalStorage } from '../../lib/crudHelpers'
 
 
 class Home extends Component {
@@ -15,27 +13,32 @@ class Home extends Component {
 
   componentWillMount() {
     if (localStorage.hasOwnProperty('project')) {
-      const projects = JSON.parse(localStorage.getItem('project'))
+      const projects = findInLocalStorage('project')
       this.setState({ projects })
     }
   }
 
   deleteProject = ({id}) => {
-    const projects = this.state.projects.filter(project => project.id !== id)
+    const projects = deleteItemFromArray(id, this.state.projects)
     this.setState({ projects })
 
-    removeProject(id)
-    removeTasksFromProject(id)
+    // Remove the project from localStorage
+    const projectsInStorage = findInLocalStorage('project')
+    const projectsToKeep = deleteItemFromArray(id, projectsInStorage)
+    removeFromLocalStorage('project')
+    saveToLocalStorage('project', projectsToKeep)
+
+    // Remove tasks related to the project
+    const tasksInStorage = findInLocalStorage('task')
+    const tasksToKeep = [...tasksInStorage.filter(task => task.parent !== id)]
+    removeFromLocalStorage('task')
+    saveToLocalStorage('task', tasksToKeep)
   }
 
   addProject = (project) => {
-    project.id = uuid()
-    const projects = [project, ...this.state.projects]
+    const projects = addItemToArray(project, this.state.projects)
     this.setState({ projects })
-
-    // Save the added task to localStorage together with the existing
-    const allProjects = [project, ...this.state.projects]
-    localStorage.setItem('project', JSON.stringify(allProjects))
+    saveToLocalStorage('project', projects)
   }
 
   setSelectedProject = (projectName, projectId) => {
@@ -51,11 +54,12 @@ class Home extends Component {
       id: editedProject.id,
     }
     const allProjectsExceptEdited = this.state.projects.filter(project => project.id !== editedProject.id)
-    const projects = [project, ...allProjectsExceptEdited]
+    const projects = addItemToArray(project, allProjectsExceptEdited)
 
     this.setState({ projects })
-    localStorage.removeItem('project')
-    localStorage.setItem('project', JSON.stringify(projects))
+
+    removeFromLocalStorage('project')
+    saveToLocalStorage('project', projects)
   }
 
   renderTasks = () => {

@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
+import uuid from 'uuid'
+
 
 class AddProject extends Component {
   state = {
     name: '',
-    rate: ''
+    rate: '',
+    id: ''
   }
 
   handleChange = e => {
@@ -19,8 +22,8 @@ class AddProject extends Component {
     const findProjectByName = this.props.projects.some(name => this.state.name === name.name)
     
     if (!findProjectByName) {
-      this.props.addProject({ name: this.state.name, rate: this.state.rate },
-        this.setState({ name: '', rate: '', errorMessage: '' })
+      this.props.addProject({ name: this.state.name, rate: this.state.rate, id: uuid() },
+        this.setState({ name: '', rate: '', errorMessage: '', id: '' })
         )
       this.showTempMessage('Project successfully added')
     } else {
