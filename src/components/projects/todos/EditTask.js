@@ -6,14 +6,11 @@ class EditTask extends Component {
     title: this.props.task.title,
     parent: this.props.task.parent,
     created: this.props.task.created,
-    elapsed: this.props.task.elapsed,
-    error: ''
+    elapsed: 0
   }
 
     handleChange = e => {
-      this.setState({
-        title: e.target.value
-      })
+      this.setState({ title: e.target.value })
     }
 
     handleSubmit = e => {
@@ -30,7 +27,7 @@ class EditTask extends Component {
           title: this.state.title,
           parent: this.state.parent,
           created: this.state.created,
-          elapsed: this.state.elapsed
+          elapsed: this.props.task.elapsed
         })
         this.setState({ success: 'Task has successfully been edited', error: '', msg: '' })
       } else if (this.state.title === this.props.task.title) {

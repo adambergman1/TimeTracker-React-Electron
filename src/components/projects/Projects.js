@@ -13,7 +13,10 @@ const Projects = ({ projects, deleteProject, selectedProject, editProject }) => 
         <div className='collection-item row' key={project.id}>
 
           <div className='project-name col s8'>
-            <button className='link' onClick={() => selectedProject(project.name, project.id)}><img src={arrowRightIcon} className='icon' alt='View project' /> {project.name}</button>
+            <button className='link' onClick={() =>
+              selectedProject(project.name, project.id)}>
+              <img src={arrowRightIcon} className='icon' alt='View project' /> {project.name}
+            </button>
           </div>
 
           <div className='rate col s2'>

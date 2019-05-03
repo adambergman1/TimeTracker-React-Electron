@@ -13,8 +13,7 @@ class Home extends Component {
 
   componentWillMount() {
     if (localStorage.hasOwnProperty('project')) {
-      const projects = findInLocalStorage('project')
-      this.setState({ projects })
+      this.setState({ projects: findInLocalStorage('project') })
     }
   }
 
@@ -23,10 +22,8 @@ class Home extends Component {
     this.setState({ projects })
 
     // Remove the project from localStorage
-    const projectsInStorage = findInLocalStorage('project')
-    const projectsToKeep = deleteItemFromArray(id, projectsInStorage)
     removeFromLocalStorage('project')
-    saveToLocalStorage('project', projectsToKeep)
+    saveToLocalStorage('project', projects)
 
     // Remove tasks related to the project
     const tasksInStorage = findInLocalStorage('task')
