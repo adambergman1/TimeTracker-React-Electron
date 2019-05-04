@@ -19,7 +19,7 @@ class AddProject extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const findProjectByName = this.props.projects.some(name => this.state.name === name.name)
+    const findProjectByName = this.props.projects.some(project => this.state.name === project.name)
     
     if (!findProjectByName) {
       this.props.addProject({ name: this.state.name, rate: this.state.rate, id: uuid() },
@@ -35,8 +35,6 @@ class AddProject extends Component {
     this.setState({message: msg})
     setTimeout(() => this.setState({message: ''}), 2500)
   }
-
-  
 
   render () {
     return (

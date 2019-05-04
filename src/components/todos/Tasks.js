@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import AddTask from './AddTask'
 import EditTask from './EditTask'
-import deleteIcon from '../../images/delete.svg'
-import titleIcon from '../../images/title.svg'
-import dateIcon from '../../images/date.svg'
-import timerIcon from '../../images/timer.svg'
-import editIcon from '../../images/edit.svg'
-import { Modal } from 'react-materialize'
 import Timer from './Timer'
-import getShortDate from '../../formatDate'
-import { findInLocalStorage, deleteItemFromArray, removeFromLocalStorage, saveToLocalStorage, addItemToArray } from '../../../lib/crudHelpers';
+import deleteIcon from '../images/delete.svg'
+import titleIcon from '../images/title.svg'
+import dateIcon from '../images/date.svg'
+import timerIcon from '../images/timer.svg'
+import editIcon from '../images/edit.svg'
+import { Modal } from 'react-materialize'
+import { findInLocalStorage, deleteItemFromArray, removeFromLocalStorage, saveToLocalStorage, addItemToArray } from '../../lib/crudHelpers'
+import { getShortDate } from '../../lib/dateHelpers'
 
 class Tasks extends Component {
     state = {
@@ -41,16 +41,17 @@ class Tasks extends Component {
     updateTimer = (timerDetails) => {
       if (timerDetails.elapsed) {
         const taskToUpdate = this.state.tasks.filter(task => task.id === timerDetails.id)[0]
-        taskToUpdate.elapsed = timerDetails.elapsed
-
-        const allButUpdated = deleteItemFromArray(timerDetails.id, this.state.tasks)
-
-        const tasks = addItemToArray(taskToUpdate, allButUpdated)
-        
-        this.setState({ tasks })
-        removeFromLocalStorage('task')
-        saveToLocalStorage('task', tasks)
-
+  
+        if (taskToUpdate) {
+          taskToUpdate.elapsed = timerDetails.elapsed
+          
+          const allButUpdated = deleteItemFromArray(timerDetails.id, this.state.tasks)
+          const tasks = addItemToArray(taskToUpdate, allButUpdated)
+          
+          this.setState({ tasks })
+          removeFromLocalStorage('task')
+          saveToLocalStorage('task', tasks)
+        }
       }
     }
 
@@ -63,7 +64,9 @@ class Tasks extends Component {
         created: editedTask.created,
       }
 
-      const tasks = [task, ...this.state.tasks.filter(task => task.id !== editedTask.id)]
+      const tasksExceptEditedFunc = deleteItemFromArray(editedTask.id, this.state.tasks)[0]
+
+      const tasks = [task, tasksExceptEditedFunc]
       this.setState({ tasks })
 
       removeFromLocalStorage('task')

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import DateRangePicker from '../Reports/DateRangePicker'
-import getElapsedTime from '../Reports/getElapsedTime'
+import DateRangePicker from '../reports/DateRangePicker'
+import { findInLocalStorage } from '../../lib/crudHelpers'
+import { getElapsedTime } from '../../lib/dateHelpers'
 
 export class Reports extends Component {
     state = {
@@ -11,16 +12,16 @@ export class Reports extends Component {
 
     componentWillMount() {
         if (localStorage.hasOwnProperty('project')) {
-            const savedProjects = JSON.parse(localStorage.getItem('project'))
-            const savedTasks = JSON.parse(localStorage.getItem('task'))
+          const savedProjects = findInLocalStorage('project')
+          const savedTasks = findInLocalStorage('task')
             
-            savedProjects.map(project => {
-                project.tasks = []
-                return savedTasks.forEach(task => {
-                    if (project.id === task.parent) project.tasks.push(task)
-                })
-            })
-            this.setState({ projects: savedProjects })
+          savedProjects.map(project => {
+              project.tasks = []
+              return savedTasks.forEach(task => {
+                  if (project.id === task.parent) project.tasks.push(task)
+              })
+          })
+          this.setState({ projects: savedProjects })
         }
     }
 

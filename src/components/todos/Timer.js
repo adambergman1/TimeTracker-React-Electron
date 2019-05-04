@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import startIcon from '../../images/play.svg'
-import pauseIcon from '../../images/stop.svg'
-import getElapsedTime from '../../Reports/getElapsedTime'
-import { findInLocalStorage } from '../../../lib/crudHelpers';
+import startIcon from '../images/play.svg'
+import pauseIcon from '../images/stop.svg'
+import { findInLocalStorage, findItemInArray } from '../../lib/crudHelpers'
+import { getElapsedTime } from '../../lib/dateHelpers'
 
 class Timer extends Component {
   state = {
@@ -13,8 +13,8 @@ class Timer extends Component {
   }
 
   componentDidMount () {
-    const savedElapsed = findInLocalStorage('task')
-    const savedTimerInfo = savedElapsed.filter(task => task.id === this.props.id)[0]
+    const tasksInStorage = findInLocalStorage('task')
+    const savedTimerInfo = findItemInArray(this.props.id, tasksInStorage)[0]
 
     if (savedTimerInfo) {
       this.setState({ elapsed: savedTimerInfo.elapsed, diff: savedTimerInfo.elapsed })
@@ -30,7 +30,6 @@ class Timer extends Component {
     },
     this.setState({timer: null, diff: 0, elapsed: 0})
     )
-
   }
 
   tick = () => {

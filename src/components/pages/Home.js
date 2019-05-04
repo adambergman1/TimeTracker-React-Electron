@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Projects from '../projects/Projects'
 import AddProject from '../projects/AddProject'
+import Tasks from '../todos/Tasks'
 import { Modal, Button, SideNav } from 'react-materialize'
-import Tasks from '../projects/todos/Tasks'
 import { addItemToArray, deleteItemFromArray, saveToLocalStorage, findInLocalStorage, removeFromLocalStorage } from '../../lib/crudHelpers'
 
 
@@ -50,8 +50,11 @@ class Home extends Component {
       rate: editedProject.rate,
       id: editedProject.id,
     }
-    const allProjectsExceptEdited = this.state.projects.filter(project => project.id !== editedProject.id)
-    const projects = addItemToArray(project, allProjectsExceptEdited)
+
+    const allExceptEdited = deleteItemFromArray(editedProject.id, this.state.projects)
+    const projects = addItemToArray(project, allExceptEdited)
+    console.log('project', project);
+    console.log('allExceptEdited', allExceptEdited)
 
     this.setState({ projects })
 
