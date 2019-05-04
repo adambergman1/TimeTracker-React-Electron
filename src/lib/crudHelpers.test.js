@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import { addItemToArray, findItemInArray } from './crudHelpers'
+import { addItemToArray, findItemInArray, deleteItemFromArray } from './crudHelpers'
 
 test('addItemToArray should add the passed item to the list', () => {
   const existingArray = [
@@ -37,7 +37,29 @@ test('findItemInArray should return the expected item from an array', () => {
   ]
   const expected = [{ name: 'two', rate: '200', id: '2' }]
 
-  const result = findItemInArray(existingArray[0].id, existingArray)
+  const result = findItemInArray('2', existingArray)
 
   expect(result).toEqual(expected)
+})
+
+test('deleteItemFromArray should remove an item by id', () => {
+  const existingArray = [
+    { name: 'two', rate: '200', id: '2' },
+    { name: 'one', rate: '100', id: '1' }
+  ]
+  const expected = [{ name: 'one', rate: '100', id: '1' }]
+
+  const result = deleteItemFromArray('2', existingArray)
+
+  expect(result).toEqual(expected)
+})
+
+test('deleteItemFromArray should not mutate the original array', () => {
+  const existingArray = [
+    { name: 'two', rate: '200', id: '2' },
+    { name: 'one', rate: '100', id: '1' }
+  ]
+  const result = deleteItemFromArray('2', existingArray)
+
+  expect(result).not.toBe(existingArray)
 })
