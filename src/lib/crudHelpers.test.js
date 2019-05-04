@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import { addItemToArray, findItemInArray, deleteItemFromArray, saveToLocalStorage, removeFromLocalStorage } from './crudHelpers'
+import { addItemToArray, findItemInArray, deleteItemFromArray, saveToLocalStorage, removeFromLocalStorage, findInLocalStorage } from './crudHelpers'
 
 test('addItemToArray should add the passed item to the list', () => {
   const existingArray = [
@@ -74,3 +74,12 @@ test('saveToLocalStorage should save an array to localStorage', () => {
 },
 window.localStorage.removeItem('test')
 )
+
+test('findInLocalStorage should return data stored in localStorage', () => {
+  const testArray = [{ name: 'Test project', rate: '500', id: '001' }]
+
+  window.localStorage.setItem('test', JSON.stringify(testArray))
+  const result = findInLocalStorage('test')
+
+  expect(testArray).toEqual(result)
+})
