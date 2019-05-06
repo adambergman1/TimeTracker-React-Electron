@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { getElapsedTime, convertPrettyTimeToMS } from '../../lib/dateHelpers'
 
 class EditTask extends Component {
   state = {
@@ -9,8 +10,16 @@ class EditTask extends Component {
     elapsed: 0
   }
 
+  componentDidMount () {
+    this.props.task.elapsed && this.setState({ elapsed: getElapsedTime(this.props.task.elapsed) })
+  }
+
     handleChange = e => {
       this.setState({ title: e.target.value })
+    }
+
+    handleTimeChange = e => {
+      this.setState({ elapsed: e.target.value })
     }
 
     handleSubmit = e => {
@@ -20,14 +29,15 @@ class EditTask extends Component {
       }
 
       const find = this.props.tasks.some(task => this.state.title === task.title)
+      const noChangesToTitle = this.state.title === this.props.task.title
 
-      if (!find) {
+      if (!find || (noChangesToTitle && this.state.elapsed)) {
         this.props.onEdit({
           id: this.state.id,
           title: this.state.title,
           parent: this.state.parent,
           created: this.state.created,
-          elapsed: this.props.task.elapsed
+          elapsed: convertPrettyTimeToMS(this.state.elapsed)
         })
         this.setState({ success: 'Task has successfully been edited', error: '', msg: '' })
       } else if (this.state.title === this.props.task.title) {
@@ -45,6 +55,9 @@ class EditTask extends Component {
         {this.state.msg ? (<p>{this.state.msg}</p>) : null}
 
         <input type='text' onChange={this.handleChange} placeholder={this.state.oldTitle} value={this.state.title} />
+        <input type="time" onChange={this.handleTimeChange} step="1" value={this.state.elapsed} />
+
+        <button className="btn">Confirm</button>
       </form>
     )
   }

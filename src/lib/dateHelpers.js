@@ -18,3 +18,10 @@ export const getShortDate = date => {
   const year = d.getUTCFullYear()
   return dateOfMonth + '/' + monthOfYear + '/' + year
 }
+
+export const convertPrettyTimeToMS = time => {
+  const hhmmss = time.split(':')
+  const result = Date.UTC(1970, 0, 1, hhmmss[0], hhmmss[1], hhmmss[2])
+  console.log(result)
+  return result
+}

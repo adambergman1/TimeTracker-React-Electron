@@ -63,10 +63,11 @@ class Tasks extends Component {
         elapsed: editedTask.elapsed,
         created: editedTask.created,
       }
+      console.log(task.elapsed)
 
-      const tasksExceptEditedFunc = deleteItemFromArray(editedTask.id, this.state.tasks)[0]
+      const tasksExceptEdited = deleteItemFromArray(editedTask.id, this.state.tasks)[0]
 
-      const tasks = [task, tasksExceptEditedFunc]
+      const tasks = [task, tasksExceptEdited]
       this.setState({ tasks })
 
       removeFromLocalStorage('task')
