@@ -63,11 +63,10 @@ class Tasks extends Component {
         elapsed: editedTask.elapsed,
         created: editedTask.created,
       }
-      console.log(task.elapsed)
 
-      const tasksExceptEdited = deleteItemFromArray(editedTask.id, this.state.tasks)[0]
+      const tasksExceptEdited = deleteItemFromArray(editedTask.id, this.state.tasks)
+      const tasks = addItemToArray(task, tasksExceptEdited)
 
-      const tasks = [task, tasksExceptEdited]
       this.setState({ tasks })
 
       removeFromLocalStorage('task')
@@ -92,8 +91,11 @@ class Tasks extends Component {
               <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} />
             </div>
             <div className='col s1 right'>
-            <Modal trigger={<img src={editIcon} className='icon right' alt='Edit task' />}>
-             <EditTask task={task} onEdit={this.editTask} tasks={this.state.tasks}></EditTask>
+            
+            <Modal id="edit-modal" trigger={<img src={editIcon} className='icon right' alt='Edit task' />}
+            options={ {onOpenStart: () => this.setState({modalIsClicked: true }), onCloseStart: () => this.setState({modalIsClicked: null})} } >
+            
+              {this.state.modalIsClicked && <EditTask task={task} onEdit={this.editTask} tasks={this.state.tasks}></EditTask>}
 
               <Modal trigger={<button className='btn red margin-top-20'>Delete</button>}>
               <p>Are you sure that you want to remove {task.title}?</p>

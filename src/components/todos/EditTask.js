@@ -7,11 +7,12 @@ class EditTask extends Component {
     title: this.props.task.title,
     parent: this.props.task.parent,
     created: this.props.task.created,
-    elapsed: 0
+    elapsed: getElapsedTime(this.props.task.elapsed) || '00:00:00'
   }
 
   componentDidMount () {
-    this.props.task.elapsed && this.setState({ elapsed: getElapsedTime(this.props.task.elapsed) })
+    // this.props.task.elapsed && this.setState({ elapsed: getElapsedTime(this.props.task.elapsed) })
+    console.log('Going into Edit Task')
   }
 
     handleChange = e => {
