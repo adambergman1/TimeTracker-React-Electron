@@ -32,6 +32,12 @@ class Timer extends Component {
     )
   }
 
+  componentDidUpdate () {
+    if (this.props.onManualUpdate) {
+      console.log(this.props.onManualUpdate)
+    }
+  }
+
   tick = () => {
     let elapsed = Date.now() - this.state.start + this.state.diff
     this.setState({ elapsed })

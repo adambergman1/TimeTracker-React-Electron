@@ -11,7 +11,6 @@ class EditTask extends Component {
   }
 
   componentDidMount () {
-    // this.props.task.elapsed && this.setState({ elapsed: getElapsedTime(this.props.task.elapsed) })
     console.log('Going into Edit Task')
   }
 

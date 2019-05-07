@@ -8,7 +8,7 @@ import dateIcon from '../images/date.svg'
 import timerIcon from '../images/timer.svg'
 import editIcon from '../images/edit.svg'
 import { Modal } from 'react-materialize'
-import { findInLocalStorage, deleteItemFromArray, removeFromLocalStorage, saveToLocalStorage, addItemToArray } from '../../lib/crudHelpers'
+import { findInLocalStorage, deleteItemFromArray, removeFromLocalStorage, saveToLocalStorage, addItemToArray, findItemInArray } from '../../lib/crudHelpers'
 import { getShortDate } from '../../lib/dateHelpers'
 
 class Tasks extends Component {
@@ -39,6 +39,7 @@ class Tasks extends Component {
     }
 
     updateTimer = (timerDetails) => {
+      console.log('timerDetails', timerDetails)
       if (timerDetails.elapsed) {
         const taskToUpdate = this.state.tasks.filter(task => task.id === timerDetails.id)[0]
   
@@ -64,6 +65,14 @@ class Tasks extends Component {
         created: editedTask.created,
       }
 
+      const edited = findItemInArray(editedTask.id, this.state.tasks)[0]
+      
+      if (edited.elapsed !== editedTask.elapsed) {
+        // Do something... Send it to the timer?
+        this.setState({manualTimerUpdate: editedTask})
+
+      }
+  
       const tasksExceptEdited = deleteItemFromArray(editedTask.id, this.state.tasks)
       const tasks = addItemToArray(task, tasksExceptEdited)
 
@@ -88,14 +97,18 @@ class Tasks extends Component {
               {task.created.length ? getShortDate(task.created) : ''}
             </div>
             <div className="col s3 flex">
-              <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} />
+              <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} onManualUpdate={this.state.manualTimerUpdate} />
             </div>
             <div className='col s1 right'>
             
-            <Modal id="edit-modal" trigger={<img src={editIcon} className='icon right' alt='Edit task' />}
-            options={ {onOpenStart: () => this.setState({modalIsClicked: true }), onCloseStart: () => this.setState({modalIsClicked: null})} } >
-            
-              {this.state.modalIsClicked && <EditTask task={task} onEdit={this.editTask} tasks={this.state.tasks}></EditTask>}
+            <Modal trigger={<img src={editIcon} className='icon right' alt='Edit task' />}
+            options={ 
+              {onOpenStart: () => this.setState({modalIsClicked: true }), 
+              onCloseStart: () => this.setState({modalIsClicked: null})} 
+              } >
+
+              {this.state.modalIsClicked && 
+              <EditTask task={task} onEdit={this.editTask} tasks={this.state.tasks}></EditTask>}
 
               <Modal trigger={<button className='btn red margin-top-20'>Delete</button>}>
               <p>Are you sure that you want to remove {task.title}?</p>
