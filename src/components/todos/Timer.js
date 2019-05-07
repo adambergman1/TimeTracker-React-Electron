@@ -32,9 +32,12 @@ class Timer extends Component {
     )
   }
 
-  componentDidUpdate () {
+  componentWillReceiveProps () {
     if (this.props.onManualUpdate) {
-      console.log(this.props.onManualUpdate)
+      this.setState({
+        elapsed: this.props.onManualUpdate.elapsed, 
+        diff: this.props.onManualUpdate.elapsed
+      })
     }
   }
 
