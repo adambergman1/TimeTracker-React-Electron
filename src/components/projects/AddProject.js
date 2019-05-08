@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import uuid from 'uuid'
+import deleteIcon from '../images/delete.svg'
 
 
 class AddProject extends Component {
@@ -23,32 +24,36 @@ class AddProject extends Component {
     
     if (!findProjectByName) {
       this.props.addProject({ name: this.state.name, rate: this.state.rate, id: uuid() },
-        this.setState({ name: '', rate: '', errorMessage: '', id: '' })
-        )
-      this.showTempMessage('Project successfully added')
+        this.setState({ name: '', rate: '', id: '',  error: null, success: 'Project has successfully been added' }))
     } else {
-      this.setState({ errorMessage: 'A project with the same name already exists'})
+      this.setState({ success: null, error: 'A project with the same name already exists'})
     }
   }
 
-  showTempMessage = (msg) => {
-    this.setState({message: msg})
-    setTimeout(() => this.setState({message: ''}), 2500)
+  hideMessage = () => {
+    this.setState({ error: null, success: null })
   }
 
   render () {
     return (
+      <React.Fragment>
+        {this.state.error || this.state.success ? 
+        <div className="col s12 right-align">
+          <span className={this.state.error ? 'error' : this.state.success ? 'success' : ''}
+          >{this.state.error ? this.state.error : this.state.success ? this.state.success : ''}</span>
+
+          <button className="btn-flat" onClick={this.hideMessage}><img src={deleteIcon} alt="Close"/></button>
+        </div>
+        : ''}
+
       <form onSubmit={this.handleSubmit}>
         <label>Add new project:</label>
-        
-        {this.state.errorMessage && <span className='error'>{this.state.errorMessage}</span>}
-          {this.state.message && <span className='success'>{this.state.message}</span>}
-
         <input type="text" onChange={this.handleChange} value={this.state.name} placeholder="The name of your project" minLength="1" required />
         <input type="number" onChange={this.handleRateChange} value={this.state.rate} placeholder="Hourly rate (if any)"
         min="0" max="9999999" />
         <button className="btn">Add Project</button>
       </form>
+      </React.Fragment>
     )
   }
 }

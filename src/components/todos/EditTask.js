@@ -52,7 +52,7 @@ class EditTask extends Component {
       <form onSubmit={this.handleSubmit}>
         {this.state.error ? (<p className='error'>{this.state.error}</p>) : null}
         {this.state.success ? (<p className='success'>{this.state.success}</p>) : null}
-        {this.state.msg ? (<p>{this.state.msg}</p>) : null}
+        {this.state.msg ? (<p>{this.state.msg}</p> ) : null}
 
         <input type='text' onChange={this.handleChange} placeholder={this.state.oldTitle} value={this.state.title} />
         <input type="time" onChange={this.handleTimeChange} step="1" value={this.state.elapsed} />

@@ -21,6 +21,9 @@ export const getShortDate = date => {
 
 export const convertPrettyTimeToMS = time => {
   const hhmmss = time.split(':')
+  if (!hhmmss[0]) hhmmss[0] = '00'
+  if (!hhmmss[1]) hhmmss[1] = '00'
+  if (!hhmmss[2]) hhmmss[2] = '00'
   const result = Date.UTC(1970, 0, 1, hhmmss[0], hhmmss[1], hhmmss[2])
   return result
 }

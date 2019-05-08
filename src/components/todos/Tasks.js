@@ -97,12 +97,10 @@ class Tasks extends Component {
             </div>
             <div className="col s3 flex">
             
-            {manualTimerUpdate && manualTimerUpdate.id === task.id ? (
-              <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} 
-              onManualUpdate={manualTimerUpdate} /> ) : (
-                <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} />
-              ) }
-
+            {manualTimerUpdate && manualTimerUpdate.id === task.id ? 
+              <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} onManualUpdate={manualTimerUpdate} /> :
+              <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} /> 
+            }
             </div>
             <div className='col s1 right'>
             
@@ -113,13 +111,13 @@ class Tasks extends Component {
               } >
 
               {this.state.modalIsClicked && this.state.taskToEdit === task.id &&
-              <EditTask task={task} onEdit={this.editTask} tasks={this.state.tasks}></EditTask>}
+              <EditTask task={task} onEdit={this.editTask} tasks={this.state.tasks}></EditTask>
+              }
 
               <Modal trigger={<button className='btn red margin-top-20'>Delete</button>}>
               <p>Are you sure that you want to remove {task.title}?</p>
                 <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>Yes, delete</span>
               </Modal>
-
             </Modal>
 
             </div>
@@ -128,38 +126,36 @@ class Tasks extends Component {
       })
     ) : <p className="center">Create your first task using the field above.</p>
 
-    const tasksHasProject = this.state.project_id.length ? (
+    const renderTasks = this.state.project_id.length ? (
       <React.Fragment>
         <div className="col m6 padding-up-and-down left">
           <h4 className="task-header">{this.props.project.projectName}</h4>
         </div>
         <AddTask addTask={this.addTask} tasks={this.state.tasks} projectId={this.state.project_id} />
         
-        <div className="collection">
+        <div className="col s12 collection">
           <div className="collection-heading row">
-          <div className='col s5'>
-            <img src={titleIcon} alt='Name' className='icon' />
-          </div>
-          <div className='col s3'>
-            <img src={dateIcon} alt='Date' className='icon' />
-          </div>
-          <div className='col s3'>
-            <img src={timerIcon} alt='Timer' className='icon' />
-          </div>
-          <div className='col s1'>
-            <img src={deleteIcon} alt='Remove' className='icon right' />
-          </div>
+            <div className='col s5'>
+              <img src={titleIcon} alt='Name' className='icon' />
+            </div>
+            <div className='col s3'>
+              <img src={dateIcon} alt='Date' className='icon' />
+            </div>
+            <div className='col s3'>
+              <img src={timerIcon} alt='Timer' className='icon' />
+            </div>
+            <div className='col s1'>
+              <img src={deleteIcon} alt='Remove' className='icon right' />
+            </div>
         </div>
-
           {tasksToDisplay}
         </div>
-        
-        </React.Fragment>
+      </React.Fragment>
     ) : ('')
 
     return (
       <React.Fragment>
-        {tasksHasProject}
+        {renderTasks}
       </React.Fragment>
     )
   }

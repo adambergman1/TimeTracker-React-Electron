@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import uuid from 'uuid'
+import deleteIcon from '../images/delete.svg'
 
 
 class AddTask extends Component {
@@ -9,6 +10,10 @@ class AddTask extends Component {
     parent: '',
     elapsed: 0,
     created: ''
+  }
+
+  componentWillUnmount () {
+    this.setState({ error: '', success: '' })
   }
 
   handleChange = e => {
@@ -27,26 +32,32 @@ class AddTask extends Component {
         elapsed: this.state.elapsed,
         created: new Date().toString()
       })
-      this.setState({ id: '', title: '', parent: '', created: '', elapsed: 0, error: '' })
-      this.showTempMessage('Project successfully added')
+      this.setState({ id: '', title: '', parent: '', created: '', elapsed: 0, success: 'Project successfully added', error: '' })
     } else {
-      this.setState({ error: 'A task with the same name already exists. Please change the name of your new task.' })
+      this.setState({ success: '', error: 'A task with the same name already exists. Please change the name of your new task.' })
     }
   }
 
-  showTempMessage = (msg) => {
-    this.setState({success: msg})
-    setTimeout(() => this.setState({success: ''}), 2500)
+  hideMessage = () => {
+    this.setState({success: '', error: ''})
   }
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
-      {this.state.error && <span className='error'>{this.state.error}</span>}
-      {this.state.success && <span className='success'>{this.state.success}</span>}
-      
+      <React.Fragment>
+      {this.state.error || this.state.success ? 
+        <div className="col s12 right-align">
+          <span className={this.state.error ? 'error' : this.state.success ? 'success' : ''}
+          >{this.state.error ? this.state.error : this.state.success ? this.state.success : ''}</span>
+
+          <button className="btn-flat" onClick={this.hideMessage}><img src={deleteIcon} alt="Close"/></button>
+        </div>
+      : ''}
+      <form className="col s12" onSubmit={this.handleSubmit}>
         <input type="text" onChange={this.handleChange} value={this.state.title} placeholder="What are you working on?" minLength="1" required />
       </form>
+      
+      </React.Fragment>
     )
   }
 }
