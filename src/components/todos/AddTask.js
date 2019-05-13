@@ -13,7 +13,7 @@ class AddTask extends Component {
   }
 
   componentWillUnmount () {
-    this.setState({ error: '', success: '' })
+    this.setState({ error: null, success: null })
   }
 
   handleChange = e => {
@@ -32,27 +32,31 @@ class AddTask extends Component {
         elapsed: this.state.elapsed,
         created: new Date().toString()
       })
-      this.setState({ id: '', title: '', parent: '', created: '', elapsed: 0, success: 'Project successfully added', error: '' })
+      this.setState({ id: '', title: '', parent: '', created: '', elapsed: 0, success: 'Project successfully added', error: null })
     } else {
-      this.setState({ success: '', error: 'A task with the same name already exists. Please change the name of your new task.' })
+      this.setState({ success: null, error: 'A task with the same name already exists. Please change the name of your new task.' })
     }
   }
 
   hideMessage = () => {
-    this.setState({success: '', error: ''})
+    this.setState({success: null, error: null})
   }
 
   render () {
+    const { error, success } = this.state
+    
+    const message = error || success ? (
+      <div className="col s12 right-align">
+        <span className={error ? 'error' : success ? 'success' : ''}>
+          {error ? error : success ? success : ''}
+        </span>
+        <button className="btn-flat" onClick={this.hideMessage}><img src={deleteIcon} alt="Close"/></button>
+      </div>
+      ) : ''
+
     return (
       <React.Fragment>
-      {this.state.error || this.state.success ? 
-        <div className="col s12 right-align">
-          <span className={this.state.error ? 'error' : this.state.success ? 'success' : ''}
-          >{this.state.error ? this.state.error : this.state.success ? this.state.success : ''}</span>
-
-          <button className="btn-flat" onClick={this.hideMessage}><img src={deleteIcon} alt="Close"/></button>
-        </div>
-      : ''}
+      {message}
       <form className="col s12" onSubmit={this.handleSubmit}>
         <input type="text" onChange={this.handleChange} value={this.state.title} placeholder="What are you working on?" minLength="1" required />
       </form>

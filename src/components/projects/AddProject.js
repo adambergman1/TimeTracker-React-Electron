@@ -35,6 +35,13 @@ class AddProject extends Component {
   }
 
   render () {
+    const { error, success } = this.state
+
+    const message = error || success ? (
+      <div className="col s12 right-align">
+        <span className={error ? 'error' : success ? 'success' : ''}></span>
+      </div>
+    ) : ''
     return (
       <React.Fragment>
         {this.state.error || this.state.success ? 
