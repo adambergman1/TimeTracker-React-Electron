@@ -13,7 +13,7 @@ class AddTask extends Component {
   }
 
   componentWillUnmount () {
-    this.setState({ error: null, success: null })
+    this.setState({ error: null })
   }
 
   handleChange = e => {
@@ -32,24 +32,22 @@ class AddTask extends Component {
         elapsed: this.state.elapsed,
         created: new Date().toString()
       })
-      this.setState({ id: '', title: '', parent: '', created: '', elapsed: 0, success: 'Project successfully added', error: null })
+      this.setState({ id: '', title: '', parent: '', created: '', elapsed: 0, error: null })
     } else {
-      this.setState({ success: null, error: 'A task with the same name already exists. Please change the name of your new task.' })
+      this.setState({ error: 'The name must be unique. Please change the it.' })
     }
   }
 
   hideMessage = () => {
-    this.setState({success: null, error: null})
+    this.setState({ error: null })
   }
 
   render () {
-    const { error, success } = this.state
+    const { error } = this.state
     
-    const message = error || success ? (
+    const message = error ? (
       <div className="col s12 right-align">
-        <span className={error ? 'error' : success ? 'success' : ''}>
-          {error ? error : success ? success : ''}
-        </span>
+        <span className={error && 'error'}>{error && error}</span>
         <button className="btn-flat" onClick={this.hideMessage}><img src={deleteIcon} alt="Close"/></button>
       </div>
       ) : ''
@@ -60,7 +58,6 @@ class AddTask extends Component {
       <form className="col s12" onSubmit={this.handleSubmit}>
         <input type="text" onChange={this.handleChange} value={this.state.title} placeholder="What are you working on?" minLength="1" required />
       </form>
-      
       </React.Fragment>
     )
   }

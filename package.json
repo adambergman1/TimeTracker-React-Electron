@@ -1,26 +1,29 @@
 {
-  "name": "complete-react-tutorial",
+  "name": "time-tracker",
+  "description": "The simple way of tracking time",
+  "author": "Adam Bergman",
   "version": "0.1.0",
   "private": true,
-  "main": "public/electron-starter.js",
   "homepage": "./",
   "dependencies": {
     "electron-is-dev": "^1.1.0",
     "react": "^16.8.6",
-    "react-datepicker": "^2.4.0",
+    "react-datepicker": "^2.5.0",
     "react-dom": "^16.8.6",
-    "react-materialize": "^3.0.5",
+    "react-materialize": "^3.3.0",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
+    "react-scripts": "3.0.1",
     "uuid": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "electron": "electron .",
-    "electron-dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\""
+    "electron-dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
+    "electron-dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -36,8 +39,30 @@
   ],
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "electron": "^5.0.0",
+    "electron": "^5.0.1",
+    "electron-builder": "^20.40.2",
     "react-test-renderer": "^16.8.6",
+    "typescript": "^3.4.5",
     "wait-on": "^3.2.0"
+  },
+  "main": "public/electron.js",
+  "build": {
+    "productName": "TimeTracker",
+    "appId": "com.timeTracker.app",
+    "directories": {
+      "buildResources": "assets",
+      "output": "release"
+    },
+    "files": [ "build/**/*", "node_modules/**/*" ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "build/appIcon.png",
+      "darkModeSupport": "true",
+      "publish": {
+        "provider": "github",
+        "owner": "Adam Bergman"
+      },
+      "target": ["dmg"]
+    }
   }
 }

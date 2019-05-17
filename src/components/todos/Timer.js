@@ -54,7 +54,6 @@ class Timer extends Component {
           timer,
           start: new Date(),
         })
-
     } else { // Stop/pause timer
       clearInterval(this.state.timer)
       this.props.onTimerUpdate({

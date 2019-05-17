@@ -128,9 +128,9 @@ class Tasks extends Component {
 
     const renderTasks = this.state.project_id.length ? (
       <React.Fragment>
-        <div className="col m6 padding-up-and-down left">
+        {/* <div className="col m6 padding-up-and-down left">
           <h4 className="task-header">{this.props.project.projectName}</h4>
-        </div>
+        </div> */}
         <AddTask addTask={this.addTask} tasks={this.state.tasks} projectId={this.state.project_id} />
         
         <div className="col s12 collection">

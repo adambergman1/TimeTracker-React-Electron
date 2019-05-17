@@ -53,8 +53,6 @@ class Home extends Component {
 
     const allExceptEdited = deleteItemFromArray(editedProject.id, this.state.projects)
     const projects = addItemToArray(project, allExceptEdited)
-    console.log('project', project);
-    console.log('allExceptEdited', allExceptEdited)
 
     this.setState({ projects })
 
@@ -65,16 +63,33 @@ class Home extends Component {
   renderTasks = () => {
     return (
       <React.Fragment>
-        <div className="col m6 padding-up-and-down right">
-          <SideNav trigger={<Button className="right">All projects</Button>} options={{closeOnClick: true}}>
-            <Modal trigger={<Button>Add new project</Button>}>
-              <AddProject addProject={this.addProject} projects={this.state.projects} />
-            </Modal>
-            <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.setSelectedProject} editProject={this.editProject} />
-          </SideNav>
+        <div className="section red darken-3">
+          <div className="container">
+            <div className="row">
+              <div className="col s12 flex align-items-center">
+                <div className="col m6">
+                  <h4 className="page-title">{this.state.selectedProject.projectName}</h4>
+                </div>
+                <div className="col m6">
+                  <SideNav trigger={<Button className="right green darken-1">All projects</Button>} options={{closeOnClick: true}}>
+                    <Modal trigger={<Button>+ Add new project</Button>}>
+                      <AddProject addProject={this.addProject} projects={this.state.projects} />
+                    </Modal>
+                    <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.setSelectedProject} editProject={this.editProject} />
+                    <button className="btn grey waves-effect" onClick={() => this.setState({selectedProject: null })}>All projects</button>
+                  </SideNav>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <Tasks project={this.state.selectedProject}></Tasks>
+        <div className="section">
+          <div className="container">
+            <div className="row">
+             <Tasks project={this.state.selectedProject}></Tasks>
+            </div>
+          </div>
+        </div>
       </React.Fragment>
     )
   }
@@ -82,16 +97,30 @@ class Home extends Component {
   renderProjects = () => {
     return (
       <React.Fragment>
-        <div className="col m6 padding-up-and-down">
-            <h4>Projects</h4>
+        <div className="section red darken-3">
+          <div className="container home">
+            <div className="row">
+              <div className="col s12 flex align-items-center">
+                <div className="col m6">
+                    <h4 className="page-title">Projects</h4>
+                </div>
+                <div className="col m6">
+                  <Modal trigger={<Button className="btn-small right green darken-1">+ Add project</Button>}>
+                    <AddProject addProject={this.addProject} projects={this.state.projects} />
+                  </Modal>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="col m6 padding-up-and-down right">
-            <Modal trigger={<Button className="right">+ Add</Button>}>
-              <AddProject addProject={this.addProject} projects={this.state.projects} />
-            </Modal>
-        </div>
-        <div className="col s12">
-          <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.setSelectedProject} editProject={this.editProject} />
+        <div className="section">
+          <div className="container home">
+            <div className="row">
+              <div className="col s12">
+                <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.setSelectedProject} editProject={this.editProject} />
+              </div>
+            </div>
+          </div>
         </div>
       </React.Fragment>
     )
@@ -101,13 +130,7 @@ class Home extends Component {
   render () {
     return (
       <main>
-        <div className="section">
-        <div className="container home">
-          <div className="row">  
             {this.state.selectedProject ? this.renderTasks() : this.renderProjects()}
-            </div>
-          </div>
-        </div>
       </main>
     )
   }

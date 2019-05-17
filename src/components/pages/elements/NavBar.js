@@ -7,10 +7,7 @@ const NavBar = () => {
       <div className='container'>
         <a href='/' className='brand-logo'>Time Tracker</a>
         <ul className='right'>
-          {/* <li><NavLink to='/'>Home</NavLink></li> */}
           <li><NavLink to='/Reports'>Reports</NavLink></li>
-          {/* <li><NavLink to='/About'>About</NavLink></li>
-          <li><NavLink to='/Contact'>Contact</NavLink></li> */}
         </ul>
       </div>
     </nav>

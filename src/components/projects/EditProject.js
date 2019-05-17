@@ -33,11 +33,6 @@ class EditProject extends Component {
     }
   }
 
-  // showTempMessage = (msg) => {
-  //   this.setState({success: msg})
-  //   setTimeout(() => this.setState({success: ''}), 2500)
-  // }
-
   render () {
     return (
       <form onSubmit={this.handleSubmit}>
