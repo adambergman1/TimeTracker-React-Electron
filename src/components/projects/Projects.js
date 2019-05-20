@@ -20,7 +20,7 @@ const Projects = ({ projects, deleteProject, selectedProject, editProject }) => 
           </div>
 
           <div className='rate col s2'>
-            <span>{project.rate}</span>
+            <span>{project.rate} {project.rate ? '$' : ''}</span>
           </div>
 
           <div className='actions col s2 right-align'>
