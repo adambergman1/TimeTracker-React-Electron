@@ -1,6 +1,4 @@
 import React from 'react'
-import titleIcon from '../images/title.svg'
-import moneyIcon from '../images/money.svg'
 import editIcon from '../images/edit.svg'
 import arrowRightIcon from '../images/arrow-right.svg'
 import { Modal } from 'react-materialize'

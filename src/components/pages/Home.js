@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Projects from '../projects/Projects'
 import AddProject from '../projects/AddProject'
 import Tasks from '../todos/Tasks'
-import { Modal, Button, SideNav } from 'react-materialize'
+import { Modal, Button, SideNav, Icon } from 'react-materialize'
+import hamburgerIcon from '../images/outline-menu.png'
 import { addItemToArray, deleteItemFromArray, saveToLocalStorage, findInLocalStorage, removeFromLocalStorage } from '../../lib/crudHelpers'
 // const { ipcRenderer } = window.require('electron')
 import isElectron from '../../lib/isElectron'
@@ -17,12 +18,9 @@ class Home extends Component {
     if (localStorage.hasOwnProperty('project')) {
       this.setState({ projects: findInLocalStorage('project') })
     }
-
     if (isElectron()) {
       window.ipcRenderer.on('add-project', () => {
-        console.log('Message received')
-        // const popup = document.querySelector('#add-project')
-        // window.M.Dropdown.init(popup)
+        this.showModal()
       })
     }
   }
@@ -76,19 +74,17 @@ class Home extends Component {
         <div className="section red darken-3">
           <div className="container">
             <div className="row">
-              <div className="col s12 flex align-items-center">
-                <div className="col m6">
-                  <h4 className="page-title">{this.state.selectedProject.projectName}</h4>
-                </div>
-                <div className="col m6">
-                  <SideNav trigger={<Button className="right green darken-1">All projects</Button>} options={{closeOnClick: true}}>
-                    <Modal trigger={<Button>+ Add new project</Button>}>
-                      <AddProject addProject={this.addProject} projects={this.state.projects} />
-                    </Modal>
-                    <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.setSelectedProject} editProject={this.editProject} />
-                    <button className="btn grey waves-effect" onClick={() => this.setState({selectedProject: null })}>All projects</button>
-                  </SideNav>
-                </div>
+              <div className="absolute">
+                <SideNav trigger={<Button className="btn-small green darken-2">All projects</Button>} options={{closeOnClick: true}}>
+                  <Modal trigger={<Button>+ Add new project</Button>}>
+                    <AddProject addProject={this.addProject} projects={this.state.projects} />
+                  </Modal>
+                  <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.setSelectedProject} editProject={this.editProject} />
+                  <button className="btn grey waves-effect" onClick={() => this.setState({selectedProject: null })}>All projects</button>
+                </SideNav>
+              </div>
+              <div className="col s12">
+                <h4 className="page-title center-align">{this.state.selectedProject.projectName}</h4>
               </div>
             </div>
           </div>
@@ -110,21 +106,21 @@ class Home extends Component {
         <div className="section red darken-3">
           <div className="container home">
             <div className="row">
-              <div className="col s12 flex align-items-center">
-                <div className="col m6">
-                    <h4 className="page-title">Projects</h4>
-                </div>
-                <div className="col m6">
-                  <Modal id="add-project" trigger={<Button className="btn-small right green darken-1">+ Add project</Button>}>
-                    <AddProject addProject={this.addProject} projects={this.state.projects} />
-                  </Modal>
-                </div>
+              <div className="col s12">
+                <h4 className="page-title center-align">Projects</h4>
               </div>
             </div>
           </div>
         </div>
         <div className="section">
           <div className="container home">
+            <div className="row center">
+                  <Modal open={this.state.isModalOpen} className="modal" trigger={
+                  <Button onClick={this.showModal} className="btn-small green darken-1">+ Add project</Button>
+                  }>
+                    <AddProject addProject={this.addProject} projects={this.state.projects} />
+                  </Modal>
+                </div>
             <div className="row">
               <div className="col s12">
                 <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.setSelectedProject} editProject={this.editProject} />
@@ -136,11 +132,14 @@ class Home extends Component {
     )
   }
 
+  showModal = () => {
+    this.setState({isModalOpen: true }, this.setState({ isModalOpen: false }))
+  }
 
-  render () {
+  render () {  
     return (
       <main>
-            {this.state.selectedProject ? this.renderTasks() : this.renderProjects()}
+        {this.state.selectedProject ? this.renderTasks() : this.renderProjects()}
       </main>
     )
   }

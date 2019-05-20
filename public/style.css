@@ -103,8 +103,9 @@ body {
     border: 0;
     cursor: pointer;
     font-family: inherit;
-    color: #039be5;
+    /* color: #039be5; */
     text-decoration: none;
+    font-weight: 500;
   }
 
   .link:focus {
@@ -194,18 +195,18 @@ body {
     color: #fff;
     font-size: 22px;
     margin: 0;
-    display: inline-block;
-    position: relative;
   }
 
-  .page-title:after {
-    content: " ";
-    width: 80px;
-    height: 2px;
-    background: #fff;
+  .absolute {
     position: absolute;
-    bottom: -15px;
-    left: 0;
+  }
+
+  .uppercase {
+    text-transform: uppercase;
+  }
+
+  a {
+    cursor: pointer;
   }
 
 @media only screen and (max-width: 992px) {
