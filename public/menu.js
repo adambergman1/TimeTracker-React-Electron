@@ -1,4 +1,4 @@
-module.exports = function applicationMenu (appName) {
+module.exports = function applicationMenu (appName, mainWindow) {
   const appMenu = [
     {
       label: 'Projects',
@@ -6,7 +6,7 @@ module.exports = function applicationMenu (appName) {
         {
           label: 'New project',
           accelerator: 'CmdOrCtrl+N',
-          click: () => console.log('Adding new project')
+          click: () => mainWindow.webContents.send('add-project')
         },
         {
           label: 'All projects',
@@ -20,40 +20,24 @@ module.exports = function applicationMenu (appName) {
       submenu: [
         {
           label: 'View reports',
-          click: () => { console.log('Viewing reports page ') }
+          click: () => {
+            console.log('Sending reports...')
+          }
         }
       ]
     },
     {
       label: 'Edit',
       submenu: [
-        {
-          role: 'undo'
-        },
-        {
-          role: 'redo'
-        },
-        {
-          type: 'separator'
-        },
-        {
-          role: 'cut'
-        },
-        {
-          role: 'copy'
-        },
-        {
-          role: 'paste'
-        },
-        {
-          role: 'pasteandmatchstyle'
-        },
-        {
-          role: 'delete'
-        },
-        {
-          role: 'selectall'
-        }
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'pasteandmatchstyle' },
+        { role: 'delete' },
+        { role: 'selectall' }
       ]
     },
     {
@@ -86,34 +70,15 @@ module.exports = function applicationMenu (appName) {
     appMenu.unshift({
       label: appName,
       submenu: [
-        {
-          role: 'about'
-        },
-        {
-          type: 'separator'
-        },
-        {
-          role: 'services',
-          submenu: []
-        },
-        {
-          type: 'separator'
-        },
-        {
-          role: 'hide'
-        },
-        {
-          role: 'hideothers'
-        },
-        {
-          role: 'unhide'
-        },
-        {
-          type: 'separator'
-        },
-        {
-          role: 'quit'
-        }
+        { role: 'about' },
+        { type: 'separator' },
+        { role: 'services', submenu: [] },
+        { type: 'separator' },
+        { role: 'hide' },
+        { role: 'hideothers' },
+        { role: 'unhide' },
+        { type: 'separator' },
+        { role: 'quit' }
       ]
     })
   }

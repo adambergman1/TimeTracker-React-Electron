@@ -18,10 +18,10 @@ function createWindow () {
     height: 600,
     title: appName,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      preload: path.join(__dirname, 'preload.js')
     }
   })
-  mainWindow.setTitle(appName)
   isDev ? mainWindow.loadURL('http://localhost:3000') : mainWindow.loadFile('build/index.html')
 
   // Open the DevTools.
@@ -44,12 +44,8 @@ app.on('ready', async () => {
   tray = new Tray(appIcon)
   tray.setToolTip(appName)
 
-  const menu = Menu.buildFromTemplate(applicationMenu(appName))
+  const menu = Menu.buildFromTemplate(applicationMenu(appName, mainWindow))
   Menu.setApplicationMenu(menu)
-
-  if (isDev) {
-    console.log('Running in dev mode ')
-  }
 })
 
 // Quit when all windows are closed.

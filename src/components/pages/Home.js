@@ -4,6 +4,8 @@ import AddProject from '../projects/AddProject'
 import Tasks from '../todos/Tasks'
 import { Modal, Button, SideNav } from 'react-materialize'
 import { addItemToArray, deleteItemFromArray, saveToLocalStorage, findInLocalStorage, removeFromLocalStorage } from '../../lib/crudHelpers'
+// const { ipcRenderer } = window.require('electron')
+import isElectron from '../../lib/isElectron'
 
 
 class Home extends Component {
@@ -14,6 +16,15 @@ class Home extends Component {
   componentWillMount() {
     if (localStorage.hasOwnProperty('project')) {
       this.setState({ projects: findInLocalStorage('project') })
+    }
+
+    if (isElectron()) {
+      window.ipcRenderer.on('add-project', () => {
+        console.log('Message received')
+        return (
+          <AddProject addProject={this.addProject} projects={this.state.projects} />
+        )
+      })
     }
   }
 
