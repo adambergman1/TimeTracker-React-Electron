@@ -97,6 +97,7 @@ class Tasks extends Component {
             </div>
             <div className="col s3 flex">
             
+            <img src={timerIcon} alt='Timer' className='non-clickable-icon' />
             {manualTimerUpdate && manualTimerUpdate.id === task.id ? 
               <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} onManualUpdate={manualTimerUpdate} /> :
               <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} /> 
@@ -134,7 +135,7 @@ class Tasks extends Component {
         <AddTask addTask={this.addTask} tasks={this.state.tasks} projectId={this.state.project_id} />
         
         <div className="col s12 collection">
-          <div className="collection-heading row">
+          {/* <div className="collection-heading row">
             <div className='col s5'>
               <img src={titleIcon} alt='Name' className='icon' />
             </div>
@@ -147,7 +148,7 @@ class Tasks extends Component {
             <div className='col s1'>
               <img src={deleteIcon} alt='Remove' className='icon right' />
             </div>
-        </div>
+        </div> */}
           {tasksToDisplay}
         </div>
       </React.Fragment>

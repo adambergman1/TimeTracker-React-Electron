@@ -14,6 +14,12 @@ body {
     vertical-align: middle;
   }
 
+  .non-clickable-icon {
+    vertical-align: middle;
+    opacity: 0.5;
+    width: 16px;
+  }
+
   .collection-heading {
     font-weight: bold;
     padding: 10px;
