@@ -11,7 +11,7 @@ module.exports = function applicationMenu (appName, mainWindow) {
         {
           label: 'All projects',
           accelerator: 'CmdOrCtrl+V',
-          click: () => console.log('Viewing all projects')
+          click: () => mainWindow.webContents.send('show-all-projects')
         }
       ]
     },

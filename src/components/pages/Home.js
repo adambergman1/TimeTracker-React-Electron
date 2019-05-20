@@ -20,7 +20,12 @@ class Home extends Component {
     }
     if (isElectron()) {
       window.ipcRenderer.on('add-project', () => {
+        this.setState({ selectedProject: '' })
         this.showModal()
+      })
+      window.ipcRenderer.on('show-all-projects', () => {
+        console.log('Show all projects')
+        this.setState({ selectedProject: '' })
       })
     }
   }
@@ -76,11 +81,11 @@ class Home extends Component {
             <div className="row">
               <div className="absolute">
                 <SideNav trigger={<Button className="btn-small green darken-2">All projects</Button>} options={{closeOnClick: true}}>
-                  <Modal trigger={<Button>+ Add new project</Button>}>
-                    <AddProject addProject={this.addProject} projects={this.state.projects} />
-                  </Modal>
+                    <Modal trigger={<Button>+ Add new project</Button>}>
+                      <AddProject addProject={this.addProject} projects={this.state.projects} />
+                    </Modal>
                   <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.setSelectedProject} editProject={this.editProject} />
-                  <button className="btn grey waves-effect" onClick={() => this.setState({selectedProject: null })}>All projects</button>
+                  <Button className="btn grey waves-effect" onClick={() => this.setState({selectedProject: '', isModalOpen: false })}>All projects</Button>
                 </SideNav>
               </div>
               <div className="col s12">
@@ -115,7 +120,7 @@ class Home extends Component {
         <div className="section">
           <div className="container home">
             <div className="row center">
-                  <Modal open={this.state.isModalOpen} className="modal" trigger={
+                  <Modal open={this.state.isModalOpen} trigger={
                   <Button onClick={this.showModal} className="btn-small green darken-1">+ Add project</Button>
                   }>
                     <AddProject addProject={this.addProject} projects={this.state.projects} />
