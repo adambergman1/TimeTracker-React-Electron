@@ -121,8 +121,7 @@ class Home extends Component {
           <div className="container home">
             <div className="row center">
                   <Modal open={this.state.isModalOpen} trigger={
-                  <Button onClick={this.showModal} className="btn-small green darken-1">+ Add project</Button>
-                  }>
+                  <Button onClick={this.showModal} className="btn-small green darken-1">+ Add project</Button>}>
                     <AddProject addProject={this.addProject} projects={this.state.projects} />
                   </Modal>
                 </div>
