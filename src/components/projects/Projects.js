@@ -43,17 +43,6 @@ const Projects = ({ projects, deleteProject, selectedProject, editProject }) => 
 
   return (
     <div className='projects collection'>
-      <div className='collection-heading row'>
-        <div className='col s8'>
-          <img src={titleIcon} alt='Name' className='icon' />
-        </div>
-        <div className='col s2'>
-          <img src={moneyIcon} alt='Hourly rate' className='icon' />
-        </div>
-        <div className='col s2'>
-          <img src={editIcon} alt='Edit' className='icon right' />
-        </div>
-      </div>
       {projectList}
     </div>
   )

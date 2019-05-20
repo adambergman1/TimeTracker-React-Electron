@@ -21,9 +21,8 @@ class Home extends Component {
     if (isElectron()) {
       window.ipcRenderer.on('add-project', () => {
         console.log('Message received')
-        return (
-          <AddProject addProject={this.addProject} projects={this.state.projects} />
-        )
+        // const popup = document.querySelector('#add-project')
+        // window.M.Dropdown.init(popup)
       })
     }
   }
@@ -116,7 +115,7 @@ class Home extends Component {
                     <h4 className="page-title">Projects</h4>
                 </div>
                 <div className="col m6">
-                  <Modal trigger={<Button className="btn-small right green darken-1">+ Add project</Button>}>
+                  <Modal id="add-project" trigger={<Button className="btn-small right green darken-1">+ Add project</Button>}>
                     <AddProject addProject={this.addProject} projects={this.state.projects} />
                   </Modal>
                 </div>
