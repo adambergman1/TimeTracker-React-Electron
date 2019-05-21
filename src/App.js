@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import { addItemToArray, deleteItemFromArray, saveToLocalStorage, findInLocalStorage, removeFromLocalStorage } from './lib/crudHelpers'
 import isElectron from './lib/isElectron'
-import ProjectPage from './components/pages/Projects'
+import ProjectPage from './components/pages/ProjectPage'
 import TaskPage from './components/pages/TaskPage'
 import Reports from './components/pages/Reports'
 
 
 class App extends Component {
   state = {
-    projects: []
+    projects: [],
+    showProjects: true,
+    selectedProject: null,
+    showReports: null
   }
 
   componentDidMount() {
@@ -18,17 +21,14 @@ class App extends Component {
 
     if (isElectron()) {
       window.ipcRenderer.on('add-project', () => {
-        console.log('Adding project');
-        // this.setState({ selectedProject: '' })
-        // this.showModal()
+        this.setState({ selectedProject: '', showProjects: true, showReports: false })
+        this.showModal()
       })
       window.ipcRenderer.on('show-all-projects', () => {
-        console.log('Showing all projects');
-        // this.setState({ selectedProject: '', isModalOpen: false })
+        this.setState({ selectedProject: '', showProjects: true, isModalOpen: false, showReports: false })
       })
       window.ipcRenderer.on('view-reports', () => {
-        console.log('Viewing reports from App')
-        this.setState({showReports: true})
+        this.setState({ showReports: true, selectedProject: null, showProjects: null })
       })
     }
   }
@@ -55,7 +55,7 @@ class App extends Component {
   }
 
   setSelectedProject = (projectName, projectId) => {
-      this.setState({ selectedProject: '' }, () => {
+      this.setState({ selectedProject: '', showProjects: null, showReports: null }, () => {
         this.setState({ selectedProject: {projectName, projectId}})
       })
   }
@@ -88,15 +88,13 @@ class App extends Component {
     setSelectedProject: this.setSelectedProject
   })
 
-  render () {  
+  render () {
+    const { selectedProject, showReports, showProjects } = this.state
     return (
       <main>
-        {this.state.selectedProject
-          ? <TaskPage {...this.getProps()} setState={this.setState.bind(this)} />
-          : <ProjectPage {...this.getProps()} />
-        }
-        
-        {this.state.showReports && <Reports />}
+        {showProjects && <ProjectPage {...this.getProps()} /> }
+        {selectedProject && <TaskPage {...this.getProps()} setState={this.setState.bind(this)} />}
+        {showReports && <Reports />}
       </main>
     )
   }

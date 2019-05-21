@@ -14,8 +14,15 @@ export default ({ addProject, state, deleteProject, editProject, setState, setSe
               <Modal trigger={<Button>+ Add new project</Button>}>
                 <AddProject addProject={addProject} projects={state.projects} />
               </Modal>
-              <Projects projects={state.projects} deleteProject={deleteProject} selectedProject={setSelectedProject} editProject={editProject} />
-              <Button className='btn grey waves-effect' onClick={() => setState({ selectedProject: '', isModalOpen: false })}>All projects</Button>
+              <Projects
+                projects={state.projects}
+                deleteProject={deleteProject}
+                selectedProject={setSelectedProject}
+                editProject={editProject}
+              />
+              <Button
+                className='btn grey waves-effect'
+                onClick={() => setState({ selectedProject: '', isModalOpen: false, showProjects: true })}>All projects</Button>
             </SideNav>
           </div>
           <div className='col s12'>
