@@ -22,6 +22,7 @@ module.exports = function applicationMenu (appName, mainWindow) {
           label: 'View reports',
           click: () => {
             console.log('Sending reports...')
+            mainWindow.webContents.send('view-reports')
           }
         }
       ]

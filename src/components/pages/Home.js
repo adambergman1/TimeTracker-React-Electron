@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
-import Projects from '../projects/Projects'
-import AddProject from '../projects/AddProject'
-import Tasks from '../todos/Tasks'
-import { Modal, Button, SideNav, Icon } from 'react-materialize'
-import hamburgerIcon from '../images/outline-menu.png'
 import { addItemToArray, deleteItemFromArray, saveToLocalStorage, findInLocalStorage, removeFromLocalStorage } from '../../lib/crudHelpers'
-// const { ipcRenderer } = window.require('electron')
 import isElectron from '../../lib/isElectron'
+import ProjectPage from './Projects'
+import TaskPage from '../pages/TaskPage'
 
 
 class Home extends Component {
@@ -14,20 +10,22 @@ class Home extends Component {
     projects: []
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (localStorage.hasOwnProperty('project')) {
       this.setState({ projects: findInLocalStorage('project') })
     }
-    if (isElectron()) {
-      window.ipcRenderer.on('add-project', () => {
-        this.setState({ selectedProject: '' })
-        this.showModal()
-      })
-      window.ipcRenderer.on('show-all-projects', () => {
-        console.log('Show all projects')
-        this.setState({ selectedProject: '' })
-      })
-    }
+    // if (isElectron()) {
+    //   window.ipcRenderer.on('add-project', () => {
+    //     this.setState({ selectedProject: '' })
+    //     this.showModal()
+    //   })
+    //   window.ipcRenderer.on('show-all-projects', () => {
+    //     this.setState({ selectedProject: '', isModalOpen: false })
+    //   })
+    //   window.ipcRenderer.on('view-reports', () => {
+    //     this.props.history.push('/Reports')
+    //   })
+    // }
   }
 
   deleteProject = ({id}) => {
@@ -73,68 +71,24 @@ class Home extends Component {
     saveToLocalStorage('project', projects)
   }
 
-  renderTasks = () => {
-    return (
-      <React.Fragment>
-        <div className="section red darken-3">
-          <div className="container">
-            <div className="row">
-              <div className="absolute">
-                <SideNav trigger={<Button className="btn-small green darken-2">All projects</Button>} options={{closeOnClick: true}}>
-                    <Modal trigger={<Button>+ Add new project</Button>}>
-                      <AddProject addProject={this.addProject} projects={this.state.projects} />
-                    </Modal>
-                  <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.setSelectedProject} editProject={this.editProject} />
-                  <Button className="btn grey waves-effect" onClick={() => this.setState({selectedProject: '', isModalOpen: false })}>All projects</Button>
-                </SideNav>
-              </div>
-              <div className="col s12">
-                <h4 className="page-title center-align">{this.state.selectedProject.projectName}</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="section">
-          <div className="container">
-            <div className="row">
-             <Tasks project={this.state.selectedProject}></Tasks>
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
-    )
-  }
+  renderTasks = () =>
+    <TaskPage
+      addProject={this.addProject}
+      state={this.state}
+      deleteProject={this.deleteProject}
+      editProject={this.editProject}
+      setState={this.setState.bind(this)}
+      setSelectedProject={this.setSelectedProject}
+    />
 
-  renderProjects = () => {
-    return (
-      <React.Fragment>
-        <div className="section red darken-3">
-          <div className="container home">
-            <div className="row">
-              <div className="col s12">
-                <h4 className="page-title center-align">Projects</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="section">
-          <div className="container home">
-            <div className="row center">
-                  <Modal open={this.state.isModalOpen} trigger={
-                  <Button onClick={this.showModal} className="btn-small green darken-1">+ Add project</Button>}>
-                    <AddProject addProject={this.addProject} projects={this.state.projects} />
-                  </Modal>
-                </div>
-            <div className="row">
-              <div className="col s12">
-                <Projects projects={this.state.projects} deleteProject={this.deleteProject} selectedProject={this.setSelectedProject} editProject={this.editProject} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
-    )
-  }
+  renderProjects = () => 
+  <ProjectPage
+    addProject={this.addProject}
+    state={this.state}
+    deleteProject={this.deleteProject}
+    editProject={this.editProject}
+    setSelectedProject={this.setSelectedProject}
+    />
 
   showModal = () => {
     this.setState({isModalOpen: true }, this.setState({ isModalOpen: false }))
