@@ -17,14 +17,20 @@ const ProjectPage = ({ addProject, state, showModal, deleteProject, setSelectedP
     <div className='section'>
       <div className='container home'>
         <div className='row center'>
-          <Modal open={state.isModalOpen} trigger={
-            <Button onClick={showModal} className='btn-small green darken-1'>+ Add project</Button>}>
+          <Modal
+            open={state.isModalOpen}
+            trigger={<Button onClick={showModal} className='btn-small green darken-1'>+ Add project</Button>}
+          >
             <AddProject addProject={addProject} projects={state.projects} />
           </Modal>
         </div>
         <div className='row'>
           <div className='col s12'>
-            <Projects projects={state.projects} deleteProject={deleteProject} selectedProject={setSelectedProject} editProject={editProject} />
+            <Projects
+              projects={state.projects}
+              deleteProject={deleteProject}
+              selectedProject={setSelectedProject}
+              editProject={editProject} />
           </div>
         </div>
       </div>
