@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Select, Modal, Button } from 'react-materialize'
 import currencyList from '../../lib/currencies.js'
-import { findInLocalStorage, saveToLocalStorage, removeFromLocalStorage, findItemInArray } from '../../lib/crudHelpers'
+import { findInLocalStorage, saveToLocalStorage, removeFromLocalStorage } from '../../lib/crudHelpers'
 
 class SetCurrency extends Component {
   state = {

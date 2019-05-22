@@ -88,8 +88,9 @@ class Timer extends Component {
         onClick={this.onClick} 
         src={isStart ? pauseIcon : startIcon} 
         alt={isStart ? 'Pause timer' : 'Start timer'} 
-        className="icon"
+        className="icon timer-icon"
         />
+
         {/* <button className="btn red" onClick={this.resetTimer}>Reset</button> */}
       </React.Fragment>
     )

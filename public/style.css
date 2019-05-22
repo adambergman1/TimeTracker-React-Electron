@@ -52,11 +52,16 @@ body {
   .elapsed-time {
     padding-right: 5px;
     color: #555;
+    font-size: 16px;
   }
   
   .elapsed-time.counting {
     color: #000;
-    font-size: 140%;
+    font-size: 130%;
+  }
+
+  .timer-icon {
+    width: 32px;
   }
 
   .collection-item .task-title::-webkit-scrollbar, .collection-item .project-title::-webkit-scrollbar,  .collection-item .project-name::-webkit-scrollbar, .task-header::-webkit-scrollbar {
@@ -117,29 +122,12 @@ body {
     justify-content: space-between;
   }
 
+  .flex-end {
+    justify-content: flex-end;
+  }
+
   .align-items-center {
     align-items: center;
-  }
-
-  .list-of-projects {
-    width: 30%;
-  }
-
-  .list-of-tasks {
-    width: 70%;
-  }
-
-  .inline-block {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .inline-block > div {
-    display: inline-block;
-  }
-
-  .inline-block > div .btn {
-    margin-left: 5%;
   }
 
   .padding-up-and-down {
@@ -177,7 +165,7 @@ body {
   }
 
   .collection .collection-item {
-    padding: 10px !important;
+    padding: 10px 0 !important;
   }
 
   .overlay {
@@ -219,6 +207,10 @@ body {
     position: absolute;
     top: 2px;
     right: 2px;
+  }
+
+  .edit-icon {
+    opacity: 0.5;
   }
 
 @media only screen and (max-width: 992px) {
