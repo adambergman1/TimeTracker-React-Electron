@@ -11,6 +11,7 @@ import ProjectPage from './components/pages/ProjectPage'
 import TaskPage from './components/pages/TaskPage'
 import Reports from './components/pages/Reports'
 import SideNavigation from './components/SideNavigation'
+import SetCurrency from './components/projects/SetCurrency'
 
 class App extends Component {
   state = {
@@ -30,7 +31,7 @@ class App extends Component {
         this.setState({
           selectedProject: null,
           showProjects: true,
-          showReports: false
+          showReports: null
         })
         this.showModal()
       })
@@ -38,15 +39,16 @@ class App extends Component {
         this.setState({
           selectedProject: null,
           showProjects: true,
-          isModalOpen: false,
-          showReports: false
+          showReports: null,
+          isModalOpen: false
         })
       })
       window.ipcRenderer.on('view-reports', () => {
         this.setState({
           showReports: true,
           selectedProject: null,
-          showProjects: null
+          showProjects: null,
+          isModalOpen: false
         })
       })
     }
@@ -126,6 +128,7 @@ class App extends Component {
         {showProjects && <ProjectPage {...this.getProps()} />}
         {selectedProject && <TaskPage selectedProject={selectedProject} setState={this.setState.bind(this)}> {this.renderSideNav()}</TaskPage>}
         {showReports && <Reports>{this.renderSideNav()}</Reports>}
+        <SetCurrency />
       </main>
     )
   }

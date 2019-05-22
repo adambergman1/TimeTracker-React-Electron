@@ -3,9 +3,18 @@ import { SideNav, Modal, Button } from 'react-materialize'
 import AddProject from './projects/AddProject'
 import Projects from './projects/Projects'
 
-const SideNavigation = ({ addProject, state, setState, deleteProject, setSelectedProject, editProject }) => (
+const SideNavigation = ({
+  addProject,
+  state,
+  setState,
+  deleteProject,
+  setSelectedProject,
+  editProject
+}) => (
   <SideNav
-    trigger={<Button className='btn-small green darken-2 absolute'>Projects</Button>}
+    trigger={
+      <Button className='btn-small green darken-2 absolute'>Projects</Button>
+    }
     options={{ closeOnClick: true }}
   >
     <Modal trigger={<Button>+ Add new project</Button>}>
@@ -23,7 +32,8 @@ const SideNavigation = ({ addProject, state, setState, deleteProject, setSelecte
         setState({
           selectedProject: null,
           isModalOpen: false,
-          showProjects: true
+          showProjects: true,
+          showReports: null
         })
       }
     >
