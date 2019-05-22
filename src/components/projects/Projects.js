@@ -10,7 +10,7 @@ const Projects = ({ projects, deleteProject, selectedProject, editProject }) => 
   const projectList = projects.length ? (
     projects.map(project => {
       return (
-        <div className='collection-item row' key={project.id}>
+        <div className='collection-item valign-wrapper' key={project.id}>
 
           <div className='project-name col s8'>
             <button className='link' onClick={() => selectedProject(project.name, project.id)}>

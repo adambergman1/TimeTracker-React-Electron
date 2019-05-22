@@ -13,7 +13,7 @@ const SideNavigation = ({
 }) => (
   <SideNav
     trigger={
-      <Button className='btn-small green darken-2 absolute'>Projects</Button>
+      <Button className='btn-small green darken-2'>Projects</Button>
     }
     options={{ closeOnClick: true }}
   >

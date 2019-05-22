@@ -5,15 +5,11 @@ export default ({ selectedProject, children }) => (
   <React.Fragment>
     <div className='section red darken-3'>
       <div className='container'>
-        <div className='row'>
-          <div className='absolute'>
-            {children}
-          </div>
-          <div className='col s12'>
-            <h4 className='page-title center-align'>
-              {selectedProject.projectName}
-            </h4>
-          </div>
+        <div className='row valign-wrapper'>
+          {children}
+          <h4 className='page-title' style={{ marginLeft: '15px' }}>
+            {selectedProject.projectName}
+          </h4>
         </div>
       </div>
     </div>
