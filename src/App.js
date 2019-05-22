@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
-import { addItemToArray, deleteItemFromArray, saveToLocalStorage, findInLocalStorage, removeFromLocalStorage } from './lib/crudHelpers'
+import {
+  addItemToArray,
+  deleteItemFromArray,
+  saveToLocalStorage,
+  findInLocalStorage,
+  removeFromLocalStorage
+} from './lib/crudHelpers'
 import isElectron from './lib/isElectron'
 import ProjectPage from './components/pages/ProjectPage'
 import TaskPage from './components/pages/TaskPage'
 import Reports from './components/pages/Reports'
-
+import SideNavigation from './components/SideNavigation'
 
 class App extends Component {
   state = {
@@ -21,19 +27,32 @@ class App extends Component {
 
     if (isElectron()) {
       window.ipcRenderer.on('add-project', () => {
-        this.setState({ selectedProject: '', showProjects: true, showReports: false })
+        this.setState({
+          selectedProject: null,
+          showProjects: true,
+          showReports: false
+        })
         this.showModal()
       })
       window.ipcRenderer.on('show-all-projects', () => {
-        this.setState({ selectedProject: '', showProjects: true, isModalOpen: false, showReports: false })
+        this.setState({
+          selectedProject: null,
+          showProjects: true,
+          isModalOpen: false,
+          showReports: false
+        })
       })
       window.ipcRenderer.on('view-reports', () => {
-        this.setState({ showReports: true, selectedProject: null, showProjects: null })
+        this.setState({
+          showReports: true,
+          selectedProject: null,
+          showProjects: null
+        })
       })
     }
   }
 
-  deleteProject = ({id}) => {
+  deleteProject = ({ id }) => {
     const projects = deleteItemFromArray(id, this.state.projects)
     this.setState({ projects })
 
@@ -48,26 +67,32 @@ class App extends Component {
     saveToLocalStorage('task', tasksToKeep)
   }
 
-  addProject = (project) => {
+  addProject = project => {
     const projects = addItemToArray(project, this.state.projects)
     this.setState({ projects })
     saveToLocalStorage('project', projects)
   }
 
   setSelectedProject = (projectName, projectId) => {
-      this.setState({ selectedProject: '', showProjects: null, showReports: null }, () => {
-        this.setState({ selectedProject: {projectName, projectId}})
-      })
+    this.setState(
+      { selectedProject: null, showProjects: null, showReports: null },
+      () => {
+        this.setState({ selectedProject: { projectName, projectId } })
+      }
+    )
   }
 
-  editProject = editedProject => {    
+  editProject = editedProject => {
     const project = {
       name: editedProject.name,
       rate: editedProject.rate,
-      id: editedProject.id,
+      id: editedProject.id
     }
 
-    const allExceptEdited = deleteItemFromArray(editedProject.id, this.state.projects)
+    const allExceptEdited = deleteItemFromArray(
+      editedProject.id,
+      this.state.projects
+    )
     const projects = addItemToArray(project, allExceptEdited)
 
     this.setState({ projects })
@@ -75,9 +100,9 @@ class App extends Component {
     removeFromLocalStorage('project')
     saveToLocalStorage('project', projects)
   }
-  
+
   showModal = () => {
-    this.setState({isModalOpen: true }, this.setState({ isModalOpen: false }))
+    this.setState({ isModalOpen: true }, this.setState({ isModalOpen: false }))
   }
 
   getProps = () => ({
@@ -88,13 +113,19 @@ class App extends Component {
     setSelectedProject: this.setSelectedProject
   })
 
-  render () {
+  renderSideNav = () =>
+    <SideNavigation
+    {...this.getProps()}
+    setState={this.setState.bind(this)}
+  />
+
+  render() {
     const { selectedProject, showReports, showProjects } = this.state
     return (
       <main>
-        {showProjects && <ProjectPage {...this.getProps()} /> }
-        {selectedProject && <TaskPage {...this.getProps()} setState={this.setState.bind(this)} />}
-        {showReports && <Reports />}
+        {showProjects && <ProjectPage {...this.getProps()} />}
+        {selectedProject && <TaskPage selectedProject={selectedProject} setState={this.setState.bind(this)}> {this.renderSideNav()}</TaskPage>}
+        {showReports && <Reports>{this.renderSideNav()}</Reports>}
       </main>
     )
   }

@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-materialize'
 import AddProject from '../projects/AddProject'
 import Projects from '../projects/Projects'
 
-const ProjectPage = ({ addProject, state, showModal, deleteProject, setSelectedProject, editProject }) =>
+const ProjectPage = ({ addProject, state, showModal, deleteProject, setSelectedProject, editProject }) => (
   <React.Fragment>
     <div className='section red darken-3'>
       <div className='container home'>
@@ -19,7 +19,11 @@ const ProjectPage = ({ addProject, state, showModal, deleteProject, setSelectedP
         <div className='row center'>
           <Modal
             open={state.isModalOpen}
-            trigger={<Button onClick={showModal} className='btn-small green darken-1'>+ Add project</Button>}
+            trigger={
+              <Button onClick={showModal} className='btn-small green darken-1'>
+                + Add project
+              </Button>
+            }
           >
             <AddProject addProject={addProject} projects={state.projects} />
           </Modal>
@@ -30,11 +34,13 @@ const ProjectPage = ({ addProject, state, showModal, deleteProject, setSelectedP
               projects={state.projects}
               deleteProject={deleteProject}
               selectedProject={setSelectedProject}
-              editProject={editProject} />
+              editProject={editProject}
+            />
           </div>
         </div>
       </div>
     </div>
   </React.Fragment>
+)
 
 export default ProjectPage

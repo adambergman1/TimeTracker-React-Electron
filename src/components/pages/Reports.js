@@ -82,6 +82,9 @@ export class Reports extends Component {
         <div className="section red darken-3">
           <div className="container">
             <div className="row">
+              <div className="absolute">
+                {this.props.children}
+              </div>
               <div className="col s12">
                 <h4 className="page-title center-align">Reports</h4>
               </div>

@@ -10,7 +10,7 @@ module.exports = function applicationMenu (appName, mainWindow) {
         },
         {
           label: 'All projects',
-          accelerator: 'CmdOrCtrl+V',
+          accelerator: 'CmdOrCtrl+P',
           click: () => mainWindow.webContents.send('show-all-projects')
         }
       ]
@@ -20,8 +20,8 @@ module.exports = function applicationMenu (appName, mainWindow) {
       submenu: [
         {
           label: 'View reports',
+          accelerator: 'CmdOrCtrl+R',
           click: () => {
-            console.log('Sending reports...')
             mainWindow.webContents.send('view-reports')
           }
         }
