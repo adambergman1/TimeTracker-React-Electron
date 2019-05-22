@@ -168,6 +168,8 @@ body {
     font-size: 80%;
     position: relative;
     color: #555;
+    font-size: 60%;
+    display: block;
   }
 
   .task-created .icon {
@@ -207,6 +209,16 @@ body {
 
   a {
     cursor: pointer;
+  }
+
+  .btn-flat:hover {
+    background-color: #eee !important;
+  }
+  
+  .top-right {
+    position: absolute;
+    top: 2px;
+    right: 2px;
   }
 
 @media only screen and (max-width: 992px) {

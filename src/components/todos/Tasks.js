@@ -82,79 +82,53 @@ class Tasks extends Component {
     const { tasks, project_id, manualTimerUpdate } = this.state
     const filteredTasks = [...tasks.filter(task => task.parent === project_id)]
 
-    let tasksToDisplay = filteredTasks.length ? (
+    const tasksToDisplay = filteredTasks.length ? (
       filteredTasks.map(task => {
         return (
-          <div className="collection-item row" key={task.id}>
-            <div className="col s5 task-title">
+          <div className="collection-item valign-wrapper" key={task.id}>
+            <div className="col s7 task-title">
               <span>{task.title}</span>
+              <span className="task-created">{task.created.length ? getShortDate(task.created) : ''}</span>
             </div>
-            <div className="col s3 task-created">
-              {task.created.length ? getShortDate(task.created) : ''}
-            </div>
-            <div className="col s3 flex">
-            
-            <img src={timerIcon} alt='Timer' className='non-clickable-icon' />
-            {manualTimerUpdate && manualTimerUpdate.id === task.id ? 
-              <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} onManualUpdate={manualTimerUpdate} /> :
-              <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} /> 
-            }
-            </div>
-            <div className='col s1 right'>
-            
-            <Modal trigger={<img src={editIcon} className='icon right' alt='Edit task' />}
-            options={ 
-              {onOpenStart: () => this.setState({modalIsClicked: true, taskToEdit: task.id }), 
-              onCloseStart: () => this.setState({modalIsClicked: null, taskToEdit: null})} 
-              } >
+            <div className="col s4 valign-wrapper">
+              <img src={timerIcon} alt='Timer' className='non-clickable-icon' />
 
-              {this.state.modalIsClicked && this.state.taskToEdit === task.id &&
-              <EditTask task={task} onEdit={this.editTask} tasks={this.state.tasks}></EditTask>
+              {manualTimerUpdate && manualTimerUpdate.id === task.id ? 
+                <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} onManualUpdate={manualTimerUpdate} /> :
+                <Timer onTimerUpdate={this.updateTimer} id={task.id} elapsed={task.elapsed} /> 
               }
+            </div>
 
-              <Modal trigger={<button className='btn red margin-top-20'>Delete</button>}>
-              <p>Are you sure that you want to remove {task.title}?</p>
-                <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>Yes, delete</span>
+            <div className='col s1 right-align'>
+              <Modal trigger={<img src={editIcon} className='icon' alt='Edit task' />} options={ 
+                {onOpenStart: () => this.setState({modalIsClicked: true, taskToEdit: task.id }), 
+                onCloseStart: () => this.setState({modalIsClicked: null, taskToEdit: null})} 
+                } >
+
+                {this.state.modalIsClicked && this.state.taskToEdit === task.id &&
+                  <EditTask task={task} tasks={tasks} onEdit={this.editTask}></EditTask>
+                }
+
+                <Modal trigger={<button className='btn btn-small red top-right'>Delete</button>}>
+                  <p>Are you sure that you want to remove {task.title}?</p>
+                  <span className='btn red' onClick={() => { this.deleteTask(task.id) }}>Yes, delete</span>
+                </Modal>
               </Modal>
-            </Modal>
-
             </div>
            </div>
         )
       })
     ) : <p className="center">Create your first task using the field above.</p>
 
-    const renderTasks = this.state.project_id.length ? (
-      <React.Fragment>
-        {/* <div className="col m6 padding-up-and-down left">
-          <h4 className="task-header">{this.props.project.projectName}</h4>
-        </div> */}
-        <AddTask addTask={this.addTask} tasks={this.state.tasks} projectId={this.state.project_id} />
-        
-        <div className="col s12 collection">
-          {/* <div className="collection-heading row">
-            <div className='col s5'>
-              <img src={titleIcon} alt='Name' className='icon' />
-            </div>
-            <div className='col s3'>
-              <img src={dateIcon} alt='Date' className='icon' />
-            </div>
-            <div className='col s3'>
-              <img src={timerIcon} alt='Timer' className='icon' />
-            </div>
-            <div className='col s1'>
-              <img src={deleteIcon} alt='Remove' className='icon right' />
-            </div>
-        </div> */}
-          {tasksToDisplay}
-        </div>
-      </React.Fragment>
-    ) : ('')
-
     return (
-      <React.Fragment>
-        {renderTasks}
-      </React.Fragment>
+        project_id.length ? 
+          <React.Fragment>
+            <AddTask addTask={this.addTask} tasks={tasks} projectId={project_id} />
+            <div className="col s12 collection">
+              {tasksToDisplay}
+            </div>
+        </React.Fragment>
+      : ''
     )
   }
 }

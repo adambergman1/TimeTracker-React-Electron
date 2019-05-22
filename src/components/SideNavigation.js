@@ -17,17 +17,8 @@ const SideNavigation = ({
     }
     options={{ closeOnClick: true }}
   >
-    <Modal trigger={<Button>+ Add new project</Button>}>
-      <AddProject addProject={addProject} projects={state.projects} />
-    </Modal>
-    <Projects
-      projects={state.projects}
-      deleteProject={deleteProject}
-      selectedProject={setSelectedProject}
-      editProject={editProject}
-    />
     <Button
-      className='btn grey waves-effect'
+      className='btn btn-flat'
       onClick={() =>
         setState({
           selectedProject: null,
@@ -36,9 +27,17 @@ const SideNavigation = ({
           showReports: null
         })
       }
-    >
-      All projects
+    >All projects
     </Button>
+    <Projects
+      projects={state.projects}
+      deleteProject={deleteProject}
+      selectedProject={setSelectedProject}
+      editProject={editProject}
+    />
+    <Modal trigger={<Button className='btn btn-small green darken-1'>+ Add new project</Button>}>
+      <AddProject addProject={addProject} projects={state.projects} />
+    </Modal>
   </SideNav>
 )
 

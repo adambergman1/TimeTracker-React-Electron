@@ -80,20 +80,18 @@ class Timer extends Component {
   }
 
   render () {
+    const { isStart } = this.state
     return (
       <React.Fragment>
-        <div className={this.state.isStart ? "elapsed-time counting" : "elapsed-time"}>{getElapsedTime(this.state.elapsed)}</div>
-
-        <div className="toggle-timer" onClick={this.onClick}>
-            {this.state.isStart ? (
-              <img src={pauseIcon} alt="Pause timer" className="icon"/>
-            ) : (
-              <img src={startIcon} alt="Start timer" className="icon"/>
-            )
-            }
-          </div>
-          {/* <button className="btn red" onClick={this.resetTimer}>Reset</button> */}
-        </React.Fragment>
+        <span className={isStart ? 'elapsed-time counting' : 'elapsed-time'}>{getElapsedTime(this.state.elapsed)}</span>
+        <img 
+        onClick={this.onClick} 
+        src={isStart ? pauseIcon : startIcon} 
+        alt={isStart ? 'Pause timer' : 'Start timer'} 
+        className="icon"
+        />
+        {/* <button className="btn red" onClick={this.resetTimer}>Reset</button> */}
+      </React.Fragment>
     )
   }
 }
