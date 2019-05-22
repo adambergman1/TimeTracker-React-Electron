@@ -95,10 +95,10 @@ export class Reports extends Component {
           <div className="container">
             <DateRangePicker projects={this.state.projects} onStartChange={this.changeStartDate} onEndChange={this.changeEndDate} />
             <div className="collection-heading row">
-              <div className="name col s5"><span>Name</span></div>
+              <div className="name col s5"><span>Project</span></div>
               <div className="hourly-rate col s2"><span>Hourly rate</span></div>
               <div className="total-time col s2"><span>Total time</span></div>
-              <div className="earned-money col s3 right-align"><span>$</span></div>
+              <div className="earned-money col s3 right-align"><span>{findInLocalStorage('currency') ? findInLocalStorage('currency') : 'Earned'}</span></div>
             </div>
             <div className="collection">
               {projectsToDisplay}

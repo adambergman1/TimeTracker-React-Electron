@@ -115,6 +115,10 @@ class App extends Component {
     setSelectedProject: this.setSelectedProject
   })
 
+  setCurrency = (currency) => {
+    this.setState({ currency })
+  }
+
   renderSideNav = () =>
     <SideNavigation
     {...this.getProps()}
@@ -122,13 +126,13 @@ class App extends Component {
   />
 
   render() {
-    const { selectedProject, showReports, showProjects } = this.state
+    const { selectedProject, showReports, showProjects, currency } = this.state
     return (
       <main>
-        {showProjects && <ProjectPage {...this.getProps()} />}
+        {showProjects && <ProjectPage {...this.getProps()} currency={currency} />}
         {selectedProject && <TaskPage selectedProject={selectedProject} setState={this.setState.bind(this)}> {this.renderSideNav()}</TaskPage>}
-        {showReports && <Reports>{this.renderSideNav()}</Reports>}
-        <SetCurrency />
+        {showReports && <Reports currency={currency} >{this.renderSideNav()}</Reports>}
+        {!selectedProject && <SetCurrency onCurrencyUpdate={this.setCurrency} /> }
       </main>
     )
   }

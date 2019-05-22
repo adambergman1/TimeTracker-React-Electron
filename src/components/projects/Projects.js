@@ -3,6 +3,7 @@ import editIcon from '../images/edit.svg'
 import arrowRightIcon from '../images/arrow-right.svg'
 import { Modal } from 'react-materialize'
 import EditProject from './EditProject'
+import { findInLocalStorage } from '../../lib/crudHelpers'
 
 const Projects = ({ projects, deleteProject, selectedProject, editProject }) => {
   const projectList = projects.length ? (
@@ -17,7 +18,7 @@ const Projects = ({ projects, deleteProject, selectedProject, editProject }) => 
           </div>
 
           <div className='rate col s2'>
-            <span>{project.rate} {project.rate ? '$' : ''}</span>
+            <span>{project.rate} {project.rate && findInLocalStorage('currency')}</span>
           </div>
 
           <div className='actions col s2 right-align'>

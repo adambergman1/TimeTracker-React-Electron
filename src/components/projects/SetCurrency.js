@@ -9,7 +9,7 @@ class SetCurrency extends Component {
     currencies: currencyList
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (localStorage.hasOwnProperty('currency')) {
       this.setState({ selectedCurrency: findInLocalStorage('currency') })
     }
@@ -18,6 +18,7 @@ class SetCurrency extends Component {
   updateCurrency = e => {
     this.setState({ selectedCurrency: e.target.value })
     saveToLocalStorage('currency', e.target.value)
+    this.props.onCurrencyUpdate({ selectedCurrency: e.target.value })
   }
 
   render() {
@@ -31,15 +32,24 @@ class SetCurrency extends Component {
           ))
         : ''
     return (
-      <React.Fragment>
-        <p>Currency: {selectedCurrency && selectedCurrency}</p>
-        <Modal trigger={<Button className="btn-flat">Change currency</Button>}>
-          <Select onChange={this.updateCurrency}>
-            <option value='none'>Select currency</option>
-            {currenciesToRender}
-          </Select>
-        </Modal>
-      </React.Fragment>
+      <div className='container'>
+        <div className='row center'>
+          <div className='col s12'>
+            <Modal
+              trigger={
+                <Button className={selectedCurrency ? 'btn-floating right' : 'btn grey lighten-3 black-text'}>
+                  {selectedCurrency ? selectedCurrency : 'Set currency'}
+                </Button>
+              }
+            >
+              <Select onChange={this.updateCurrency}>
+                <option value='none'>Select currency</option>
+                {currenciesToRender}
+              </Select>
+            </Modal>
+          </div>
+        </div>
+      </div>
     )
   }
 }
