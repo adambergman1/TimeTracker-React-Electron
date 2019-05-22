@@ -150,7 +150,7 @@ const currencyList = [
     code: 'DJF'
   },
   {
-    symbol: 'Dkr',
+    symbol: 'kr',
     name: 'Danish Krone',
     code: 'DKK'
   },
@@ -395,7 +395,7 @@ const currencyList = [
     code: 'NIO'
   },
   {
-    symbol: 'Nkr',
+    symbol: 'kr',
     name: 'Norwegian Krone',
     code: 'NOK'
   },
@@ -480,7 +480,7 @@ const currencyList = [
     code: 'SDG'
   },
   {
-    symbol: 'Skr',
+    symbol: 'kr',
     name: 'Swedish Krona',
     code: 'SEK'
   },

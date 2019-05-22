@@ -18,7 +18,8 @@ class App extends Component {
     projects: [],
     showProjects: true,
     selectedProject: null,
-    showReports: null
+    showReports: null,
+    currency: ''
   }
 
   componentDidMount() {

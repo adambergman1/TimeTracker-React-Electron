@@ -41,11 +41,12 @@ export class Reports extends Component {
     const elapsedTime = elapsed.filter(time => time !== 0)
     const sum = elapsedTime.length > 1 ? elapsedTime.reduce((a, b) => a + b) : elapsedTime
 
-    return ((rate / 3600) * (parseInt(sum / 1000))).toFixed(2)
+    return ((rate / 3600) * (parseInt(sum / 1000))).toFixed(0)
   }
 
   render() {
     const { projects, startDate, endDate } = this.state
+    const currency = findInLocalStorage('currency')
 
     let projectsToDisplay = projects.length ? (
         projects.map(project => {
@@ -96,9 +97,9 @@ export class Reports extends Component {
             <DateRangePicker projects={this.state.projects} onStartChange={this.changeStartDate} onEndChange={this.changeEndDate} />
             <div className="collection-heading row">
               <div className="name col s5"><span>Project</span></div>
-              <div className="hourly-rate col s2"><span>Hourly rate</span></div>
-              <div className="total-time col s2"><span>Total time</span></div>
-              <div className="earned-money col s3 right-align"><span>{findInLocalStorage('currency') ? findInLocalStorage('currency') : 'Earned'}</span></div>
+              <div className="hourly-rate col s2"><span>Rate/h</span></div>
+              <div className="total-time col s2"><span>Time</span></div>
+              <div className="earned-money col s3 right-align"><span>{currency ? currency.code : 'Earned'}</span></div>
             </div>
             <div className="collection">
               {projectsToDisplay}

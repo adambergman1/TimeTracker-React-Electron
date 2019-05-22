@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Select, Modal, Button } from 'react-materialize'
 import currencyList from '../../lib/currencies.js'
-import { findInLocalStorage, saveToLocalStorage, removeFromLocalStorage } from '../../lib/crudHelpers'
+import { findInLocalStorage, saveToLocalStorage, removeFromLocalStorage, findItemInArray } from '../../lib/crudHelpers'
 
 class SetCurrency extends Component {
   state = {
@@ -21,9 +21,11 @@ class SetCurrency extends Component {
   }
 
   updateCurrency = e => {
-    this.setState({ selectedCurrency: e.target.value })
-    saveToLocalStorage('currency', e.target.value)
-    this.props.onCurrencyUpdate({ selectedCurrency: e.target.value })
+    const selectedCurrency = this.state.currencies.filter(c => c.code === e.target.value)[0]
+    this.setState({ selectedCurrency })
+    this.props.onCurrencyUpdate({ selectedCurrency })
+    saveToLocalStorage('currency', selectedCurrency)
+
   }
 
   resetCurrency = () => {
@@ -35,7 +37,7 @@ class SetCurrency extends Component {
   }
 
   render() {
-    const { currencies } = this.state
+    const { currencies, selectedCurrency } = this.state
     const currenciesToRender =
       currencies.length >= 1
         ? currencies.map(c => (
@@ -49,11 +51,12 @@ class SetCurrency extends Component {
         <div className='row center'>
           <div className='col s12'>
             <Modal open={this.state.isModalOpen}>
+              <p>Selected currency: {selectedCurrency.name && selectedCurrency.name}</p>
               <Select onChange={this.updateCurrency}>
                 <option value='none'>Select currency</option>
                 {currenciesToRender}
               </Select>
-              <Button onClick={this.resetCurrency}>Reset</Button>
+              <Button className="btn-flat" onClick={this.resetCurrency}>Reset</Button>
             </Modal>
           </div>
         </div>

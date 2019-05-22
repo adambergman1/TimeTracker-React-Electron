@@ -6,6 +6,7 @@ import EditProject from './EditProject'
 import { findInLocalStorage } from '../../lib/crudHelpers'
 
 const Projects = ({ projects, deleteProject, selectedProject, editProject }) => {
+  const currency = findInLocalStorage('currency')
   const projectList = projects.length ? (
     projects.map(project => {
       return (
@@ -18,7 +19,7 @@ const Projects = ({ projects, deleteProject, selectedProject, editProject }) => 
           </div>
 
           <div className='rate col s2'>
-            <span>{project.rate} {project.rate && findInLocalStorage('currency')}</span>
+            <span>{project.rate} {currency && currency.symbol}</span>
           </div>
 
           <div className='actions col s2 right-align'>
