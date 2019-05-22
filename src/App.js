@@ -51,6 +51,13 @@ class App extends Component {
           isModalOpen: false
         })
       })
+      window.ipcRenderer.on('set-currency', () => {
+        this.setState({
+          showCurrencySwitcher: true,
+        },
+        this.setState({ showCurrencySwitcher: null })
+        )
+      })
     }
   }
 
@@ -126,13 +133,13 @@ class App extends Component {
   />
 
   render() {
-    const { selectedProject, showReports, showProjects, currency } = this.state
+    const { selectedProject, showReports, showProjects, currency, showCurrencySwitcher } = this.state
     return (
       <main>
         {showProjects && <ProjectPage {...this.getProps()} currency={currency} />}
         {selectedProject && <TaskPage selectedProject={selectedProject} setState={this.setState.bind(this)}> {this.renderSideNav()}</TaskPage>}
         {showReports && <Reports currency={currency} >{this.renderSideNav()}</Reports>}
-        {!selectedProject && <SetCurrency onCurrencyUpdate={this.setCurrency} /> }
+        {showCurrencySwitcher && <SetCurrency onCurrencyUpdate={this.setCurrency} /> }
       </main>
     )
   }

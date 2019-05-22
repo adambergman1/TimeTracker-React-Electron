@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Select, Modal, Button } from 'react-materialize'
 import currencyList from '../../lib/currencies.js'
-import { findInLocalStorage, saveToLocalStorage } from '../../lib/crudHelpers'
+import { findInLocalStorage, saveToLocalStorage, removeFromLocalStorage } from '../../lib/crudHelpers'
 
 class SetCurrency extends Component {
   state = {
@@ -13,6 +13,11 @@ class SetCurrency extends Component {
     if (localStorage.hasOwnProperty('currency')) {
       this.setState({ selectedCurrency: findInLocalStorage('currency') })
     }
+    this.setState({ isModalOpen: true })
+  }
+
+  componentWillUnmount() {
+    this.setState({ isModalOpen: false })
   }
 
   updateCurrency = e => {
@@ -21,8 +26,16 @@ class SetCurrency extends Component {
     this.props.onCurrencyUpdate({ selectedCurrency: e.target.value })
   }
 
+  resetCurrency = () => {
+    if (localStorage.hasOwnProperty('currency')) {
+      removeFromLocalStorage('currency')
+    }
+    this.setState({ selectedCurrency: '' })
+    this.props.onCurrencyUpdate({ selectedCurrency: '' })
+  }
+
   render() {
-    const { currencies, selectedCurrency } = this.state
+    const { currencies } = this.state
     const currenciesToRender =
       currencies.length >= 1
         ? currencies.map(c => (
@@ -35,17 +48,12 @@ class SetCurrency extends Component {
       <div className='container'>
         <div className='row center'>
           <div className='col s12'>
-            <Modal
-              trigger={
-                <Button className={selectedCurrency ? 'btn-floating right' : 'btn grey lighten-3 black-text'}>
-                  {selectedCurrency ? selectedCurrency : 'Set currency'}
-                </Button>
-              }
-            >
+            <Modal open={this.state.isModalOpen}>
               <Select onChange={this.updateCurrency}>
                 <option value='none'>Select currency</option>
                 {currenciesToRender}
               </Select>
+              <Button onClick={this.resetCurrency}>Reset</Button>
             </Modal>
           </div>
         </div>

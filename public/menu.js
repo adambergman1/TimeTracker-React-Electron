@@ -10,8 +10,12 @@ module.exports = function applicationMenu (appName, mainWindow) {
         },
         {
           label: 'All projects',
-          accelerator: 'CmdOrCtrl+P',
+          accelerator: 'CmdOrCtrl+A',
           click: () => mainWindow.webContents.send('show-all-projects')
+        },
+        {
+          label: 'Set currency',
+          click: () => mainWindow.webContents.send('set-currency')
         }
       ]
     },
