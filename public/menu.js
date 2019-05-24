@@ -24,7 +24,7 @@ module.exports = function applicationMenu (appName, mainWindow) {
       submenu: [
         {
           label: 'View reports',
-          accelerator: 'CmdOrCtrl+R',
+          // accelerator: 'CmdOrCtrl+R',
           click: () => {
             mainWindow.webContents.send('view-reports')
           }
@@ -67,6 +67,14 @@ module.exports = function applicationMenu (appName, mainWindow) {
         {
           label: 'Bring All To Front',
           role: 'front'
+        },
+        {
+          label: 'Dev Tools',
+          click: () => mainWindow.webContents.openDevTools()
+        },
+        {
+          label: 'Reload',
+          role: 'reload'
         }
       ]
     }

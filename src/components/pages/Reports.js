@@ -37,8 +37,8 @@ export class Reports extends Component {
     return new Date(date).setHours(0, 0, 0, 0)
   }
 
-  calculateCost = (rate, elapsed) => {
-    const elapsedTime = elapsed.filter(time => time !== 0)
+  calculateCost = (rate, diff) => {
+    const elapsedTime = diff.filter(time => time !== 0)
     const sum = elapsedTime.length > 1 ? elapsedTime.reduce((a, b) => a + b) : elapsedTime
 
     return ((rate / 3600) * (parseInt(sum / 1000))).toFixed(0)
@@ -50,12 +50,12 @@ export class Reports extends Component {
 
     let projectsToDisplay = projects.length ? (
         projects.map(project => {
-          let elapsed = []
+          let diff = []
           project.tasks.forEach(task => {
             if (project.id === task.parent) {
               if (this.withoutTime(task.created) >= this.withoutTime(startDate) && 
               this.withoutTime(task.created) <= this.withoutTime(endDate)) {
-                elapsed.push(task.elapsed)
+                diff.push(task.diff)
               }
             }
           }) 
@@ -68,10 +68,10 @@ export class Reports extends Component {
              <span>{project.rate}</span>
             </div>
             <div className='total-time col s2'>
-              <span>{project.tasks.length ? elapsed.length ? (getElapsedTime(elapsed.reduce((a, b) => a + b))) : '0:00:00' : '0:00:00'}</span>
+              <span>{project.tasks.length ? diff.length ? (getElapsedTime(diff.reduce((a, b) => a + b))) : '0:00:00' : '0:00:00'}</span>
             </div>
             <div className="col s3 right-align">
-              {project.rate.length ? <span>{this.calculateCost(project.rate, elapsed)}</span> : ''}
+              {project.rate.length ? <span>{this.calculateCost(project.rate, diff)}</span> : ''}
             </div>
           </div>
         )

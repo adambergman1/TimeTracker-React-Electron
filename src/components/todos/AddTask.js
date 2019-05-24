@@ -8,7 +8,9 @@ class AddTask extends Component {
     id: '',
     title: '',
     parent: '',
-    elapsed: 0,
+    start: null,
+    end: null,
+    diff: null,
     created: ''
   }
 
@@ -29,10 +31,12 @@ class AddTask extends Component {
         id: uuid(),
         title: this.state.title,
         parent: this.props.projectId,
-        elapsed: this.state.elapsed,
+        start: null,
+        end: null,
+        diff: null,
         created: new Date().toString()
       })
-      this.setState({ id: '', title: '', parent: '', created: '', elapsed: 0, error: null })
+      this.setState({ id: '', title: '', parent: '', created: '', error: null })
     } else {
       this.setState({ error: 'The name must be unique. Please change the it.' })
     }
