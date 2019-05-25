@@ -27,6 +27,7 @@ function createWindow () {
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
     mainWindow = null
+    tray = null
   })
 }
 
@@ -37,6 +38,11 @@ app.on('ready', async () => {
 
   const menu = Menu.buildFromTemplate(applicationMenu(appName, mainWindow))
   Menu.setApplicationMenu(menu)
+
+  const desktopIdle = require('desktop-idle')
+  setInterval(() => {
+    console.log(desktopIdle.getIdleTime()) // Should print 600 seconds (10 min) after 10 min inactivity
+  }, 60000)
 })
 
 // Quit when all windows are closed.
