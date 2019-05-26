@@ -18,7 +18,7 @@ class App extends Component {
     projects: [],
     showProjects: true,
     selectedProject: null,
-    showReports: null,
+    showReports: false,
     currency: ''
   }
 
@@ -32,7 +32,7 @@ class App extends Component {
         this.setState({
           selectedProject: null,
           showProjects: true,
-          showReports: null
+          showReports: false
         })
         this.showModal()
       })
@@ -40,7 +40,7 @@ class App extends Component {
         this.setState({
           selectedProject: null,
           showProjects: true,
-          showReports: null,
+          showReports: false,
           isModalOpen: false
         })
       })
@@ -48,7 +48,7 @@ class App extends Component {
         this.setState({
           showReports: true,
           selectedProject: null,
-          showProjects: null,
+          showProjects: false,
           isModalOpen: false
         })
       })
@@ -85,7 +85,7 @@ class App extends Component {
 
   setSelectedProject = (projectName, projectId) => {
     this.setState(
-      { selectedProject: null, showProjects: null, showReports: null },
+      { selectedProject: null, showProjects: false, showReports: false },
       () => {
         this.setState({ selectedProject: { projectName, projectId } })
       }

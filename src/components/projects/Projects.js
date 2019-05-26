@@ -7,6 +7,7 @@ import { findInLocalStorage } from '../../lib/crudHelpers'
 
 const Projects = ({ projects, deleteProject, selectedProject, editProject }) => {
   const currency = findInLocalStorage('currency')
+
   const projectList = projects.length ? (
     projects.map(project => {
       return (

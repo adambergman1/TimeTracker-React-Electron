@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import AddTask from './AddTask'
-import EditTask from './EditTask'
-import Timer from './Timer'
-import editIcon from '../images/edit.svg'
-import { Modal } from 'react-materialize'
 import { findInLocalStorage, deleteItemFromArray, removeFromLocalStorage, saveToLocalStorage, addItemToArray, findItemInArray } from '../../lib/crudHelpers'
-import { getShortDate } from '../../lib/dateHelpers'
+import Task from './Task';
 
 class Tasks extends Component {
   state = {
@@ -35,7 +31,7 @@ class Tasks extends Component {
   }
 
   editTask = ({ task }) => {
-     this.updateTimer(task)
+    this.updateTimer(task)
     const tasksExceptEdited = deleteItemFromArray(task.id, this.state.tasks)
     const tasks = addItemToArray(task, tasksExceptEdited)
 
@@ -57,6 +53,7 @@ class Tasks extends Component {
   updateTaskFromTimer = ({ task }) => {
     if (!task.end) this.setState({ preventEdit: task.id })
     if (task.end) this.setState({ preventEdit: null })
+
     const allButEdited = deleteItemFromArray(task.id, this.state.tasks)
     const tasks = addItemToArray(task, allButEdited)
 
@@ -66,55 +63,35 @@ class Tasks extends Component {
   }
 
   render() {
-    const { tasks, project_id, updateTimer, preventEdit } = this.state
+    const { tasks, project_id, preventEdit, updateTimer } = this.state
     const filteredTasks = [...tasks.filter(task => task.parent === project_id)]
 
     const tasksToDisplay = filteredTasks.length ? (
       filteredTasks.map(task => {
         return (
-          <div className='collection-item valign-wrapper' key={task.id}>
-            <div className='col s1 left-align'>
-              {preventEdit !== task.id &&
-              <Modal trigger={<img src={editIcon} className='icon edit-icon' alt='Edit task' />} 
-                options={{
-                  onOpenStart: () => this.setState({ isModalClicked: true, taskToEdit: task.id}),
-                  onCloseStart: () => this.setState({ isModalClicked: null, taskToEdit: null })
-                }}
-              >
-                {this.state.isModalClicked && this.state.taskToEdit === task.id &&
-                 <EditTask task={task} tasks={tasks} onEdit={this.editTask} /> 
-                }
-
-                <Modal trigger={ <button className='btn btn-small red top-right'>Delete</button>}>
-                  <p>Are you sure that you want to remove {task.title}?</p>
-                  <span className='btn red' onClick={() => { this.deleteTask(task.id)}}>Yes, delete</span>
-                </Modal>
-              </Modal>
-              }
-            </div>
-            <div className='col s7 task-title'>
-              <span>{task.title}</span>
-              <span className='task-created'>
-                {task.created.length ? getShortDate(task.created) : ''}
-              </span>
-            </div>
-            <div className='col s4 valign-wrapper flex-end'>
-            <Timer updateTask={this.updateTaskFromTimer} task={task} onManualUpdate={updateTimer}/>
-            </div>
-          </div>
+          <Task 
+            key={task.id}
+            task={task}
+            tasks={tasks}
+            preventEdit={preventEdit} 
+            onManualUpdate={updateTimer}
+            updateTask={this.updateTaskFromTimer} 
+            onEdit={this.editTask}
+            deleteTask={this.deleteTask}
+          />
         )
       })
     ) : (
       <p className='center'>Create your first task using the field above.</p>
     )
 
-    return project_id.length ? (
+    return (
       <React.Fragment>
         <AddTask addTask={this.addTask} tasks={tasks} projectId={project_id} />
-        <div className='col s12 collection'>{tasksToDisplay}</div>
+        <div className='col s12 collection'>
+          {tasksToDisplay}
+        </div>
       </React.Fragment>
-    ) : (
-      ''
     )
   }
 }
