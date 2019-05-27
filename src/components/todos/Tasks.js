@@ -51,6 +51,7 @@ class Tasks extends Component {
   }
 
   updateTaskFromTimer = ({ task }) => {
+    this.props.timerIsRunning({ task })
     if (!task.end) this.setState({ preventEdit: task.id })
     if (task.end) this.setState({ preventEdit: null })
 

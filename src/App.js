@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-import {
-  addItemToArray,
-  deleteItemFromArray,
-  saveToLocalStorage,
-  findInLocalStorage,
-  removeFromLocalStorage
-} from './lib/crudHelpers'
+import { addItemToArray, deleteItemFromArray, saveToLocalStorage, findInLocalStorage, removeFromLocalStorage } from './lib/crudHelpers'
 import isElectron from './lib/isElectron'
 import ProjectPage from './components/pages/ProjectPage'
 import TaskPage from './components/pages/TaskPage'
@@ -19,7 +13,8 @@ class App extends Component {
     showProjects: true,
     selectedProject: null,
     showReports: false,
-    currency: ''
+    currency: '',
+    timerIsRunning: false
   }
 
   componentDidMount() {
@@ -58,6 +53,9 @@ class App extends Component {
         },
         this.setState({ showCurrencySwitcher: null })
         )
+      })
+      window.ipcRenderer.on('idle', (a, b) => {
+        console.log('I am idle! Now send this to the Task component in order to change the end time', b)
       })
     }
   }
@@ -127,6 +125,17 @@ class App extends Component {
     this.setState({ currency })
   }
 
+  timerIsRunning = ({task }) => {
+    if (task.start && !task.end) {
+      console.log('Timer started');
+      // this.setState({ timerIsRunning: true })
+      window.ipcRenderer.send('timer-running', true)
+    } else if(task.end) {
+      console.log('Timer stopped')
+      window.ipcRenderer.send('timer-stopped', false)
+    }
+  }
+
   renderSideNav = () =>
     <SideNavigation
     {...this.getProps()}
@@ -138,7 +147,7 @@ class App extends Component {
     return (
       <main>
         {showProjects && <ProjectPage {...this.getProps()} currency={currency} />}
-        {selectedProject && <TaskPage selectedProject={selectedProject} setState={this.setState.bind(this)}> {this.renderSideNav()}</TaskPage>}
+        {selectedProject && <TaskPage timerIsRunning={this.timerIsRunning} selectedProject={selectedProject} setState={this.setState.bind(this)}> {this.renderSideNav()}</TaskPage>}
         {showReports && <Reports currency={currency} >{this.renderSideNav()}</Reports>}
         {showCurrencySwitcher && <SetCurrency onCurrencyUpdate={this.setCurrency} /> }
       </main>

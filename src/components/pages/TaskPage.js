@@ -1,7 +1,7 @@
 import React from 'react'
 import Tasks from '../todos/Tasks'
 
-export default ({ selectedProject, children }) => (
+export default ({ selectedProject, children, timerIsRunning }) => (
   <React.Fragment>
     <div className='section red darken-3'>
       <div className='container'>
@@ -16,7 +16,7 @@ export default ({ selectedProject, children }) => (
     <div className='section'>
       <div className='container'>
         <div className='row'>
-          <Tasks project={selectedProject} />
+          <Tasks timerIsRunning={timerIsRunning} project={selectedProject} />
         </div>
       </div>
     </div>
