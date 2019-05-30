@@ -27,15 +27,15 @@ class AddTask extends Component {
     const findTaskByName = this.props.tasks.some(task => this.state.title === task.title)
 
     if (!findTaskByName) {
-      this.props.addTask({
-        id: uuid(),
-        title: this.state.title,
-        parent: this.props.projectId,
-        start: null,
-        end: null,
-        diff: null,
-        created: new Date().toString()
-      })
+        this.props.addTask({
+          id: uuid(),
+          title: this.state.title,
+          parent: this.props.projectId,
+          start: null,
+          end: null,
+          diff: null,
+          created: new Date().toString()
+        })
       this.setState({ id: '', title: '', parent: '', created: '', error: null })
     } else {
       this.setState({ error: 'The name must be unique. Please change the it.' })
