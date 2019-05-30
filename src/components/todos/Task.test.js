@@ -19,9 +19,7 @@ describe('<Task />', () => {
     }
     const task = shallow(
       <Task
-        key={mockTask.id}
         task={mockTask}
-        tasks={null}
         preventEdit={null}
         onManualUpdate={null}
         updateTask={() => null}
@@ -34,5 +32,28 @@ describe('<Task />', () => {
     task.setProps({ task: { title: 'Hello', created: Date.now() } })
 
     expect(task.find('.task-title').text()).toBe('Hello')
+  })
+  it('Calls props.deleteTask on delete button click', () => {
+    const deleteTaskSpy = jest.fn()
+    const mockTask = {
+      created: Date.now(),
+      title: 'Test item',
+      id: '123',
+      parent: '999',
+      start: null,
+      diff: null
+    }
+    const task = shallow(
+      <Task
+        task={mockTask}
+        preventEdit={null}
+        onManualUpdate={null}
+        updateTask={() => null}
+        onEdit={() => null}
+        deleteTask={deleteTaskSpy}
+      />
+    )
+    task.find('.btn.red').simulate('click')
+    expect(deleteTaskSpy).toHaveBeenCalled()
   })
 })
