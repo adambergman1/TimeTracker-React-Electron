@@ -24,7 +24,7 @@ module.exports = function applicationMenu (appName, mainWindow) {
       submenu: [
         {
           label: 'View reports',
-          // accelerator: 'CmdOrCtrl+R',
+          accelerator: 'CmdOrCtrl+Shift+R',
           click: () => {
             mainWindow.webContents.send('view-reports')
           }

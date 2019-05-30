@@ -40,8 +40,8 @@ export class Task extends Component {
             </Modal>
           )}
         </div>
-        <div className='col s7 task-title'>
-          <span>{task.title}</span>
+        <div className='col s7'>
+          <span className='task-title'>{task.title}</span>
           <span className='task-created'>
             {task.created.length ? getShortDate(task.created) : ''}
           </span>

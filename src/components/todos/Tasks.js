@@ -71,6 +71,7 @@ class Tasks extends Component {
 
     const tasksToDisplay = filteredTasks.length ? (
       filteredTasks.map(task => {
+        console.log(task)
         return (
           <Task 
             key={task.id}
