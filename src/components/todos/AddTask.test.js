@@ -20,13 +20,13 @@ describe('<AddTask />', () => {
       { id: 0, title: '0' },
       { id: 1, title: '1' }
     ]
-    const addTask = jest.fn()
-    const newTask = shallow(<AddTask tasks={tasksArray} addTask={addTask} />)
+    const addTaskSpy = jest.fn()
+    const newTask = shallow(<AddTask tasks={tasksArray} addTask={addTaskSpy} />)
 
     newTask.find('input').simulate('change', { target: { value: 'Changing title' } })
     newTask.find('form').simulate('submit', { preventDefault () {} })
 
-    expect(addTask).toHaveBeenCalled()
+    expect(addTaskSpy).toHaveBeenCalled()
   })
   it('clears the state on submit', () => {
     const tasksArray = [
