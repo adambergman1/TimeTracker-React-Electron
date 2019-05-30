@@ -40,4 +40,14 @@ describe('<AddTask />', () => {
 
     expect(newTask.state().title).toBe('')
   })
+  it('calls preventDefault on submit', () => {
+    const preventDefault = jest.fn()
+    const tasksArray = [ { id: 0, title: '0' }, { id: 1, title: '1' } ]
+    const newTask = shallow(<AddTask tasks={tasksArray} addTask={() => { }} />)
+
+    newTask.find('input').simulate('change', { target: { value: 'Changing title ' } })
+    newTask.find('form').simulate('submit', { preventDefault })
+
+    expect(preventDefault).toHaveBeenCalled()
+  })
 })
