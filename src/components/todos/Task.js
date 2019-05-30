@@ -5,10 +5,11 @@ import Timer from './Timer'
 import { getShortDate } from '../../lib/dateHelpers'
 import editIcon from '../images/edit.svg'
 
+
 export class Task extends Component {
   state = {
     isModalClicked: false,
-    taskToEdit: null
+    taskToEdit: null,
   }
 
   render() {
@@ -20,40 +21,21 @@ export class Task extends Component {
         <div className='col s1 left-align'>
           {preventEdit !== task.id && (
             <Modal
-              trigger={
-                <img
-                  src={editIcon}
-                  className='icon edit-icon'
-                  alt='Edit task'
-                />
-              }
+              trigger={<img src={editIcon} className='icon edit-icon' alt='Edit task' />}
               options={{
                 onOpenStart: () =>
                   this.setState({ isModalClicked: true, taskToEdit: task.id }),
                 onCloseStart: () =>
                   this.setState({ isModalClicked: false, taskToEdit: null })
-              }}
-            >
+              }}>
               {isModalClicked && taskToEdit === task.id && (
                   <EditTask task={task} tasks={tasks} onEdit={onEdit} />
                 )}
 
               <Modal
-                trigger={
-                  <button className='btn btn-small red top-right'>
-                    Delete
-                  </button>
-                }
-              >
+                trigger={<button className='btn btn-small red top-right'>Delete</button>}>
                 <p>Are you sure that you want to remove {task.title}?</p>
-                <span
-                  className='btn red'
-                  onClick={() => {
-                    deleteTask(task.id)
-                  }}
-                >
-                  Yes, delete
-                </span>
+                <span className='btn red' onClick={ () => {deleteTask(task.id)} }>Yes, delete</span>
               </Modal>
             </Modal>
           )}

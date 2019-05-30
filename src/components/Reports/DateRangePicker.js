@@ -24,25 +24,26 @@ class DatePicker extends Component {
 
   render () {
     return (
-    <div className="date-range-picker">
-        <span style={{ marginRight: '10px'}}>From</span>
-        <ReactDatePicker
-            maxDate={new Date()}
-            selected={this.state.startDate}
-            startDate={this.state.startDate}
-            endDate={this.state.endDate}
-            onChange={this.handleChangeStart}
-            />
+    <div className="mb-2 valign-wrapper space-evenly">
 
-    <span style={{ marginRight: '10px' }}>To</span>
-        <ReactDatePicker
-            minDate={this.state.startDate}
-            maxDate={new Date()}
-            selected={this.state.endDate}
-            startDate={this.state.startDate}
-            endDate={this.state.endDate}
-            onChange={this.handleChangeEnd}
-        />
+      <ReactDatePicker
+        maxDate={new Date()}
+        selected={this.state.startDate}
+        startDate={this.state.startDate}
+        endDate={this.state.endDate}
+        onChange={this.handleChangeStart}
+      />
+
+      <span>-</span>
+
+      <ReactDatePicker
+          minDate={this.state.startDate}
+          maxDate={new Date()}
+          selected={this.state.endDate}
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          onChange={this.handleChangeEnd}
+      />
     </div>
     )
   }

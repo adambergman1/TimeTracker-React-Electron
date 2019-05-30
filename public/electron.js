@@ -18,8 +18,8 @@ let tray
 
 function createWindow () {
   mainWindow = new BrowserWindow({
-    width: 800, // 400
-    height: 600, // 520
+    width: 400,
+    height: 520,
     title: appName,
     webPreferences: {
       nodeIntegration: false,
@@ -90,10 +90,10 @@ if (!gotTheLock) {
 function checkForIdleTime () {
   const idle = desktopIdle.getIdleTime()
   console.log('checkForIdle', idle)
-  if (idle >= 5) {
+  if (idle >= 600) {
     clearInterval(timer)
     idleTimeStamp = new Date(new Date().setMinutes(new Date().getMinutes() - 10))
-    timer = setInterval(checkIfUserIsActiveAgain, 1000)
+    timer = setInterval(checkIfUserIsActiveAgain, 15000)
   }
 }
 
@@ -105,29 +105,22 @@ function checkIfUserIsActiveAgain () {
     notifier.notify(
       {
         title: 'Idle time detected',
-        // message: 'Do you want to keep or discard the idle time?',
-        message: `You were inactive since ${idleTimeStamp.toString().substring(16, 21)}. Discard?`,
+        message: `We want to let you know that you have been inactive since ${idleTimeStamp.toString().substring(16, 21)}.`,
         sound: 'Funk',
-        wait: true,
         icon: appIcon,
-        closeLabel: 'Keep it',
-        actions: 'Discard'
-      }, (err, res, meta) => {
-        if (err) throw err
-        if (meta.activationValue !== 'Discard') return
-
-        console.log('Discarding idle time...')
-        mainWindow.webContents.send('idle', idleTimeStamp)
+        wait: true
       }
     )
-    timer = setInterval(checkForIdleTime, 1000)
+    timer = setInterval(checkForIdleTime, 60000)
   }
 }
 
+// Received from the App component to notify that a timer has been started
 ipcMain.on('timer-running', () => {
-  timer = setInterval(checkForIdleTime, 1000)
+  timer = setInterval(checkForIdleTime, 60000)
 })
 
+// Received from the App component to notifty that a timer has been stopped
 ipcMain.on('timer-stopped', () => {
   clearInterval(timer)
 })

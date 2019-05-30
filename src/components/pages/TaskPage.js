@@ -5,7 +5,7 @@ export default ({ selectedProject, children, timerIsRunning }) => (
   <React.Fragment>
     <div className='section red darken-3'>
       <div className='container'>
-        <div className='row valign-wrapper'>
+        <div className='row valign-wrapper mb-0'>
           {children}
           <h4 className='page-title' style={{ marginLeft: '15px' }}>
             {selectedProject.projectName}

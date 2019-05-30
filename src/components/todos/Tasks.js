@@ -6,7 +6,9 @@ import Task from './Task';
 class Tasks extends Component {
   state = {
     project_id: this.props.project.projectId,
-    tasks: []
+    tasks: [],
+    updateTimer: null,
+    preventEdit: null
   }
 
   // Get all saved data in localStorage

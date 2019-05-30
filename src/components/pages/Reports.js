@@ -82,7 +82,7 @@ export class Reports extends Component {
       <main>
         <div className="section red darken-3">
           <div className="container">
-            <div className="row">
+            <div className="row mb-1">
               <div className="absolute">
                 {this.props.children}
               </div>

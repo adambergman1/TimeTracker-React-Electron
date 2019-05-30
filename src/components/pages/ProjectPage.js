@@ -7,7 +7,7 @@ const ProjectPage = ({ addProject, state, showModal, deleteProject, setSelectedP
   <React.Fragment>
     <div className='section red darken-3'>
       <div className='container home'>
-        <div className='row'>
+        <div className='row mb-0'>
           <div className='col s12'>
             <h4 className='page-title center-align'>Projects</h4>
           </div>

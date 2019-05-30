@@ -49,10 +49,12 @@ class Timer extends Component {
   }
 
   tick = () => {
-    if (this.state.diff === 0 || this.state.diff === null) { 
-      this.setState({ elapsed: Date.now() - this.state.start })
-    } else {
-      this.setState({ elapsed: Date.now() - new Date(this.state.start) + this.state.diff })
+    if (this.state.isStart) {
+      if (this.state.diff === 0 || this.state.diff === null) { 
+        this.setState({ elapsed: Date.now() - this.state.start })
+      } else {
+        this.setState({ elapsed: Date.now() - new Date(this.state.start) + this.state.diff })
+      }
     }
   }
 
