@@ -7,8 +7,8 @@ class DatePicker extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      startDate: new Date(new Date().setDate(new Date().getDate() - 30)),
-      endDate: new Date()
+      startDate: new Date(new Date().setDate(new Date().getDate() - 30)).setHours(0, 0, 0, 0),
+      endDate: new Date().setHours(0, 0, 0, 0)
     }
   }
 
@@ -26,8 +26,8 @@ class DatePicker extends Component {
     return (
     <div className="mb-2 valign-wrapper space-evenly">
 
-      <ReactDatePicker
-        maxDate={new Date()}
+      <ReactDatePicker className="start-date"
+        maxDate={new Date().setHours(0, 0, 0, 0)}
         selected={this.state.startDate}
         startDate={this.state.startDate}
         endDate={this.state.endDate}
@@ -36,9 +36,9 @@ class DatePicker extends Component {
 
       <span>-</span>
 
-      <ReactDatePicker
+      <ReactDatePicker className="end-date"
           minDate={this.state.startDate}
-          maxDate={new Date()}
+          maxDate={new Date().setHours(0, 0, 0, 0)}
           selected={this.state.endDate}
           startDate={this.state.startDate}
           endDate={this.state.endDate}

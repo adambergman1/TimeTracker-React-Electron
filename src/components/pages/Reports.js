@@ -6,8 +6,8 @@ import { getElapsedTime } from '../../lib/dateHelpers'
 export class Reports extends Component {
   state = {
     projects: [],
-    startDate: new Date(new Date().setDate(new Date().getDate() - 30)).toString(),
-    endDate: new Date().toString()
+    startDate: new Date(new Date().setDate(new Date().getDate() - 30)).setHours(0, 0, 0, 0).toString(),
+    endDate: new Date().setHours(0, 0, 0, 0).toString()
   }
 
   componentWillMount() {
@@ -26,11 +26,11 @@ export class Reports extends Component {
   }
 
   changeStartDate = (start) => {
-    this.setState({ startDate: new Date(start.start) })
+    this.setState({ startDate: this.withoutTime(new Date(start.start)) })
   }
 
   changeEndDate = (end) => {
-    this.setState({ endDate: new Date(end.end) })
+    this.setState({ endDate: this.withoutTime(new Date(end.end)) })
   }
 
   withoutTime = (date) => {
@@ -53,8 +53,11 @@ export class Reports extends Component {
           let diff = []
           project.tasks.forEach(task => {
             if (project.id === task.parent) {
-              if (this.withoutTime(task.created) >= this.withoutTime(startDate) && 
-              this.withoutTime(task.created) <= this.withoutTime(endDate)) {
+              // if (this.withoutTime(task.created) >= this.withoutTime(startDate) && 
+              // this.withoutTime(task.created) <= this.withoutTime(endDate)) {
+              //   diff.push(task.diff)
+              // }
+              if (task.created >= startDate && task.created <= endDate) {
                 diff.push(task.diff)
               }
             }
