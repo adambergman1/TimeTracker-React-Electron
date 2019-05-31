@@ -1,6 +1,6 @@
-import { getElapsedTime, getShortDate } from './dateHelpers'
-
 /* eslint-env jest */
+
+import { getElapsedTime, getShortDate } from '../lib/dateHelpers'
 
 describe('Date formatting', () => {
   test('getElapsedTime should return the time in format HH:MM:SS', () => {

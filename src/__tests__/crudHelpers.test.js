@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import { addItemToArray, findItemInArray, deleteItemFromArray, saveToLocalStorage, removeFromLocalStorage, findInLocalStorage } from './crudHelpers'
+import { addItemToArray, findItemInArray, deleteItemFromArray, saveToLocalStorage, removeFromLocalStorage, findInLocalStorage } from '../lib/crudHelpers'
 
 describe('Add, find & delete with arrays', () => {
   test('addItemToArray should add the passed item to the list', () => {

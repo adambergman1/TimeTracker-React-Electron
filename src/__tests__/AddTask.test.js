@@ -3,7 +3,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import AddTask from './AddTask'
+import AddTask from '../components/todos/AddTask'
 
 describe('<AddTask />', () => {
   it('handles input change on state', () => {

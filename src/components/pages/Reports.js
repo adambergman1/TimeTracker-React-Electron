@@ -52,14 +52,9 @@ export class Reports extends Component {
         projects.map(project => {
           let diff = []
           project.tasks.forEach(task => {
-            if (project.id === task.parent) {
-              // if (this.withoutTime(task.created) >= this.withoutTime(startDate) && 
-              // this.withoutTime(task.created) <= this.withoutTime(endDate)) {
-              //   diff.push(task.diff)
-              // }
-              if (task.created >= startDate && task.created <= endDate) {
+            if (project.id === task.parent &&
+              task.created >= startDate && task.created) {
                 diff.push(task.diff)
-              }
             }
           }) 
           return (

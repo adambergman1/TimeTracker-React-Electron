@@ -3,7 +3,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import SetCurrency from './SetCurrency'
+import SetCurrency from '../components/projects/SetCurrency'
 
 describe('<SetCurrency />', () => {
   it('state.currencies should include 118 currencies', () => {

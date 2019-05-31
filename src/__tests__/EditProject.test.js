@@ -3,7 +3,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import EditProject from './EditProject'
+import EditProject from '../components/projects/EditProject'
 
 describe('<EditProject />', () => {
   it('sets the initial state from given props', () => {

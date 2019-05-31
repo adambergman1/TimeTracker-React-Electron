@@ -3,7 +3,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import DateRangePicker from './DateRangePicker'
+import DateRangePicker from '../components/reports/DateRangePicker'
 
 describe('<DateRangePicker />', () => {
   it('should set starting date to 30 days back', () => {

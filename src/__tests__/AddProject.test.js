@@ -3,7 +3,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import AddProject from './AddProject'
+import AddProject from '../components/projects/AddProject'
 
 describe('<AddProject />', () => {
   it('handles input change on state', () => {

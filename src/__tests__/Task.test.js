@@ -1,10 +1,9 @@
 /* eslint-env jest */
 
 import React from 'react'
-// import toJson from 'enzyme-to-json'
 import { shallow } from 'enzyme'
 
-import Task from './Task'
+import Task from '../components/todos/Task'
 
 describe('<Task />', () => {
   it('Displays the task title based on props.task.title ', () => {
