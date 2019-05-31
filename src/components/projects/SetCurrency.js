@@ -51,7 +51,7 @@ class SetCurrency extends Component {
         <div className='row center'>
           <div className='col s12'>
             <Modal open={this.state.isModalOpen}>
-              <p>Selected currency: {selectedCurrency.name && selectedCurrency.name}</p>
+              <p className="selected-currency">Selected currency: {selectedCurrency.name && selectedCurrency.name}</p>
               <Select onChange={this.updateCurrency}>
                 <option value='none'>Select currency</option>
                 {currenciesToRender}
