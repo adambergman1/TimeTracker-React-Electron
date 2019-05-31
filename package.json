@@ -24,6 +24,7 @@
     "electron": "electron .",
     "electron-dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
+    "electron-pack-win": "electron-builder -c.extraMetadata.main=build/electron.js --win",
     "electron-dist": "electron-builder",
     "postinstall": "electron-builder install-app-deps"
   },
@@ -43,7 +44,6 @@
     "concurrently": "^4.1.0",
     "electron": "^5.0.2",
     "electron-builder": "^20.41.0",
-    "electron-rebuild": "^1.8.5",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "react-test-renderer": "^16.8.6",
@@ -72,6 +72,19 @@
       },
       "target": [
         "dmg"
+      ]
+    },
+    "win": {
+      "publisherName": "Adam Bergman",
+      "icon": "build/appIcon.png",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
       ]
     }
   }

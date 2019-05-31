@@ -11,7 +11,6 @@ describe('<App />', () => {
   })
   it('should only display projects on initial state', () => {
     const app = shallow(<App />)
-    app.find('.page-title').text()
 
     expect(app.state().showProjects).toBeTruthy()
     expect(app.state().showReports).toBeFalsy()
