@@ -3,8 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=node,macos,visualstudiocode
 
 # Custom
-build/
-coverage/
+build
 
 ### macOS ###
 # General
