@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
 const applicationMenu = require('./menu')
@@ -14,7 +14,6 @@ let idleTimeStamp
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-let tray
 
 function createWindow () {
   mainWindow = new BrowserWindow({
@@ -46,15 +45,11 @@ function createWindow () {
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
     mainWindow = null
-    tray = null
   })
 }
 
 app.on('ready', async () => {
   createWindow()
-  tray = new Tray(appIcon)
-  tray.setToolTip(appName)
-
   const menu = Menu.buildFromTemplate(applicationMenu(appName, mainWindow))
   Menu.setApplicationMenu(menu)
 })

@@ -52,8 +52,8 @@ function createWindow () {
 
 app.on('ready', async () => {
   createWindow()
-  tray = new Tray(appIcon)
-  tray.setToolTip(appName)
+  // tray = new Tray(appIcon)
+  // tray.setToolTip(appName)
 
   const menu = Menu.buildFromTemplate(applicationMenu(appName, mainWindow))
   Menu.setApplicationMenu(menu)

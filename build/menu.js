@@ -67,14 +67,6 @@ module.exports = function applicationMenu (appName, mainWindow) {
         {
           label: 'Bring All To Front',
           role: 'front'
-        },
-        {
-          label: 'Dev Tools',
-          click: () => mainWindow.webContents.openDevTools()
-        },
-        {
-          label: 'Reload',
-          role: 'reload'
         }
       ]
     }
