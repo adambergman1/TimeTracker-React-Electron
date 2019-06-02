@@ -26,8 +26,13 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-  isDev ? mainWindow.loadURL('http://localhost:3000') : mainWindow.loadFile('build/index.html')
-  mainWindow.webContents.toggleDevTools()
+
+  if (isDev) {
+    mainWindow.loadURL('http://localhost:3000')
+    mainWindow.webContents.toggleDevTools()
+  } else {
+    mainWindow.loadFile('build/index.html')
+  }
 
   mainWindow.on('close', (e) => {
     if (app.quitting) {
