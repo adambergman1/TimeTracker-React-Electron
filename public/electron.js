@@ -8,11 +8,14 @@ const appName = 'Time Tracker'
 
 const notifier = require('node-notifier')
 const desktopIdle = require('desktop-idle')
+
+// A global reference of the timer
 let timer
+
+// A global reference of the time stamp when user was inactive
 let idleTimeStamp
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+// Keep a global reference of the window object
 let mainWindow
 
 function createWindow () {
@@ -60,14 +63,10 @@ app.on('before-quit', () => {
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') app.quit()
 })
 
 app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow()
   } else {
@@ -75,6 +74,7 @@ app.on('activate', () => {
   }
 })
 
+// Allow only one window
 const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) {
   app.quit()
@@ -87,6 +87,7 @@ if (!gotTheLock) {
   })
 }
 
+// Checks if the user doesn't move keyboard or mouse
 function checkForIdleTime () {
   const idle = desktopIdle.getIdleTime()
   console.log('checkForIdle', idle)
@@ -97,6 +98,7 @@ function checkForIdleTime () {
   }
 }
 
+// Checks when the user is active again (by touching the keyboard or mouse)
 function checkIfUserIsActiveAgain () {
   const idle = desktopIdle.getIdleTime()
   console.log('checkIfUserIsActive', idle)

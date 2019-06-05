@@ -17,7 +17,7 @@ class DatePicker extends Component {
     this.setState({ startDate: start })
   }
 
-    handleChangeEnd = end => {
+  handleChangeEnd = end => {
     this.props.onEndChange({ end: end })
     this.setState({ endDate: end })
   }

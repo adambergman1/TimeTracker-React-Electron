@@ -1,3 +1,9 @@
+/**
+ * Checks if the application is running on Electron
+ *
+ * @returns bool
+ */
+
 function isElectron () {
   // Renderer process
   if (typeof window !== 'undefined' && typeof window.process === 'object' && window.process.type === 'renderer') {

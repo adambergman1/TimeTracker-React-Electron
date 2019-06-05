@@ -21,6 +21,7 @@ class App extends Component {
       this.setState({ projects: findInLocalStorage('project') })
     }
 
+    // Data received from Electron when user interacts with the app menu 
     if (isElectron()) {
       window.ipcRenderer.on('add-project', () => {
         this.setState({
@@ -118,12 +119,11 @@ class App extends Component {
     this.setState({ currency })
   }
 
+  // Send data to Electron
   timerIsRunning = ({task }) => {
     if (task.start && !task.end) {
-      console.log('Timer started');
       window.ipcRenderer.send('timer-running')
     } else if (task.end) {
-      console.log('Timer stopped')
       window.ipcRenderer.send('timer-stopped')
     }
   }

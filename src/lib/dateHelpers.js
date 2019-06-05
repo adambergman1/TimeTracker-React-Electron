@@ -1,3 +1,8 @@
+/**
+ * Converts milliseconds into the format HH:MM:SS
+ * @param {elapsed} elapsed - time in milliseconds
+ */
+
 export const getElapsedTime = elapsed => {
   let seconds = Math.floor(elapsed / 1000)
   let minutes = Math.floor(seconds / 60)
@@ -11,6 +16,10 @@ export const getElapsedTime = elapsed => {
   return ((hours + '').length === 1 ? '0' + hours : hours) + ':' + ('0' + minutes).substr(-2) + ':' + ('0' + seconds).substr(-2)
 }
 
+/**
+ * Returns a date formatted in DD/MM/YYYY
+ * @param {date} date - the date to convert
+ */
 export const getShortDate = date => {
   const d = new Date(date)
   const dateOfMonth = d.getUTCDate()
@@ -19,6 +28,10 @@ export const getShortDate = date => {
   return dateOfMonth + '/' + monthOfYear + '/' + year
 }
 
+/**
+ * Converts time in the format HH:MM:SS to milliseconds
+ * @param {time} time - the time received (HH:MM:SS format)
+ */
 export const convertPrettyTimeToMS = time => {
   const hhmmss = time.split(':')
   if (!hhmmss[0]) hhmmss[0] = '00'
