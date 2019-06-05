@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
 const applicationMenu = require('./menu')
@@ -8,13 +8,15 @@ const appName = 'Time Tracker'
 
 const notifier = require('node-notifier')
 const desktopIdle = require('desktop-idle')
+
+// A global reference of the timer
 let timer
+
+// A global reference of the time stamp when user was inactive
 let idleTimeStamp
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+// Keep a global reference of the window object
 let mainWindow
-let tray
 
 function createWindow () {
   mainWindow = new BrowserWindow({
@@ -46,15 +48,11 @@ function createWindow () {
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
     mainWindow = null
-    tray = null
   })
 }
 
 app.on('ready', async () => {
   createWindow()
-  // tray = new Tray(appIcon)
-  // tray.setToolTip(appName)
-
   const menu = Menu.buildFromTemplate(applicationMenu(appName, mainWindow))
   Menu.setApplicationMenu(menu)
 })
@@ -65,14 +63,10 @@ app.on('before-quit', () => {
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') app.quit()
 })
 
 app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow()
   } else {
@@ -80,6 +74,7 @@ app.on('activate', () => {
   }
 })
 
+// Allow only one window
 const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) {
   app.quit()
@@ -92,16 +87,18 @@ if (!gotTheLock) {
   })
 }
 
+// Checks if the user doesn't move keyboard or mouse
 function checkForIdleTime () {
   const idle = desktopIdle.getIdleTime()
   console.log('checkForIdle', idle)
   if (idle >= 600) {
     clearInterval(timer)
     idleTimeStamp = new Date(new Date().setMinutes(new Date().getMinutes() - 10))
-    timer = setInterval(checkIfUserIsActiveAgain, 15000)
+    timer = setInterval(checkIfUserIsActiveAgain, 10000)
   }
 }
 
+// Checks when the user is active again (by touching the keyboard or mouse)
 function checkIfUserIsActiveAgain () {
   const idle = desktopIdle.getIdleTime()
   console.log('checkIfUserIsActive', idle)
@@ -116,13 +113,14 @@ function checkIfUserIsActiveAgain () {
         wait: true
       }
     )
-    timer = setInterval(checkForIdleTime, 60000)
+    timer = setInterval(checkForIdleTime, 10000)
   }
 }
 
 // Received from the App component to notify that a timer has been started
 ipcMain.on('timer-running', () => {
-  timer = setInterval(checkForIdleTime, 60000)
+  console.log('Timer running')
+  timer = setInterval(checkForIdleTime, 10000)
 })
 
 // Received from the App component to notifty that a timer has been stopped

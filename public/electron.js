@@ -94,7 +94,7 @@ function checkForIdleTime () {
   if (idle >= 600) {
     clearInterval(timer)
     idleTimeStamp = new Date(new Date().setMinutes(new Date().getMinutes() - 10))
-    timer = setInterval(checkIfUserIsActiveAgain, 15000)
+    timer = setInterval(checkIfUserIsActiveAgain, 10000)
   }
 }
 
@@ -113,13 +113,14 @@ function checkIfUserIsActiveAgain () {
         wait: true
       }
     )
-    timer = setInterval(checkForIdleTime, 60000)
+    timer = setInterval(checkForIdleTime, 10000)
   }
 }
 
 // Received from the App component to notify that a timer has been started
 ipcMain.on('timer-running', () => {
-  timer = setInterval(checkForIdleTime, 60000)
+  console.log('Timer running')
+  timer = setInterval(checkForIdleTime, 10000)
 })
 
 // Received from the App component to notifty that a timer has been stopped

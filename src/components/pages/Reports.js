@@ -53,9 +53,10 @@ export class Reports extends Component {
           let diff = []
           project.tasks.forEach(task => {
             if (project.id === task.parent &&
-              task.created >= startDate && task.created) {
+              task.created >= startDate && 
+              task.created <= endDate) {
                 diff.push(task.diff)
-            }
+              }
           }) 
           return (
           <div className="collection-item row" key={project.id}>
