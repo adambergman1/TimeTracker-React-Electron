@@ -91,10 +91,10 @@ if (!gotTheLock) {
 function checkForIdleTime () {
   const idle = desktopIdle.getIdleTime()
   console.log('checkForIdle', idle)
-  if (idle >= 10) {
+  if (idle >= 600) {
     clearInterval(timer)
     idleTimeStamp = new Date(new Date().setMinutes(new Date().getMinutes() - 10))
-    timer = setInterval(checkIfUserIsActiveAgain, 10000)
+    timer = setInterval(checkIfUserIsActiveAgain, 60000)
   }
 }
 
@@ -113,7 +113,7 @@ function checkIfUserIsActiveAgain () {
         wait: true
       }
     )
-    timer = setInterval(checkForIdleTime, 10000)
+    timer = setInterval(checkForIdleTime, 60000)
   }
 }
 
