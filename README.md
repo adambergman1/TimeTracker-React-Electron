@@ -22,7 +22,7 @@ An intuitive way of tracking time spent on several tasks on different projects. 
 
 ## Instructions
 
-1. Download the app for MacOS from [here](https://github.com/1dv430/ab224qr-project/raw/master/release/TimeTracker-0.1.0.dmg).
+1. Download the app for MacOS from [here](./release/TimeTracker-0.1.0.dmg).
 2. Create your first project
 3. Create your first task
 4. Start the timer for your created task (▶)
@@ -45,7 +45,7 @@ The code is fully available under MIT license.
 
 TimeTracker is built with React and Electron. Feel free to develop any additional features. To get started, simply do the following:
 
-    git clone https://github.com/1dv430/ab224qr-project.git
+    git clone https://github.com/WPUtvecklare/TimeTracker-React-Electron.git
     cd ab224qr-project
     npm install
 
