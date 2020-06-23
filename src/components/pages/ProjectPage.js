@@ -3,7 +3,14 @@ import { Modal, Button } from 'react-materialize'
 import AddProject from '../projects/AddProject'
 import Projects from '../projects/Projects'
 
-const ProjectPage = ({ addProject, state, showModal, deleteProject, setSelectedProject, editProject }) => (
+const ProjectPage = ({
+  addProject,
+  state,
+  showModal,
+  deleteProject,
+  setSelectedProject,
+  editProject,
+}) => (
   <React.Fragment>
     <div className='section red darken-3'>
       <div className='container home'>
